@@ -1,1 +1,1 @@
-# kanban-server
+. kanban-server
