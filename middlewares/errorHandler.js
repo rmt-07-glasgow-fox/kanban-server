@@ -3,10 +3,14 @@ const errorHandler = (err, req, res, next) => {
     switch (err.name) {
       case "NoEmail":
         res.status(401).json({
-          message: 'Unauthorized. Somethings wrong check your email or password.'
+          message: "Unauthorized. Something's wrong check your email or password."
         })
         break;
-    
+      case "WrongPassword":
+        res.status(401).json({
+          message: "Unauthorized. Something's wrong check your email or password."
+        })
+        break;
       default:
         if(err.name === 'SequelizeValidationError'){
           let errors = err.errors.map(el => {
