@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         isIn: {
-          args: [['backlog', 'todo', 'doing', 'done']],
+          args: [["backlog", "todo", "doing", "done"]],
           msg: 'Please define one <"backlog"/"todo"/"doing"/"done">'
         }
       }

@@ -18,9 +18,7 @@ class ControllerUser {
         res.status(201).json(output)
       })
       .catch(err => {
-        res.status(500).json({
-          message: err.message
-        })
+        next(err)
       })
   }
 
@@ -46,7 +44,7 @@ class ControllerUser {
             }
   
             const access_token = generateToken(payload)
-  
+            req.headers.access_token = access_token
             res.status(200).json({ access_token })
           } else {
             res.status(401).json({
@@ -60,10 +58,7 @@ class ControllerUser {
         }
       })
       .catch(err => {
-        console.log(err);
-        res.status(500).json({
-          message: err.message
-        })
+        next(err)
       })
   }
 }
