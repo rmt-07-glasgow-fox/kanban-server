@@ -72,7 +72,7 @@ class KanbanController{
         })
         .then(data => {
             if(data){
-                res.status(201).json(data)
+                res.status(200).json(data[1][0])
             } else {
                 next({status: 404})
             }
@@ -102,7 +102,7 @@ class KanbanController{
         })
         .then(data => {
             if(data){
-                res.status(201).json(data)
+                res.status(200).json(data[1][0])
             } else {
                 next({status: 404})
             }

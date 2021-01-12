@@ -49,7 +49,7 @@ class UserController{
                     })
                 } else {
                     res.status(401).json({
-                        message: "Email/password not valid"
+                        message: "Invalid email/password"
                     })
                 }
             } else {
