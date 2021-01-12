@@ -2,7 +2,7 @@ function errorHandlers(err, req, res, next) {
     if (err) {
         let { name } = err
 
-        if (name === 'SequelizeValidationError') {
+        if (name === 'SequelizeValidationError' || name === 'SequelizeUniqueConstraintError') {
             let errorMessages = err.errors.map(error => error.message)
             return res.status(400).json({ message: errorMessages })
         }
@@ -25,6 +25,8 @@ function errorHandlers(err, req, res, next) {
 
         return res.status(500).json({ message: err })
     }
+
+    console.log('>>> check error handlers om !!!')
 }
 
 module.exports = errorHandlers

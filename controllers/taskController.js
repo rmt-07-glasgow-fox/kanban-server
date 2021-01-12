@@ -3,7 +3,8 @@ const { Task } = require('../models')
 class TaskController {
     static async AddTask(req, res, next) {
         try {
-            // let { title, CategoryId } = req.body
+            let { title, CategoryId, UserId } = req.body
+            if (!title || !CategoryId || UserId) { return res.status(400).json({ message: 'Title / CategoryId / UserId is required' }) }
 
             return res.status(200).json({ message: req.body })
         } catch (err) {

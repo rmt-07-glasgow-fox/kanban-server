@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     category: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: { msg: 'Category is already registered' },
       validate: {
         notEmpty: { msg: 'Category is Empty' },
         notNull: { msg: 'Category is null' }
