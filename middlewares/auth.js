@@ -27,8 +27,6 @@ const authenticate = (req, res, next) => {
 
 const authorize = (req, res, next) => {
   const taskId = +req.params.id;
-  console.log(req.params.id, "<<< ini req params");
-
   Task.findOne({
     where: {
       id: taskId,

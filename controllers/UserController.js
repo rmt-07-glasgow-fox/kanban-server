@@ -35,7 +35,7 @@ class UserController {
     User.findOne({ where: { email } })
       .then((user) => {
         if (!user) {
-          res.status(401).json({ message: "Invalid email / password" });
+          res.status(400).json({ message: "Invalid email / password" });
         }
 
         const match = comparePassword(password, user.password);
@@ -49,7 +49,7 @@ class UserController {
 
         match
           ? res.status(200).json({ access_token })
-          : res.status(401).json({ message: "Invalid email / password" });
+          : res.status(400).json({ message: "Invalid email / password" });
       })
       .catch((err) => {
         res.status(500).json({ message: err.message });

@@ -38,6 +38,14 @@ _Response (201 - Created)_
 }
 ```
 
+
+_Response (401 - Unauthorized)_
+```
+{
+    "message": "Please login first"
+}
+```
+
 _Response (400 - Bad Request)_
 ```
 {
@@ -91,6 +99,13 @@ _Response (200)_
 ]
 ```
 
+_Response (401 - Unauthorized)_
+```
+{
+    "message": "Please login first"
+}
+```
+
 _Response (500 - Internal Server Error)_
 ```
 {
@@ -125,6 +140,13 @@ _Response (200)_
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
   }
+```
+
+_Response (401 - Unauthorized)_
+```
+{
+    "message": "Please login first"
+}
 ```
 
 _Response (404 - Not Found)_
@@ -164,6 +186,20 @@ _Response (200)_
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
   }
+```
+
+_Response (401 - Unauthorized)_
+```
+{
+    "message": "Unauthorized"
+}
+```
+
+_Response (401 - Unauthorized)_
+```
+{
+    "message": "Please login first"
+}
 ```
 
 _Response (400 - Bad Request)_
@@ -218,6 +254,20 @@ _Response (200)_
   }
 ```
 
+_Response (401 - Unauthorized)_
+```
+{
+    "message": "Unauthorized"
+}
+```
+
+_Response (401 - Unauthorized)_
+```
+{
+    "message": "Please login first"
+}
+```
+
 _Response (400 - Bad Request)_
 ```
 {
@@ -260,6 +310,20 @@ _Response (200)_
 ```
 {
     "message": "Task has been deleted"
+}
+```
+
+_Response (401 - Unauthorized)_
+```
+{
+    "message": "Unauthorized"
+}
+```
+
+_Response (401 - Unauthorized)_
+```
+{
+    "message": "Please login first"
 }
 ```
 
