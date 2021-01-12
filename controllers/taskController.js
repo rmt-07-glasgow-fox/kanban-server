@@ -30,7 +30,9 @@ class TaskController {
       const id = req.params.id;
       const { title, category } = req.body;   
       const updatedTask = await Task.update({ title, category }, { where: {id} });
-      return res.status(200).json(updatedTask);
+      console.log(updatedTask);
+      if(updatedTask[0] === 1) return res.status(200).json({ message: 'Success update task'});      
+      return next(err);
     }
     catch (err) {
       return next(err);
@@ -41,7 +43,8 @@ class TaskController {
     try {
       const id = req.params.id;
       const deletedTask = await Task.destroy({ where: {id} });
-      return res.status(200).json(deletedTask);
+      if(deletedTask === 1) return res.status(200).json({ message: 'Success delete task'});      
+      return next(err);
     }
     catch (err) {
       return next(err);
