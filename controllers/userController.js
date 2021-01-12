@@ -1,6 +1,7 @@
 const { User } = require('../models')
 const { checkPassword } = require('../helpers/bcrypt')
 const { generateToken } = require('../helpers/jwt')
+const {OAuth2Client} = require('google-auth-library')
 
 class userController {
     static register(req, res, next){
@@ -51,7 +52,7 @@ class userController {
         let email = ''
         client.verifyIdToken({
             idToken: id_token,
-            audience: process.env.GOOGLE_CLIENT_ID,  
+            audience: process.env.GOOGLE_CLIENT_ID
         }).then(ticket => {
             const payload = ticket.getPayload();
             email = payload.email
@@ -80,6 +81,7 @@ class userController {
             res.status(200).json({access_token})
         })
         .catch(err => {
+            console.log(err)
             next(err)
         })
         
