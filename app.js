@@ -5,14 +5,13 @@ if (process.env.NODE_ENV === "development") {
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
+const indexRouter = require("./routes");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-  res.send("KANBAN");
-});
+app.use("/", indexRouter);
 
-app.listen(port, () => {
+app.listen(PORT, () => {
   console.log(`Kanban App running at http://localhost:${PORT}`);
 });
