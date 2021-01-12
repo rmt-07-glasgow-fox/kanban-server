@@ -12,6 +12,9 @@ app.use(express.urlencoded({ extended: false }))
 
 // routers
 const userRouter = require('./routers/userRouter')
+const errorHandlers = require('./middlewares/errorHandlers')
+
 app.use('/user', userRouter)
+app.use(errorHandlers)
 
 app.listen(PORT, () => { console.log(` >>> SERVER PORT : ${PORT}`) })
