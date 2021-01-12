@@ -13,6 +13,8 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             // define association here
             User.belongsToMany(models.Organisation, { as: 'organisation', foreignKey: 'userId', through: models.UserOrganisation })
+            User.hasMany(models.Task, { as: 'task', foreignKey: 'userId' })
+            User.hasOne(models.Organisation, { as: 'ownerOrganisation', foreignKey: 'ownerId' });
         }
     };
     User.init({
