@@ -24,6 +24,12 @@ const errorHandler = (err, req, res, next) => {
                 message: 'email or password wrong!'
             })
             break;
+        case "unauthorize":
+            res.status(401).json({
+                status: 'error',
+                message: 'unauthorize action!'
+            })
+            break;
         case "notFound":
             res.status(404).json({
                 status: 'error',

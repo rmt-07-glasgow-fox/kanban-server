@@ -7,7 +7,7 @@ router.post('/', taskController.store);
 router.get('/:id', taskController.get);
 router.put('/:id', isAuthorizeTask, taskController.update);
 router.patch('/:id', isAuthorizeTask, taskController.updateCategory);
-router.delete('/:id', isAuthorizeTask, taskController.destory);
+router.delete('/:id', isAuthorizeTask, taskController.destroy);
 
 
 module.exports = router;
