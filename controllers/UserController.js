@@ -3,7 +3,7 @@ const { comparePassword } = require("../helpers/bcrypt");
 const { generateToken } = require("../helpers/jwt");
 
 class UserController {
-  static register(req, res) {
+  static register(req, res, next) {
     const { email, password } = req.body;
     const newUser = { email, password };
 
@@ -18,24 +18,22 @@ class UserController {
       })
       .catch((err) => {
         if (err.errors[0].validatorName === "isEmail") {
-          res.status(400).json({ message: err.message });
+          next({name: "isEmail"})
         } else if (err.errors[0].validatorName === "len") {
-          res.status(400).json({ message: err.message });
+          next({name: "len"})
         } else {
-          res
-            .status(500)
-            .json({ message: "Internal Server Error", error: err.message });
+          next(err)
         }
       });
   }
 
-  static login(req, res) {
+  static login(req, res, next) {
     const { email, password } = req.body;
 
     User.findOne({ where: { email } })
       .then((user) => {
         if (!user) {
-          res.status(400).json({ message: "Invalid email / password" });
+          next({name: "invalidEmailOrPassword"})
         }
 
         const match = comparePassword(password, user.password);
@@ -49,10 +47,10 @@ class UserController {
 
         match
           ? res.status(200).json({ access_token })
-          : res.status(400).json({ message: "Invalid email / password" });
+          : next({name: "InvalidEmailOrPassword"});
       })
       .catch((err) => {
-        res.status(500).json({ message: err.message });
+        next(err)
       });
   }
 }

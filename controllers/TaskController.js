@@ -1,11 +1,11 @@
 const { Task, User } = require("../models");
 
 class TaskController {
-  static postTask(req, res) {
+  static postTask(req, res, next) {
     const newTask = {
       title: req.body.title,
       category: req.body.category,
-      UserId: req.user.id
+      UserId: req.user.id,
     };
 
     Task.create(newTask)
@@ -13,49 +13,43 @@ class TaskController {
         res.status(201).json(task);
       })
       .catch((err) => {
-        if (err.errors[0].validatorName === "notEmpty") {
-          res.status(400).json({ message: err.message });
+        if (err.errors[0].path === "title") {
+          next({ name: "title" });
+        } else if (err.errors[0].path === "category") {
+          next({ name: "category" });
         } else {
-          res
-            .status(500)
-            .json({ message: "Internal Server Error", error: err.message });
+          next(err);
         }
       });
   }
 
-  static getTask(req, res) {
+  static getTask(req, res, next) {
     Task.findAll({
       include: User,
     })
       .then((tasks) => {
-        res.status(200).json(tasks);
+        tasks ? res.status(200).json(tasks) : next({ name: "notFound" });
       })
       .catch((err) => {
-        res
-          .status(500)
-          .json({ message: "Internal Server Error", error: err.message });
+        next(err);
       });
   }
 
-  static getTaskById(req, res) {
+  static getTaskById(req, res, next) {
     const taskId = +req.params.id;
 
     Task.findByPk(taskId, {
       include: User,
     })
       .then((task) => {
-        task
-          ? res.status(200).json(task)
-          : res.status(404).json({ message: "Task Not Found" });
+        task ? res.status(200).json(task) : next({ name: "notFound" });
       })
       .catch((err) => {
-        res
-          .status(500)
-          .json({ message: "Internal Server Error", error: err.message });
+        next(err);
       });
   }
 
-  static putTaskById(req, res) {
+  static putTaskById(req, res, next) {
     const taskId = +req.params.id;
 
     const updateTask = {
@@ -70,22 +64,20 @@ class TaskController {
       returning: true,
     })
       .then((task) => {
-        task[0] === 0
-          ? res.status(404).json({ message: "Tasks not found" })
-          : res.status(200).json(task);
+        task[0] === 0 ? next({ name: "notFound" }) : res.status(200).json(task);
       })
       .catch((err) => {
-        if (err.errors[0].validatorName === "notEmpty") {
-          res.status(400).json({ message: err.message });
+        if (err.errors[0].path === "title") {
+          next({ name: "title" });
+        } else if (err.errors[0].path === "category") {
+          next({ name: "category" });
         } else {
-          res
-            .status(500)
-            .json({ message: "Internal Server Error", error: err.message });
+          next(err);
         }
       });
   }
 
-  static patchTaskById(req, res) {
+  static patchTaskById(req, res, next) {
     const taskId = +req.params.id;
 
     const updateTask = {
@@ -99,22 +91,18 @@ class TaskController {
       returning: true,
     })
       .then((task) => {
-        task[0] === 0
-          ? res.status(404).json({ message: "Task not found" })
-          : res.status(200).json(task);
+        task[0] === 0 ? next({ name: "notFound" }) : res.status(200).json(task);
       })
       .catch((err) => {
-        if (err.errors[0].validatorName === "notEmpty") {
-          res.status(400).json({ message: err.message });
+        if (err.errors[0].path === "category") {
+          next({ name: "category" });
         } else {
-          res
-            .status(500)
-            .json({ message: "Internal Server Error", error: err.message });
+          next(err);
         }
       });
   }
 
-  static deleteTaskById(req, res) {
+  static deleteTaskById(req, res, next) {
     const taskId = +req.params.id;
 
     Task.destroy({
@@ -123,12 +111,10 @@ class TaskController {
       .then((task) => {
         task === 1
           ? res.status(200).json({ message: "Task has been deleted" })
-          : res.status(404).json({ message: "Task not found" });
+          : next({ name: "notFound" });
       })
       .catch((err) => {
-        res
-          .status(500)
-          .json({ message: "Internal Server Error", error: err.message });
+        next(err);
       });
   }
 }
