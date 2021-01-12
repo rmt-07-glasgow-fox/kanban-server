@@ -395,9 +395,67 @@ _Response (500 - Internal Server Error)_
 
 ---
 
-### GET /tasks/:TaskId
+### GET /tasks/:CategoryId
 
-> Get organizations list
+> Get task per category
+
+_Request Header_
+```
+{
+  access_token: "< jwt access token >"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Request Params_
+```
+{
+  CategoryId: "< category id >"
+}
+```
+
+_Response (200 - Ok)_
+```
+[
+    {
+        "id": < task id >,
+        "title": "< task title >",
+        "CategoryId": < task category id >,
+        "UserId": < task user id >,
+        "OrganizationId": < task organization id >,
+        "createdAt": "2021-01-12T13:41:46.877Z",
+        "updatedAt": "2021-01-12T13:41:46.877Z"
+    },
+    {
+        "id": < task id >,
+        "title": "< task title >",
+        "CategoryId": < task category id >,
+        "UserId": < task user id >,
+        "OrganizationId": < task organization id >,
+        "createdAt": "2021-01-12T13:41:46.877Z",
+        "updatedAt": "2021-01-12T13:41:46.877Z"
+    },
+]
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+    "err": [
+        "< error message >"
+    ]
+}
+```
+
+---
+
+### GET /tasks/focus/:TaskId
+
+> Get specific task
 
 _Request Header_
 ```
@@ -420,16 +478,67 @@ _Request Params_
 
 _Response (200 - Ok)_
 ```
-[
-    {
-        "id": < task id >,
-        "title": "< task title >",
-        "CategoryId": < task category id >,
-        "UserId": < task user id >,
-        "OrganizationId": < task organization id >,
-        "createdAt": "2021-01-12T13:41:46.877Z",
-        "updatedAt": "2021-01-12T13:41:46.877Z"
-    },
+{
+    "id": < task id >,
+    "title": "< task title >",
+    "CategoryId": < task category id >,
+    "UserId": < task user id >,
+    "OrganizationId": < task organization id >,
+    "createdAt": "2021-01-12T13:41:46.877Z",
+    "updatedAt": "2021-01-12T13:41:46.877Z"
+},
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+    "err": [
+        "< error message >"
+    ]
+}
+```
+
+---
+
+### PUT /tasks/:TaskId
+
+> Update a task
+
+_Request Header_
+```
+{
+  access_token: "< jwt access token >"
+}
+```
+
+_Request Body_
+```
+{
+  "title" : "< task title >",
+  "CategoryId" : "< task category id >"
+}
+```
+
+_Response (200 - Ok)_
+```
+{
+  "updated": {
+    "id": < new task id >,
+    "title": "< new task title >",
+    "CategoryId": < new task category id >,
+    "UserId": < new task user id >,
+    "OrganizationId": < new task organization id >
+  }
+}
+```
+
+_Response (400 - Bad Request)_
+```
+{
+    "message": [
+        "< error message >"
+    ]
+}
 ```
 
 _Response (500 - Internal Server Error)_

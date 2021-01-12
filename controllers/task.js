@@ -26,7 +26,7 @@ class TaskController {
       });
   }
 
-  static listAll(req, res, next) {
+  static getPerCategory(req, res, next) {
     const { CategoryId } = req.params;
     const { OrganizationId } = req.user;
 
@@ -38,7 +38,18 @@ class TaskController {
       // include: User,
     })
       .then((response) => {
-        console.log(response[0]);
+        // console.log(response[0]);
+        res.status(200).json(response);
+      })
+      .catch((err) => {
+        next(err);
+      });
+  }
+
+  static getSpecific(req, res, next) {
+    const id = +req.params.id;
+    Task.findByPk(id)
+      .then((response) => {
         res.status(200).json(response);
       })
       .catch((err) => {
@@ -83,7 +94,7 @@ class TaskController {
     const id = +req.params.id;
     Task.destroy({ where: { id } })
       .then((response) => {
-        res.status(200).send({message: `Task ${id} successfully deleted`});
+        res.status(200).send({ message: `Task ${id} successfully deleted` });
       })
       .catch((err) => {
         next(err);
