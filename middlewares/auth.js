@@ -1,5 +1,5 @@
 const { readToken } = require('../helpers/token')
-const { User, Task } = require('../models')
+const { User, Task, Category } = require('../models')
 
 async function authenticate(req, res, next) {
     try {
@@ -28,20 +28,52 @@ async function authenticate(req, res, next) {
     }
 }
 
-async function authorize(req, res, next) {
+async function authorizeTask(req, res, next) {
     try {
-        let { idTask } = req.params
-        if (!idTask) { return res.status(400).json({ messsage: 'idTask params is required' }) }
+        let idTask = +req.params.idTask
+        if (!idTask) {
+            return res.status(400).json({ messsage: 'idTask params is required' })
+        }
 
         let task = await Task.findByPk(idTask)
 
-        if (task.UserId !== req.user.id) {
-            return next({ name: '401' })
+        if (!task) {
+            return next({ name: '404' })
         }
 
-        if (task.UserId === req.user.id) {
-            console.log('authorized')
-            
+        if (task) {
+            if (task.UserId !== req.user.id) {
+                return next({ name: '401' })
+            }
+
+            if (task.UserId === req.user.id) {
+                console.log('>>> authorized Task')
+                req.task = task
+                return next()
+            }
+        }
+
+        console.log('authorize salah nih')
+    } catch (err) {
+        return next(err)
+    }
+}
+
+async function authorizeCategory(req, res, next) {
+    try {
+        let idCategory = +req.params.CategoryId
+        if (!idCategory) {
+            return res.status(400).json({ messsage: 'CategoryId params is required' })
+        }
+
+        let category = await Category.findByPk(idCategory)
+
+        if (!category) {
+            return next({ name: '404' })
+        }
+
+        if (category) {
+            console.log('>>> authorized Category')
             return next()
         }
 
@@ -52,5 +84,5 @@ async function authorize(req, res, next) {
 }
 
 module.exports = {
-    authenticate, authorize
+    authenticate, authorizeTask, authorizeCategory
 }

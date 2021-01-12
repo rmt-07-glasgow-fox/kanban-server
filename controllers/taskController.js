@@ -1,20 +1,41 @@
-const { Task } = require('../models')
+const { Task, User, Category } = require('../models')
 
 class TaskController {
     static async AddTask(req, res, next) {
         try {
-            let { title, CategoryId, UserId } = req.body
-            if (!title || !CategoryId || UserId) { return res.status(400).json({ message: 'Title / CategoryId / UserId is required' }) }
+            console.log('>>> req.body : ', req.body)
 
-            return res.status(200).json({ message: req.body })
+            let title = req.body.title
+            let CategoryId = +req.body.CategoryId
+            let UserId = +req.user.id
+
+            if (!title || !CategoryId || !UserId) {
+                return res.status(400).json({ message: 'title or CategoryId or UserId is required' })
+            }
+
+            let data = await Task.create({ title, CategoryId, UserId })
+            let response = {
+                title: data.title
+            }
+            // console.log(title, CategoryId, UserId)
+
+            return res.status(200).json(response)
         } catch (err) {
             return next(err)
         }
     }
 
-    static async UserTask(req, res, next) {
+    static async AllTask(req, res, next) {
         try {
-            return res.status(200).json({ message: req.body })
+            console.log('task list')
+
+            let data = await Task.findAll({
+                order: [['id']],
+                attributes: { exclude: ['createdAt', 'updatedAt'] },
+                include: [User, Category],
+            })
+
+            return res.status(200).json(data)
         } catch (err) {
             return next(err)
         }
@@ -22,12 +43,13 @@ class TaskController {
 
     static async DeleteTask(req, res, next) {
         try {
-            let { idTask } = req.params
-            if (!idTask) {
-                return res.status(400).json({ message: 'Id Task Gak ada' })
-            }
+            let idTask = +req.params.idTask
+            console.log('>>> idTask : ', idTask)
 
-            return res.status(200).json({ message: req.body })
+            let deleteTask = await Task.destroy({ where: { id: idTask } })
+            console.log('>>> deleteTask : ', deleteTask)
+
+            return res.status(200).json({ message: `${req.task.title} is deleted` })
         } catch (err) {
             return next(err)
         }
@@ -35,22 +57,34 @@ class TaskController {
 
     static async EditTask(req, res, next) {
         try {
-            let { idTask, CategoryId } = req.params
-            let { title } = req.body
+            let idTask = +req.params.idTask
+            let CategoryId = +req.params.CategoryId
+            let title = req.body.title
+            let UserId = +req.user.id
 
-            if (!idTask || !CategoryId || !title) {
-                return next({ name: '400' })
+            if (!title) {
+                return res.status(400).json({ message: 'title is required' })
             }
 
-            return res.status(200).json({ message: req.body })
-        } catch (err) {
-            return next(err)
-        }
-    }
+            let updatedTask = await Task.update({ title, CategoryId, UserId }, {
+                where: { id: idTask }
+            })
+            console.log('>> update ', updatedTask)
 
-    static async UpdateCategoryTask(req, res, next) {
-        try {
-            return res.status(200).json({ message: req.body })
+            if (updatedTask[0]) {
+                let data = await Task.findByPk(idTask, {
+                    attributes: { exclude: ['updatedAt', 'createdAt'] }
+                })
+
+                return res.status(200).json(data)
+            }
+
+            if (!updatedTask[0]) {
+                return res.status(400).json({ message: 'gagal update' })
+            }
+
+            console.log('update data salah nih')
+            // return res.status(200).json({ idTask, title, CategoryId, UserId })
         } catch (err) {
             return next(err)
         }
