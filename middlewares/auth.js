@@ -7,20 +7,16 @@ function authenticate(req, res, next) {
 
     User.findOne({ where: { id: decoded.id } })
       .then((dataUser) => {
-        if (!dataUser) {
-          throw new Error("Email/PasswordWrong");
-        } else {
-          req.user = {
-            id: dataUser.id,
-          };
-          next();
-        }
+        req.user = {
+          id: dataUser.id,
+        };
+        next();
       })
       .catch((err) => {
-        console.log(err);
+        next(err);
       });
   } catch (err) {
-    console.log(err);
+    next(err);
   }
 }
 
@@ -30,18 +26,18 @@ function authorize(req, res, next) {
 
   Task.findOne({ where: { id } })
     .then((dataTask) => {
+      console.log(dataTask);
       if (!dataTask) {
-        console.log(dataTask);
-        throw new Error("notFound");
+        throw { name: "dataNotFound" };
       } else if (dataTask.UserId !== userId) {
         console.log(dataTask);
-        throw new Error("forbidden");
+        throw { name: "forbidden" };
       } else {
         next();
       }
     })
     .catch((err) => {
-      console.log(err);
+      next(err);
     });
 }
 
