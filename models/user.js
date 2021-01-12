@@ -2,6 +2,8 @@
 const {
   Model
 } = require('sequelize');
+const encrypt = require('../helpers/bcryptHelper').encrypt
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -15,12 +17,53 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   User.init({
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    first_name: DataTypes.STRING,
-    last_name: DataTypes.STRING
+    email: {
+      type: DataTypes.STRING,
+      unique: true,
+      validate:{
+        isEmail:{
+          msg: 'Please enter valid email.'
+        },
+        notEmpty:{
+          msg: 'Email field is required.'
+        }
+      }
+    },
+    password: {
+      type: DataTypes.STRING,
+      validate:{
+        len: {
+          args: [8],
+          msg: 'Password must be at least 8 characters'
+        },
+        notEmpty: {
+          msg: 'Password field is required'
+        }
+      }
+    },
+    first_name: {
+      type: DataTypes.STRING,
+      validate:{
+        notEmpty:{
+          msg: 'First name field is required.'
+        }        
+      }
+    },
+    last_name:{
+      type: DataTypes.STRING,
+      validate:{
+        notEmpty:{
+          msg: 'Last name field is required.'
+        }        
+      }
+    }
   }, {
     sequelize,
+    hooks:{
+      beforeCreate: (instance, options) => {
+        instance.password = encrypt(instance.password)
+      }
+    },
     modelName: 'User',
   });
   return User;
