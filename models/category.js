@@ -21,7 +21,11 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: { args: true, msg: 'Name category is required' },
         },
       },
-      BoardId: DataTypes.INTEGER,
+      BoardId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: { notNull: { args: true, msg: 'Board ID is required' } },
+      },
     },
     {
       sequelize,

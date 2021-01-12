@@ -17,9 +17,19 @@ module.exports = (sequelize, DataTypes) => {
     {
       name: {
         type: DataTypes.STRING,
-        validate: { notEmpty: { args: true, msg: 'Name board is required' } },
+        allowNull: false,
+        validate: {
+          notNull: { args: true, msg: 'Name is required' },
+          notEmpty: { args: true, msg: 'Name board is required' },
+        },
       },
-      OrganizationId: DataTypes.INTEGER,
+      OrganizationId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notNull: { args: true, msg: 'Organization ID is required' },
+        },
+      },
     },
     {
       sequelize,

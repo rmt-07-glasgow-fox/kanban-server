@@ -51,11 +51,18 @@ module.exports = (err, req, res, next) => {
           message: 'You are not member',
         },
       ]);
+    } else if (err.name === 'NotOwner') {
+      res.status(400).json([
+        {
+          message: 'You are not owner task',
+        },
+      ]);
     } else if (err.name === 'BoardValidation') {
       res
         .status(422)
         .json([{ message: 'Name and OrganizationId is Required' }]);
     } else {
+      console.log(err);
       res.status(500).json([{ message: 'Internal Server Error', error: err }]);
     }
   }
