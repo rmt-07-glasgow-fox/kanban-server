@@ -16,7 +16,7 @@ class CategoryController {
   static getCategory(req, res, next) {
     // TODO: ADD TOKEN
 
-    const id = req.body.id;
+    const id = req.params.id;
     Category.findOne({ where: { id } })
       .then((dataCategory) => {
         return res.status(200).json(dataCategory);
@@ -42,12 +42,17 @@ class CategoryController {
   static putCategory(req, res, next) {
     const id = req.params.id;
 
-    Category.update({ where: { id } })
+    Category.update(
+      {
+        name: req.body.name || null,
+      },
+      { where: { id } }
+    )
       .then((dataCategory) => {
         if (!dataCategory) {
-          console.log(dataCategory);
+          throw new Error("Updated data error");
         }
-        return res.status(200).json(dataCategory);
+        return res.status(200).json({ message: "Category has been updated" });
       })
       .catch((err) => {
         console.log(err);
@@ -55,13 +60,12 @@ class CategoryController {
   }
 
   static deleteCategory(req, res, next) {
-    id = req.params.id;
+    const id = req.params.id;
 
     Category.destroy({ where: { id } })
       .then((dataCategory) => {
         if (!dataCategory) {
-          console.log(dataCategory);
-          // throw new Error("Invalid Id");
+          throw new Error("Invalid Id");
         }
         return res.status(200).json({ message: "Category has been deleted" });
       })
