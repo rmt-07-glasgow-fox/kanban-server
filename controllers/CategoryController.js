@@ -7,29 +7,31 @@ class CategoryController {
         return res.status(200).json(allDataCategory);
       })
       .catch((err) => {
-        console.log(err);
+        next(err);
       });
   }
 
   static getCategory(req, res, next) {
     const id = req.params.id;
+
     Category.findOne({ where: { id } })
       .then((dataCategory) => {
         return res.status(200).json(dataCategory);
       })
       .catch((err) => {
-        console.log(err);
+        next(err);
       });
   }
 
   static postCategory(req, res, next) {
     const { name } = req.body;
+
     Category.create({ name })
       .then((dataCategory) => {
         return res.status(200).json(dataCategory);
       })
       .catch((err) => {
-        console.log(err);
+        next(err);
       });
   }
 
@@ -44,12 +46,12 @@ class CategoryController {
     )
       .then((dataCategory) => {
         if (!dataCategory) {
-          throw new Error("Updated data error");
+          next(err);
         }
         return res.status(200).json({ message: "Category has been updated" });
       })
       .catch((err) => {
-        console.log(err);
+        next(err);
       });
   }
 
@@ -59,12 +61,12 @@ class CategoryController {
     Category.destroy({ where: { id } })
       .then((dataCategory) => {
         if (!dataCategory) {
-          throw new Error("Invalid Id");
+          next(err);
         }
         return res.status(200).json({ message: "Category has been deleted" });
       })
       .catch((err) => {
-        console.log(err);
+        next(err);
       });
   }
 }

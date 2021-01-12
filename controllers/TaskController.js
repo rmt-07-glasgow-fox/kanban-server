@@ -8,7 +8,7 @@ class TaskController {
         return res.status(200).json(allDataTask);
       })
       .catch((err) => {
-        console.log(err);
+        next(err);
       });
   }
 
@@ -20,7 +20,7 @@ class TaskController {
         return res.status(200).json(dataTask);
       })
       .catch((err) => {
-        console.log(err);
+        next(err);
       });
   }
 
@@ -36,7 +36,7 @@ class TaskController {
         return res.status(200).json(dataTask);
       })
       .catch((err) => {
-        console.log(err);
+        next(err);
       });
   }
 
@@ -50,14 +50,11 @@ class TaskController {
       },
       { where: { id } }
     )
-      .then((dataTask) => {
-        if (!dataTask) {
-          throw new Error("Updated data error");
-        }
-        return res.status(200).json({ message: "Task has been updated" });
+      .then(() => {
+        return res.status(200).json({ message: "Task have been updated" });
       })
       .catch((err) => {
-        console.log(err);
+        next(err);
       });
   }
 
@@ -65,14 +62,11 @@ class TaskController {
     const id = req.params.id;
 
     Task.destroy({ where: { id } })
-      .then((dataTask) => {
-        if (!dataTask) {
-          throw new Error("Invalid Id");
-        }
-        return res.status(200).json({ message: "Task has been deleted" });
+      .then(() => {
+        return res.status(200).json({ message: "Task have been deleted" });
       })
       .catch((err) => {
-        console.log(err);
+        next(err);
       });
   }
 }

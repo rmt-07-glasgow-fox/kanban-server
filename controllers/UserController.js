@@ -14,7 +14,7 @@ class UserController {
         });
       })
       .catch((err) => {
-        console.log(err);
+        return next(err);
       });
   }
 
@@ -24,13 +24,12 @@ class UserController {
     console.log(email);
     User.findOne({ where: { email } })
       .then((dataUser) => {
-        console.log(dataUser, "MASUK");
         if (!dataUser) {
-          throw new Error("Wrong Email");
+          throw { name: "invalidEmailPassword" };
         }
         const checkPassword = comparePassword(password, dataUser.password);
         if (!checkPassword) {
-          throw new Error("Wrong Password");
+          throw { name: "invalidEmailPassword" };
         }
         const payload = {
           id: dataUser.id,
@@ -40,7 +39,11 @@ class UserController {
         return res.status(200).json({ access_token });
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err, "ALL ERROR============");
+        // console.log(err.name, "ERROR NAME============");
+        // console.log(err.message, "ERROR Message============");
+        return next(err);
+        // throw { name: "invalidEmailPassword" };
       });
   }
 }
