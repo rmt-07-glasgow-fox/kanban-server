@@ -1,4 +1,7 @@
+const jwt = require('jsonwebtoken');
+
 const { User } = require('../models');
+const { comparePassword } = require('../helpers/bcrypt');
 
 exports.login = async (req, res, next) => {
   const { email, password } = req.body;

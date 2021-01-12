@@ -28,6 +28,17 @@ module.exports = (err, req, res, next) => {
       res.status(404).json([{ message: `${err.attr} not found` }]);
     } else if (err.name === 'Auth') {
       res.status(401).json([{ message: 'You must be logged in.' }]);
+    } else if (err.name === 'Member') {
+      res.status(400).json([{ message: 'User is already member' }]);
+    } else if (err.name === 'NotAdmin') {
+      res
+        .status(400)
+        .json([
+          {
+            message:
+              'Admin cannot remove, change role to member for remove member',
+          },
+        ]);
     } else {
       res.status(500).json([{ message: 'Internal Server Error', error: err }]);
     }

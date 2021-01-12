@@ -10,7 +10,7 @@ const taskRoutes = require('./task');
 router.use('/users', userRoutes);
 router.use('/categories', categoryRoutes);
 router.use('/boards', boardRoutes);
-router.use('/oraganizations', organizationRoutes);
+router.use('/organizations', organizationRoutes);
 router.use('/tasks', taskRoutes);
 
 module.exports = router;
