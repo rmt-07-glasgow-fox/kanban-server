@@ -32,7 +32,7 @@ module.exports = {
                 onDelete: 'Cascade',
                 onUpdate: 'Cascade'
             },
-            categroyId: {
+            categoryId: {
                 type: Sequelize.INTEGER,
                 references: {
                     model: 'Categories',
