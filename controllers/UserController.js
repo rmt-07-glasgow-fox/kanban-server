@@ -1,5 +1,6 @@
 const { User } = require("../models");
 const { comparePassword } = require("../helpers/bcrypt.js");
+const { generateJwt } = require("../helpers/jwt.js");
 
 class UserController {
   static userRegister(req, res, next) {
@@ -27,19 +28,18 @@ class UserController {
         if (!dataUser) {
           throw new Error("Wrong Email");
         }
-        // TODO:Bcrypt => decrypt password
         const checkPassword = comparePassword(password, dataUser.password);
         if (!checkPassword) {
           throw new Error("Wrong Password");
         }
-        // TODO: Create access_token
-        return res.status(200).json({
+        const payload = {
           id: dataUser.id,
           email: dataUser.email,
-        });
+        };
+        const access_token = generateJwt(payload);
+        return res.status(200).json({ access_token });
       })
       .catch((err) => {
-        console.log("MASUK CATCH================================");
         console.log(err);
       });
   }
