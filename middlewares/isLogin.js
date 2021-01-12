@@ -1,4 +1,5 @@
 const decodeToken = require('../helpers/decodedToken');
+const { User } = require('../models');
 
 const isLogin = async(req, res, next) => {
     try {
