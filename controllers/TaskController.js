@@ -1,9 +1,8 @@
 const { Task } = require("../models");
+const { verifyJwt } = require("../helpers/jwt.js");
 
 class TaskController {
   static getAllTask(req, res, next) {
-    // TODO: ADD TOKEN
-
     Task.findAll()
       .then((allDataTask) => {
         return res.status(200).json(allDataTask);
@@ -14,7 +13,6 @@ class TaskController {
   }
 
   static getTask(req, res, next) {
-    // TODO: ADD TOKEN
     const id = req.params.id;
 
     Task.findOne({ where: { id } })
@@ -27,10 +25,13 @@ class TaskController {
   }
 
   static postTask(req, res, next) {
-    // TODO: ADD UserId, CategoryId
-
-    const { title, UserId, CategoryId } = req.body;
-    Task.create({ title, UserId, CategoryId })
+    const decoded = verifyJwt(req.headers.access_token);
+    const { title, CategoryId } = req.body;
+    Task.create({
+      title,
+      UserId: decoded.id,
+      CategoryId,
+    })
       .then((dataTask) => {
         return res.status(200).json(dataTask);
       })

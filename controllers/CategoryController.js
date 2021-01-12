@@ -2,8 +2,6 @@ const { Category } = require("../models");
 
 class CategoryController {
   static getAllCategory(req, res, next) {
-    // TODO: ADD TOKEN
-
     Category.findAll()
       .then((allDataCategory) => {
         return res.status(200).json(allDataCategory);
@@ -14,8 +12,6 @@ class CategoryController {
   }
 
   static getCategory(req, res, next) {
-    // TODO: ADD TOKEN
-
     const id = req.params.id;
     Category.findOne({ where: { id } })
       .then((dataCategory) => {
@@ -27,8 +23,6 @@ class CategoryController {
   }
 
   static postCategory(req, res, next) {
-    // TODO: ADD UserId, CategoryId
-
     const { name } = req.body;
     Category.create({ name })
       .then((dataCategory) => {
