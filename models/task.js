@@ -3,6 +3,7 @@ const {
     Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
+
     class Task extends Model {
         /**
          * Helper method for defining associations.

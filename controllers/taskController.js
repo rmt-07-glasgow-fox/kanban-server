@@ -1,9 +1,23 @@
-const { Task } = require('../models');
+const { Task, Organisation, Category, User } = require('../models');
 
 class TaskController {
     static async getAll(req, res, next) {
         try {
-            const task = await Task.findAll();
+            const task = await Task.findAll({
+                include: [{
+                    model: Organisation,
+                    as: 'organisation',
+                    attributes: ['name']
+                }, {
+                    model: Category,
+                    as: 'category',
+                    attributes: ['name']
+                }, {
+                    model: User,
+                    as: 'user',
+                    attributes: ['firstName', 'lastName', 'email', ]
+                }]
+            });
 
             return res.status(200).json({
                 status: 'success',
@@ -18,6 +32,22 @@ class TaskController {
         try {
             const { id } = req.params;
             const task = await Task.findByPk(id, {
+                include: [{
+                        model: Organisation,
+                        as: 'organisation',
+                        attributes: ['name']
+                    },
+                    {
+                        model: Category,
+                        as: 'category',
+                        attributes: ['name']
+                    },
+                    {
+                        model: User,
+                        as: 'user',
+                        attributes: ['firstName', 'lastName', 'email']
+                    }
+                ],
                 attributes: { exclude: ['createdAt', 'updatedAt'] }
             });
 
@@ -59,7 +89,6 @@ class TaskController {
             });
 
             if (!data) return next({ name: 'notFound' });
-
 
             await Task.update(input, { where: { id } });
             await data.reload();
