@@ -16,11 +16,11 @@ function authenticate(req, res, next){
             }
             next()
         } else {
-            res.status(403).json({message : "You dont have access"})
+            next({name : 'Do not have access'})
         }
     })
     .catch(err => {
-        res.status(500).json({message : "Internal Server Error"})
+       next(err)
     })
 }
 
@@ -34,15 +34,15 @@ function authorization(req, res, next){
     })
     .then(task => {
         if(task === null){
-            res.status(404).json({message : "Not Found"})
+            next({name : "Not found"})
         } else if(task.UserId === userId){
             next()
         } else {
-            res.status(403).json({message : "Do Not Have Access"})
+            next({name : 'Do not have access'})
         }
     })
     .catch(err => {
-        res.status(500).json({message : "Internal Server Error"})
+        next(err)
     })
 }
 
