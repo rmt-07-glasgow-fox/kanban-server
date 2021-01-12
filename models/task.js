@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
                 }
             }
         },
-        categroyId: {
+        categoryId: {
             type: DataTypes.INTEGER,
             validate: {
                 notEmpty: {

@@ -23,8 +23,8 @@ class AuthController {
 
             return res.status(200).json({
                 status: 'success',
-                access_token,
                 fullname: user.fullname(),
+                access_token,
             })
 
         } catch (error) {
