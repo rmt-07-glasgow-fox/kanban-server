@@ -76,7 +76,7 @@ class userController {
                 id : user.id,
                 email : user.email
             }
-            const access_token = createToken(payload)
+            const access_token = generateToken(payload)
             res.status(200).json({access_token})
         })
         .catch(err => {
