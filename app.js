@@ -12,9 +12,14 @@ app.use(express.urlencoded({ extended: false }))
 
 // routers
 const userRouter = require('./routers/userRouter')
+const taskRouter = require('./routers/taskRouter')
+const categoryRouter = require('./routers/categoryRouter')
 const errorHandlers = require('./middlewares/errorHandlers')
+const { authenticate } = require('./middlewares/auth')
 
 app.use('/user', userRouter)
+app.use('/task', authenticate, taskRouter)
+app.use('/category', authenticate, categoryRouter)
 app.use(errorHandlers)
 
 app.listen(PORT, () => { console.log(` >>> SERVER PORT : ${PORT}`) })
