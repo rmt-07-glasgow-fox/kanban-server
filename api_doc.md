@@ -240,7 +240,7 @@ _Response (500 - Internal Server Error)_
 ```
 
 ---
-### DEELTE /tasks/:id
+### DELETE /tasks/:id
 
 > DELETE tasks by ID
 
@@ -277,8 +277,84 @@ _Response (500 - Internal Server Error)_
 }
 ```
 
+---
+### POST /register
 
+> CREATE new user
 
+_Request Header_
+```
+not needed
+```
 
+_Request Body_
+```
+{
+  "email": "<email to get insert into>",
+  "password": "<password to get insert into>"
+}
+```
+
+_Response (201 - Created)_
+```
+{
+  "id": <given id by system>,
+  "email": "<posted email>"
+}
+```
+
+_Response (400 - Bad Request)_
+```
+{
+    "message": "Validation error: Invalid email format"
+}
+
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+    "message": "Internal Server Error"
+}
+```
+
+---
+### POST /login
+
+> LOGIN user
+
+_Request Header_
+```
+not needed
+```
+
+_Request Body_
+```
+{
+  "email": "<email to get insert into>",
+  "password": "<password to get insert into>"
+}
+```
+
+_Response (200)_
+```
+  {
+    "access_token": <generate token>
+  }
+```
+
+_Response (400 - Bad Request)_
+```
+{
+    "message": "Invalid email / password"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+    "message": "Internal Server Error"
+}
+```
 
 

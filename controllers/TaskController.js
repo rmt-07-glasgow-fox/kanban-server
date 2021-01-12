@@ -5,11 +5,12 @@ class TaskController {
     const newTask = {
       title: req.body.title,
       category: req.body.category,
+      UserId: req.user.id
     };
 
     Task.create(newTask)
-      .then((tasks) => {
-        res.status(201).json(tasks);
+      .then((task) => {
+        res.status(201).json(task);
       })
       .catch((err) => {
         if (err.errors[0].validatorName === "notEmpty") {
@@ -42,9 +43,9 @@ class TaskController {
     Task.findByPk(taskId, {
       include: User,
     })
-      .then((tasks) => {
-        tasks
-          ? res.status(200).json(tasks)
+      .then((task) => {
+        task
+          ? res.status(200).json(task)
           : res.status(404).json({ message: "Task Not Found" });
       })
       .catch((err) => {
@@ -68,10 +69,10 @@ class TaskController {
       },
       returning: true,
     })
-      .then((tasks) => {
-        tasks[0] === 0
+      .then((task) => {
+        task[0] === 0
           ? res.status(404).json({ message: "Tasks not found" })
-          : res.status(200).json(tasks);
+          : res.status(200).json(task);
       })
       .catch((err) => {
         if (err.errors[0].validatorName === "notEmpty") {
@@ -97,10 +98,10 @@ class TaskController {
       },
       returning: true,
     })
-      .then((tasks) => {
-        tasks[0] === 0
+      .then((task) => {
+        task[0] === 0
           ? res.status(404).json({ message: "Task not found" })
-          : res.status(200).json(tasks);
+          : res.status(200).json(task);
       })
       .catch((err) => {
         if (err.errors[0].validatorName === "notEmpty") {
@@ -119,8 +120,8 @@ class TaskController {
     Task.destroy({
       where: { id: taskId },
     })
-      .then((tasks) => {
-        tasks === 1
+      .then((task) => {
+        task === 1
           ? res.status(200).json({ message: "Task has been deleted" })
           : res.status(404).json({ message: "Task not found" });
       })
