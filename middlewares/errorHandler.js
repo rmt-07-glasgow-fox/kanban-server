@@ -14,8 +14,18 @@ module.exports = (err, req, res, next) => {
         };
       });
       res.status(400).json(errorMessage);
+    } else if (err.name === 'LoginValidation') {
+      res.status(422).json([{ message: 'Must provide email and password' }]);
+    } else if (err.name === 'RegisterValidation') {
+      res
+        .status(422)
+        .json([
+          { message: 'Must provide first_name, last_name, email and password' },
+        ]);
+    } else if (err.name === 'LoginFailed') {
+      res.status(400).json([{ message: 'Invalid email or password' }]);
     } else if (err.name === 'NotFound') {
-      res.status(404).json([{ message: `Not Found` }]);
+      res.status(404).json([{ message: `${err.attr} not found` }]);
     } else if (err.name === 'Auth') {
       res.status(401).json([{ message: 'You must be logged in.' }]);
     } else {
