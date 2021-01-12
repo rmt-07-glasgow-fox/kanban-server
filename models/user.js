@@ -11,12 +11,44 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.hasMany(models.Task, {
+        foreignKey: "UserId"
+      })
     }
   };
   User.init({
-    name: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING
+    name: {
+      type : DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: { msg: "Name Is Required" }
+      }
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isEmail: { msg: "Invalid Email Format"},
+        notEmpty: { msg: "Email required"},
+        notNull: { msg: "Email required"},
+        dupEmail(value) {
+          return User.findAll ({ where: {email: value}})
+          .then(user => {
+            if (user.length != 0) {
+              throw new Error("This email has been taken")
+            }
+          })
+        }
+      }
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty : { msg : "Password Required"},
+        notNull: { msg : "Password Required"}
+      }
+    }
   }, {
     sequelize,
     modelName: 'User',

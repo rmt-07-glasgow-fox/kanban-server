@@ -11,7 +11,7 @@ module.exports = {
     await queryInterface.addColumn('Tasks', 'CategoryId', {
       type: Sequelize.INTEGER,
       references: {
-        model: 'Users',
+        model: 'Categories',
         key: 'id'
       },
       onDelete: 'cascade',
