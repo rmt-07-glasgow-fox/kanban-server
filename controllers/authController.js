@@ -40,7 +40,15 @@ class AuthController {
 
     static async register(req, res, next) {
         try {
+            const { email, password, firstName, lastName } = req.body;
+            const input = { email, password, firstName, lastName };
 
+            const data = await User.create(input)
+
+            return res.status(201).json({
+                status: 'success',
+                data
+            })
         } catch (error) {
             return next(error)
         }
