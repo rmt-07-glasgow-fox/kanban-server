@@ -152,7 +152,7 @@ exports.removeMember = async (req, res, next) => {
             .status(200)
             .json({ message: 'Member has been remove from organization' });
         } else {
-          return next({ name: 'NotAdmin' });
+          return next({ name: 'NotAdmin', attr: 1 });
         }
       }
     }

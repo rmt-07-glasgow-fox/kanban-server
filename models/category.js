@@ -9,6 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Category.belongsTo(models.Board);
+      Category.hasMany(models.Task);
     }
   }
   Category.init(
@@ -19,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: { args: true, msg: 'Name category is required' },
         },
       },
+      BoardId: DataTypes.INTEGER,
     },
     {
       sequelize,

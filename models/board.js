@@ -9,6 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Board.hasMany(models.Category);
+      Board.belongsTo(models.Organization);
     }
   }
   Board.init(
@@ -18,7 +20,6 @@ module.exports = (sequelize, DataTypes) => {
         validate: { notEmpty: { args: true, msg: 'Name board is required' } },
       },
       OrganizationId: DataTypes.INTEGER,
-      CategoryId: DataTypes.INTEGER,
     },
     {
       sequelize,

@@ -31,14 +31,30 @@ module.exports = (err, req, res, next) => {
     } else if (err.name === 'Member') {
       res.status(400).json([{ message: 'User is already member' }]);
     } else if (err.name === 'NotAdmin') {
-      res
-        .status(400)
-        .json([
+      if (err.attr === 0) {
+        res.status(400).json([
+          {
+            message: 'You are not Admin',
+          },
+        ]);
+      } else if (err.attr === 1) {
+        res.status(400).json([
           {
             message:
               'Admin cannot remove, change role to member for remove member',
           },
         ]);
+      }
+    } else if (err.name === 'NotMember') {
+      res.status(400).json([
+        {
+          message: 'You are not member',
+        },
+      ]);
+    } else if (err.name === 'BoardValidation') {
+      res
+        .status(422)
+        .json([{ message: 'Name and OrganizationId is Required' }]);
     } else {
       res.status(500).json([{ message: 'Internal Server Error', error: err }]);
     }
