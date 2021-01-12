@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
             User.hasMany(models.Task, { as: 'task', foreignKey: 'userId' })
             User.hasMany(models.Organisation, { as: 'ownerOrganisation', foreignKey: 'ownerId' });
         }
+
+        fullname() {
+            return `${this.firstName} ${this.lastName}`;
+        }
     };
     User.init({
         email: {
