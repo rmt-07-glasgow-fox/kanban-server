@@ -24,7 +24,7 @@ function errorHandler(err, req, res, next) {
                 }
                 break;
             case 404:
-                res.status(400).json({
+                res.status(404).json({
                     message: "Data not found"
                 })
                 break;

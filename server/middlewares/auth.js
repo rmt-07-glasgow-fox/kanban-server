@@ -4,7 +4,8 @@ const { User, Kanban } = require('../models')
 function authenticate(req, res, next){
     try {
         let decode = verifyToken(req.headers.access_token)
-        User.findbyPk(decode.id)
+        console.log(decode);
+        User.findByPk(decode.id)
         .then(data => {
             if(data){
                 req.userData = {
@@ -30,7 +31,7 @@ function authenticate(req, res, next){
 function authorized(req, res, next){
     let taskId = req.params.id
     let userId = req.userData.id
-    Kanban.findbyPk(taskId)
+    Kanban.findByPk(taskId)
     .then(data => {
         if(data){
             if(data.UserId == userId){
