@@ -87,7 +87,11 @@ class AuthController {
 
             return res.status(201).json({
                 status: 'success',
-                data
+                data: {
+                    email: data.email,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                }
             })
         } catch (error) {
             return next(error)
