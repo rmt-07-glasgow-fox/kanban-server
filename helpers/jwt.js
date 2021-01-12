@@ -6,6 +6,10 @@ function generateToken(payload){
     return token
 }
 
+function verifyToken(token){
+    return jwt.verify(token, SECRET_KEY)
+}
+
 module.exports = {
-    generateToken
+    generateToken, verifyToken
 }
