@@ -8,7 +8,7 @@ function errorHandlers(err, req, res, next) {
         }
 
         if (name === '400') {
-            return res.status(401).json({ message: 'Bad Request' })
+            return res.status(400).json({ message: 'Bad Request' })
         }
 
         if (name === '401') {
