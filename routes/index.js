@@ -1,4 +1,6 @@
 const router = require('express').Router()
+const { authentication } = require('../middlewares/auth')
+const { errorHandlers } = require('../middlewares/errorHandlers')
 const auth = require('./auth')
 const task = require('./task')
 
@@ -8,6 +10,9 @@ router.get('/', (req, res) => {
 })
 
 router.use(auth)
+router.use(authentication)
 router.use('/tasks', task)
+
+router.use(errorHandlers)
 
 module.exports = router

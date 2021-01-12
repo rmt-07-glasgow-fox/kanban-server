@@ -27,7 +27,8 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: true
       }
-    }
+    },
+    UserId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Task',
