@@ -2,6 +2,10 @@
 const {
   Model
 } = require('sequelize');
+const {
+  hashPassword
+} = require("../helpers/bcrypt");
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -11,10 +15,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.belongsToMany(models.Category, {
-        through: models.Task,
+      User.hasMany(models.Task, {
         foreignKey: "userId",
       })
+      // User.belongsToMany(models.Category, {
+      //   through: models.Task,
+      //   foreignKey: "userId",
+      // })
     }
   };
   User.init({
@@ -24,25 +31,29 @@ module.exports = (sequelize, DataTypes) => {
         args: true,
         msg: "Email already used"
       },
+      allowNull: {
+        args: false,
+        msg: "Category name must be filled"
+      },
       validate: {
         notEmpty: {
           args: true,
           msg: "Email must be filled"
         },
-        notNull: {
+        isEmail: {
           args: true,
-          msg: "Email must be filled"
+          msg: "Invalid email format"
         }
       }
     },
     password: {
       type: DataTypes.STRING,
+      allowNull: {
+        args: false,
+        msg: "Category name must be filled"
+      },
       validate: {
         notEmpty: {
-          args: true,
-          msg: "Password must be filled"
-        },
-        notNull: {
           args: true,
           msg: "Password must be filled"
         },
@@ -54,18 +65,23 @@ module.exports = (sequelize, DataTypes) => {
     },
     fullname: {
       type: DataTypes.STRING,
+      allowNull: {
+        args: false,
+        msg: "Category name must be filled"
+      },
       validate: {
         notEmpty: {
           args: true,
           msg: "Full name must be filled"
         },
-        notNull: {
-          args: true,
-          msg: "Full name must be filled"
-        }
       }
     } 
   }, {
+    hooks: {
+      beforeCreate (user, options) {
+        user.password = hashPassword(user.password)
+      }
+    },
     sequelize,
     modelName: 'User',
   });

@@ -11,22 +11,24 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Category.belongsToMany(models.User, {
-        through: models.Task,
+      Category.hasMany(models.Task, {
         foreignKey: "categoryId",
       })
+      // Category.belongsToMany(models.User, {
+      //   through: models.Task,
+      //   foreignKey: "categoryId",
+      // })
     }
   };
   Category.init({
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: {
+        args: false,
+        msg: "Category name must be filled"
+      },
       validate: {
         notEmpty: {
-          args: true,
-          msg: "Category name must be filled"
-        },
-        notNull: {
           args: true,
           msg: "Category name must be filled"
         },

@@ -1,5 +1,6 @@
 const {
-  User
+  User,
+  Task
 } = require("../models")
 const {
   verifyToken
@@ -32,4 +33,35 @@ const authentication = (req, res, next) => {
       name: "NotLoggedIn"
     })
   }
+}
+
+const authorization = (req, res, next) => {
+  let userId = req.user.id
+  let id = req.params.id
+  Task.findOne({
+    where: {
+      id
+    }
+  })
+  .then(data => {
+    if (!data) {
+      return next({
+        name: "NotFound"
+      })
+    } else if (userId === data.userId) {
+      next()
+    } else {
+      return next({
+        name: "Unauthorized"
+      })
+    }
+  })
+  .catch(err =>{
+    next(err)
+  })
+}
+
+module.exports = {
+  authentication,
+  authorization
 }
