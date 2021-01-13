@@ -6,7 +6,7 @@ class Auth {
         try {
             let decoded = checkToken(req.headers.access_token)
             // console.log( decoded);
-            user.find({where: {
+            user.findOne({where: {
                 email: decoded.email
             }})
             .then( data => {
@@ -21,7 +21,7 @@ class Auth {
                 res.status(500).json({message: err.message})
             })
         } 
-        catch{
+        catch (err) { 
             res.status(500).json({message: err.message})
         }
     }
