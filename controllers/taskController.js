@@ -1,12 +1,12 @@
-const { Task } = require('../models/task.js');
+const { Task } = require('../models/index.js');
 
-class TaskCOntroller {
+class TaskController {
   static async createTask(req, res, next) {
     try {
       const input = {
         title: req.body.title,
         description: req.body.description,
-        due_date: req.body.due_date,
+        duedate: req.body.duedate,
         category: req.body.category,
         UserId: req.user.id
       };
@@ -47,7 +47,7 @@ class TaskCOntroller {
       const input = {
         title: req.body.title,
         description: req.body.description,
-        due_date: req.body.due_date,
+        duedate: req.body.duedate,
         category: req.body.category,
       };
       const update = await Task.update(input, { where: { id: inputID } });
@@ -92,4 +92,4 @@ class TaskCOntroller {
   };
 };
 
-module.exports = TaskCOntroller;
+module.exports = TaskController;

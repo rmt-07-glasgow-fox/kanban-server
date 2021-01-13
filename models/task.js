@@ -38,6 +38,10 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: {
           args: true,
           msg: 'Please insert your due date!'
+        },
+        isAfter: {
+          args: new Date().toString(),
+          msg: "Cannot set due date after today."
         }
       }
     },
