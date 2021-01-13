@@ -38,7 +38,8 @@ class taskControl {
             let id = req.params.id
             const input = {
                 title: req.body.title,
-                date: new Date()
+                date: new Date(),
+                CategoryId: req.body.CategoryId
             }
             const search = await Task.findByPk(id)
             if (!search) {
@@ -51,12 +52,12 @@ class taskControl {
                 })
                 res.status(200).json({
                     title: search.title,
-                    date: search.date
+                    date: search.date,
+                    CategoryId: search.CategoryId
                 })
             }
         } catch (err) {
             res.status(500).json(err)
-            // console.log(err)
         }
     }
     static async delete (req, res) {
