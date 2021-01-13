@@ -1,9 +1,9 @@
 const {verifyToken} = require("../helpers/jwt")
 
-exports.authetificate = (req, res, next) => {
+exports.authentificate = (req, res, next) => {
   try {
-    if (req.params.access_token) {
-      const user = verifyToken(req.params.access_token)
+    if (req.headers.access_token) {
+      const user = verifyToken(req.headers.access_token)
       if (user) {
         req.user = user
         next()
