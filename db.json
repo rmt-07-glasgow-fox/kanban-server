@@ -1,0 +1,16 @@
+{
+  "tasks": [
+    {
+      "title": "migrate the models",
+      "description": "make sure that the models are properly migrated into db",
+      "id": 2,
+      "category": "Backlog"
+    },
+    {
+      "title": "create assocations",
+      "description": "create associations in the models and check it on postgres db",
+      "id": 3,
+      "category": "Todo"
+    }
+  ]
+}
