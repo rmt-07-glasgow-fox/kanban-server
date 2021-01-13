@@ -336,7 +336,7 @@ not needed
 _Response (200)_
 ```json
 {
-  "message": "Task has been deleted"
+  "message": "Task 1 success to delete"
 }
 ```
 

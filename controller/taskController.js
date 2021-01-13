@@ -78,7 +78,7 @@ class TaskController {
             } else {
                 res.status(200).json({
                     // id : data.id,
-                    message : `Todo ${id} success to delete`
+                    message : `Task ${id} success to delete`
                 })
             }
 
