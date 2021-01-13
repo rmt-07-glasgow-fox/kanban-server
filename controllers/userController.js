@@ -35,10 +35,10 @@ class userController {
                     const access_token = generateToken(payload)
                     res.status(200).json({access_token})
                 } else {
-                    res.status(400).json({message : "Invalid Email / Password"})
+                    next({name : "Invalid email / password"})
                 }
             } else {
-                res.status(400).json({message : "Invalid Email / Password"})
+                next({name : "Invalid email / password"})
             }
         })
         .catch(err => {
