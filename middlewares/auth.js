@@ -1,4 +1,4 @@
-const { User } = require('../models')
+const { User, Task } = require('../models')
 const checkToken = require('../helpers/jwt.js').checkToken
 
 async function authenticate(req, res, next) {
@@ -16,6 +16,22 @@ async function authenticate(req, res, next) {
     }
 }
 
+async function authorize(req, res, next) {
+    try {
+        const found = await Task.findByPk(+req.params.id)
+        if (!found) next({ name: 'notFound' })
+        else {
+            if (req.user === found.UserId) {
+                next()
+            } else {
+                next({ name: 'unauthorized' })
+            }
+        }
+    } catch (err) {
+        next(err)
+    }
+}
+
 module.exports = { 
-    authenticate
+    authenticate, authorize
 }

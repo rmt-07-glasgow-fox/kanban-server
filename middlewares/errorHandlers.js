@@ -27,7 +27,7 @@ errorHandlers = (err, req, res, next) => {
                 res.status(401).json({ message: "Unauthorized to changed" })
                 break;
             case "notFound":
-                res.status(404).json({ message: "Kanban not found" })
+                res.status(404).json({ message: "Not found" })
                 break;
             default:
                 res.status(500).json({

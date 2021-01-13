@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      User.hasMany(models.Task)
     }
   };
   User.init({
@@ -29,7 +29,11 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           msg: "Email is must be filled"
-        }
+        },
+        isEmail: {
+          msg: "Error format email"
+        },
+        //uniqueCustom
       }
     },
     password: {
