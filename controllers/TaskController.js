@@ -32,6 +32,65 @@ class TaskController {
         next(err)
       })
   }
+  static updateTaskById(req, res, next){
+    Task.update(req.body, {
+      where:{
+        id: req.params.id
+      }
+    })
+      .then(data => {
+        if(data[0] === 1){
+          res.status(200).json({
+            message: 'Success your task has been saved.'
+          })
+        }else{
+          next({
+            name: 'NoData'
+          })
+        }
+      })
+  }
+  static patchTaskCategoryById(req, res, next){
+    Task.update(
+      {
+        category: req.body.category
+      },
+      {
+        where:{
+          id: req.params.id
+        }
+      }
+    )
+    .then(_ => {
+      res.status(200).json({
+        message: 'Success your task has been saved.'
+      })
+    })
+    .catch(err => {
+      next(err)
+    })
+  }
+  static deleteTaskById(req, res, next){
+    Task.destroy({
+      where:{
+        id: req.params.id
+      }
+    })
+      .then(data => {
+        if(data === 1){
+          res.status(200).json({
+            message: 'Success your task has been deleted.'
+          })
+        }else{
+          next({
+            name: 'NoData'
+          })
+        }
+      })
+      .catch(err => {
+        next(err)
+      })
+  }
 }
 
 module.exports = TaskController
