@@ -22,9 +22,92 @@ Kanban App is an application that help you to manage todo, project, task, etc. T
 - `DELETE /categories/:id`
 
 ## RESTful endpoints
+### POST /register
+
+> Create new user
+
+_Request Header_
+```
+{
+not needed
+}
+```
+
+_Request Body_
+```json
+{
+  "name": "<name to get insert into>",
+  "email": "<email to get insert into>",
+  "password": "<password to get insert into>"
+}
+```
+
+_Response (201)_
+```json
+{
+  "id": <given id by system>,
+  "name": "<posted name>",
+  "email": "<posted email>"
+}
+```
+
+_Response (400 - Bad Request)_
+```json
+{
+  "message": "<err>"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "Internal server error"
+}
+```
+---
+### POST /login
+
+> Compare data login on database with data inputed
+
+_Request Header_
+```
+{
+not needed
+}
+```
+
+_Request Body_
+```json
+{
+  "email": "<email to get compare>",
+  "password": "<password to get compare>"
+}
+```
+
+_Response (200)_
+```json
+{
+  "acces_token": "<your acces token>"
+}
+```
+
+_Response (401 - Unauthorized)_
+```json
+{
+  "message": "Invalid email/ password"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "Internal server error"
+}
+```
+---
 ### GET /tasks
 
-> Get all task
+> Get all tasks
 
 _Request Header_
 ```json
@@ -45,17 +128,13 @@ _Response (200)_
     "id": 1,
     "title": "<task name>",
     "CategoryId": "<category id>",
-    "UserId": "<user id>",
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
+    "UserId": "<user id>"
   },
   {
     "id": 2,
     "title": "<task name>",
     "CategoryId": "<category id>",
-    "UserId": "<user id>",
-    "createdAt": "2020-03-20T07:15:12.149Z",
-    "updatedAt": "2020-03-20T07:15:12.149Z",
+    "UserId": "<user id>"
   }
 ]
 ```
@@ -67,9 +146,9 @@ _Response (500 - Internal Server Error)_
 }
 ```
 ---
-### POST /todos
+### POST /tasks
 
-> Create new todo
+> Create new task
 
 _Request Header_
 ```json
@@ -98,7 +177,7 @@ _Response (201 - Created)_
 _Response (400 - Bad Request)_
 ```json
 {
-  "message": "Invalid requests"
+  "message": "<err>"
 }
 ```
 
@@ -109,55 +188,9 @@ _Response (500 - Internal Server Error)_
 }
 ```
 ---
-### PUT /todos/:id
+### GET /tasks/:id
 
-> Update todo with the id inputed
-
-
-_Request Header_
-```json
-{
-  "access_token": "<your access token>"
-}
-```
-
-_Request Body_
-```json
-{
-  "id": "<id todo want to be deleted>"
-}
-```
-
-_Response (201)_
-```json
-{
-  "id": <given id by system>,
-  "name": "<posted name>",
-  "description": "<posted description>",
-  "status": "<posted status>",
-  "due_date": "<posted due_date>",
-  // "createdAt": "2020-03-20T07:15:12.149Z",
-  // "updatedAt": "2020-03-20T07:15:12.149Z",
-}
-```
-
-_Response (404 - Not Found)_
-```json
-{
-  "message": "Todo not found"
-}
-```
-
-_Response (400 - Bad Request)_
-```json
-{
-  "message": "Invalid requests"
-}
-```
----
-### PATCH /todos/:id
-
-> Update todo with the id inputed
+> Get task with the id inputed
 
 _Request Header_
 ```json
@@ -166,69 +199,47 @@ _Request Header_
 }
 ```
 
-_Request Body_
+_Request Params_
 ```json
 {
-  "id": "<id todo want to be deleted>"
-}
-```
-
-_Response (201)_
-```json
-{
-  "id": <given id by system>,
-  "name": "<posted name>",
-  "description": "<posted description>",
-  "status": "<posted status>",
-  "due_date": "<posted due_date>",
-  // "createdAt": "2020-03-20T07:15:12.149Z",
-  // "updatedAt": "2020-03-20T07:15:12.149Z",
-}
-```
-
-_Response (404 - Not Found)_
-```json
-{
-  "message": "Todo not found"
-}
-```
-
-_Response (400 - Bad Request)_
-```json
-{
-  "message": "Invalid requests"
-}
-```
----
-### DELETE /todos/:id
-
-> Delete todo with the id inputed
-
-_Request Header_
-```json
-{
-  "access_token": "<your access token>"
+    "id": "<id task want to get>"
 }
 ```
 
 _Request Body_
-```json
-{
-  "id": "<id todo want to be deleted>"
-}
+```
+not needed
 ```
 
 _Response (200)_
 ```json
+[
+  {
+    "id": 1,
+    "title": "<task name>",
+    "CategoryId": "<category id>",
+    "UserId": "<user id>"
+  },
+  {
+    "id": 2,
+    "title": "<task name>",
+    "CategoryId": "<category id>",
+    "UserId": "<user id>"
+  }
+]
+```
+
+_Response (400 - Bad Request)_
+```json
 {
-  "message": "Todo has been deleted"
+  "message": "<err>"
 }
 ```
 
 _Response (404 - Not Found)_
 ```json
 {
-  "message": "Todo not found"
+  "message": "Not found"
 }
 ```
 
@@ -239,9 +250,10 @@ _Response (500 - Internal Server Error)_
 }
 ```
 ---
-### POST /register
+### PUT /tasks/:id
 
-> Create new user
+> Update task with the id inputed
+
 
 _Request Header_
 ```json
@@ -250,21 +262,25 @@ _Request Header_
 }
 ```
 
+_Request Params_
+```json
+{
+    "id": "<id task want to be updated>"
+}
+```
+
 _Request Body_
 ```json
 {
-  "email": "<email to get insert into>",
-  "password": "<password to get insert into>"
+  "title": "<title to get updated>",
+  "CategoryId": "<posted to get updated>"
 }
 ```
 
 _Response (201)_
 ```json
 {
-  "id": <given id by system>,
-  "email": "<posted email>",
-  // "createdAt": "2020-03-20T07:15:12.149Z",
-  // "updatedAt": "2020-03-20T07:15:12.149Z",
+  "message": "Task has been Updated"
 }
 ```
 
@@ -274,10 +290,24 @@ _Response (400 - Bad Request)_
   "message": "<err>"
 }
 ```
----
-### POST /login
 
-> Compare data login database with request
+_Response (404 - Not Found)_
+```json
+{
+  "message": "Not found"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "Internal server error"
+}
+```
+---
+### PATCH /tasks/:id
+
+> Update CategoryId task with the id inputed
 
 _Request Header_
 ```json
@@ -286,24 +316,98 @@ _Request Header_
 }
 ```
 
+_Request Params_
+```json
+{
+    "id": "<id task want to be updated>"
+}
+```
+
 _Request Body_
 ```json
 {
-  "email": "<email to get compare>",
-  "password": "<password to get compare>"
+  "CategoryId": "<category id to get updated>"
+}
+```
+
+_Response (201)_
+```json
+{
+  "message": true
+}
+```
+
+_Response (400 - Bad Request)_
+```json
+{
+  "message": "<err>"
+}
+```
+
+_Response (404 - Not Found)_
+```json
+{
+  "message": "Not found"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "Internal server error"
+}
+```
+---
+### DELETE /tasks/:id
+
+> Delete task with the id inputed
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Params_
+```json
+{
+    "id": "<id task want to be deleted>"
+}
+```
+
+_Request Body_
+```
+{
+not needed
 }
 ```
 
 _Response (200)_
 ```json
 {
-  "acces_token": "<your acces token>"
+  "message": "Task has been deleted"
 }
 ```
 
-_Response (401 - Unauthorized)_
+_Response (400 - Bad Request)_
 ```json
 {
-  "message": "Invalid email/ password"
+  "message": "<err>"
 }
 ```
+
+_Response (404 - Not Found)_
+```json
+{
+  "message": "Not found"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "Internal server error"
+}
+```
+---

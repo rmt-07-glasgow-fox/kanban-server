@@ -38,7 +38,7 @@ module.exports = class TaskController {
         const getId = +req.params.id
         Task.findByPk(getId, {
             attributes: {
-                exclude: [ 'UserId', 'createdAt', 'updatedAt' ]
+                exclude: [ 'createdAt', 'updatedAt' ]
             }
         })
         .then( data => {
