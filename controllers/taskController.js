@@ -53,7 +53,16 @@ class TaskController {
         Task.update(obj,{where: {id: req.params.id}})
         .then(data => {
             if (data) {
-                res.status(200).json(data)
+                return Task.findOne({where: {id: req.params.id}})
+                .then(data2 => {
+                   res.status(200).json(data2) 
+                })
+                .catch(error => {
+                    throw {
+                        status: 404,
+                        message: 'task not found'
+                    }
+                })   
             } else {
                 throw {
                     status: 404,
@@ -75,7 +84,16 @@ class TaskController {
         Task.update(obj,{where: {id: req.params.id}})
         .then(data => {
             if (data) {
-                res.status(200).json(data)
+                return Task.findOne({where: {id: req.params.id}})
+                .then(data2 => {
+                   res.status(200).json(data2) 
+                })
+                .catch(error => {
+                    throw {
+                        status: 404,
+                        message: 'task not found'
+                    }
+                })
             } else {
                 throw {
                     status: 404,
