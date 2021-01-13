@@ -11,7 +11,7 @@ class OrganisationController {
                     model: Organisation,
                     through: UserOrganisation,
                     as: 'organisation',
-                    attributes: ['name'],
+                    attributes: ['id', 'name'],
                     include: [{
                         model: User,
                         as: 'owner',
@@ -21,7 +21,7 @@ class OrganisationController {
                 attributes: ['email']
             })
 
-            return res.status(200).json({ status: 'sucess', data: organisation })
+            return res.status(200).json({ status: 'sucess', data: organisation[0].organisation })
         } catch (error) {
             return next(error)
         }
