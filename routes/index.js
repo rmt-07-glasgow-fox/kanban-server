@@ -1,17 +1,10 @@
 const router = require('express').Router()
 const taskRouter = require('./taskRouter')
+const UserController = require('../controllers/userController')
 
-router.get('/', (req, res) => {
-    res.send('Hello World!')
-})
+router.post('/login', UserController.login)
 
-router.post('/login', (req, res) => {
-
-})
-
-router.post('/register', (req, res) => {
-
-})
+router.post('/register', UserController.register)
 
 router.use('/tasks', taskRouter)
 
