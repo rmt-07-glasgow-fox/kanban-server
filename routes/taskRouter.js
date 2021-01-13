@@ -5,20 +5,12 @@ router.get('/', TaskController.getAllTasks)
 
 router.get('/:id', TaskController.getTaskDescription)
 
-router.post('/', (req, res) => {
+router.post('/', TaskController.postTask)
 
-})
+router.put('/:id', TaskController.editTask)
 
-router.put('/:id', (req, res) => {
+router.patch('/:id', TaskController.changeCategory)
 
-})
-
-router.patch('/:id', (req, res) => {
-
-})
-
-router.delete('/:id', (req, res) => {
-
-})
+router.delete('/:id', TaskController.deleteTask)
 
 module.exports = router
