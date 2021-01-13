@@ -54,16 +54,16 @@ class userControl {
         }
     }
     static async googleLogin (req, res) {
-        const google_token = req.body.google_token
         try {
+            const {id_token } = req.body
             const client = new OAuth2Client(CLIENT_ID);
             const ticket = await client.verifyIdToken({
-                idToken: google_token,
+                idToken: id_token,
                 audience: process.env.GOOGLE_KEY,
             });
             const payload = ticket.getPayload();
             const find = await User.findOne({
-                where: {email: payload.email}
+                where: { email: payload.email }
             })
             if (find) {
                 const access_token = generateToken({
@@ -82,7 +82,7 @@ class userControl {
                     id: newUser.id,
                     email: newUser.email
                 })
-                res.status(200).json({
+                res.status(201).json({
                     access_token
                 })
             }

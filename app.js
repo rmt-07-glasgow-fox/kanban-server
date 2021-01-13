@@ -6,6 +6,7 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT || 3000
 const { authenticate } = require('./middleware/auth')
+const category = require('./routers/category')
 const task = require('./routers/tasks')
 const user = require('./routers/user')
 
@@ -18,6 +19,7 @@ app.use(express.urlencoded({ extended:true }))
 app.use(user)
 app.use(authenticate)
 app.use(task)
+app.use(category)
 
 app.listen(port, () => {
     console.log(`connected on http://localhost:${port}`);

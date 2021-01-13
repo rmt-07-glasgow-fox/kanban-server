@@ -3,7 +3,7 @@ const { Task, Category } = require('../models')
 class taskControl {
     static async readAll (req, res) {
         try {
-            const readAll = await Task.findAll()
+            const readAll = await Task.findAll({ order: [['date', 'ASC']] })
             res.status(200).json(readAll)
         } catch (err) {
             console.log(err)
