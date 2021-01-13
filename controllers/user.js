@@ -96,7 +96,7 @@ exports.google = async (req, res, next) => {
       const token = jwt.sign(payloadNewUser, process.env.JWT_SECRET);
 
       return res.status(200).json({
-        accessToken: token,
+        access_token: token,
         first_name: payloadGoogle.given_name,
         last_name: payloadGoogle.family_name,
       });

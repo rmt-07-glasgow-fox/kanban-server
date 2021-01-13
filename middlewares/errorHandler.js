@@ -18,7 +18,7 @@ module.exports = (err, req, res, next) => {
       res.status(422).json([{ message: 'Must provide email and password' }]);
     } else if (err.name === 'RegisterValidation') {
       res
-        .status(422)
+        .status(400)
         .json([
           { message: 'Must provide first_name, last_name, email and password' },
         ]);
@@ -32,7 +32,7 @@ module.exports = (err, req, res, next) => {
       res.status(400).json([{ message: 'User is already member' }]);
     } else if (err.name === 'NotAdmin') {
       if (err.attr === 0) {
-        res.status(400).json([
+        res.status(403).json([
           {
             message: 'You are not Admin',
           },
@@ -46,20 +46,20 @@ module.exports = (err, req, res, next) => {
         ]);
       }
     } else if (err.name === 'NotMember') {
-      res.status(400).json([
+      res.status(403).json([
         {
           message: 'You are not member',
         },
       ]);
     } else if (err.name === 'NotOwner') {
-      res.status(400).json([
+      res.status(403).json([
         {
           message: 'You are not owner task',
         },
       ]);
     } else if (err.name === 'BoardValidation') {
       res
-        .status(422)
+        .status(400)
         .json([{ message: 'Name and OrganizationId is Required' }]);
     } else {
       console.log(err);
