@@ -10,7 +10,7 @@ class CategoryController {
             let newCategory = await Category.create({ category })
             let response = newCategory.category
 
-            return res.status(200).json({ message: `Category ${response} is created` })
+            return res.status(201).json({ message: `Category ${response} is created` })
         } catch (err) {
             next(err)
         }

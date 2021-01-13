@@ -29,10 +29,12 @@ class TaskController {
         try {
             console.log('task list')
 
-            let data = await Task.findAll({
+            let data = await Category.findAll({
                 order: [['id']],
-                attributes: { exclude: ['createdAt', 'updatedAt'] },
-                include: [User, Category],
+                attributes: {
+                    exclude: ['createdAt', 'updatedAt']
+                },
+                include: [Task]
             })
 
             return res.status(200).json(data)

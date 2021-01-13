@@ -1,11 +1,11 @@
 # kanban-server
 
 **User**
-| Method | Route            | Description                            |
-| ------ | ---------------- | -------------------------------------- |
-| POST   | /user/register   | Add new user                           |
-| POST   | /user/login      | Login user                             |
-| POST   | /user/loginGoole | Login/Register user using google oauth |
+| Method | Route             | Description                            |
+| ------ | ----------------- | -------------------------------------- |
+| POST   | /user/register    | Add new user                           |
+| POST   | /user/login       | Login user                             |
+| POST   | /user/loginGoogle | Login/Register user using google oauth |
 
 **Task**
 | Method | Route                     | Description   |
@@ -14,6 +14,12 @@
 | POST   | /task                     | Add task      |
 | DELETE | /task/:idTask             | Delete task   |
 | PUT    | /task/:idTask/:idCategory | Update task   |
+
+**Category**
+| Method | Route     | Description        |
+| ------ | --------- | ------------------ |
+| GET    | /category | Get all categories |
+| POST   | /category | Add new category   |
 
 ---
 ### POST /user/register 
@@ -173,41 +179,41 @@ _Response( 200 )_
 [
     {
         "id": 1,
-        "title": "test",
-        "UserId": 1,
-        "CategoryId": 2,
-        "User": {
-            "id": 1,
-            "email": "user01@gmail.com",
-            "password": "$2a$10$AbIhQuGNXK.Ne3oaziXZCOER12P8IuzuPZNertEjoEuwK/5/Q4S4.",
-            "createdAt": "2021-01-12T15:52:39.486Z",
-            "updatedAt": "2021-01-12T15:52:39.486Z"
-        },
-        "Category": {
-            "id": 2,
-            "category": "todo",
-            "createdAt": "2021-01-12T15:53:30.428Z",
-            "updatedAt": "2021-01-12T15:53:30.428Z"
-        }
+        "category": "backlog",
+        "Tasks": [
+            {
+                "id": 4,
+                "title": "Belajar React",
+                "UserId": 1,
+                "CategoryId": 1,
+                "createdAt": "2021-01-12T17:13:39.512Z",
+                "updatedAt": "2021-01-12T17:13:39.512Z"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "category": "todo",
+        "Tasks": [
+            {
+                "id": 3,
+                "title": "test ganti dong",
+                "UserId": 1,
+                "CategoryId": 2,
+                "createdAt": "2021-01-12T17:12:10.657Z",
+                "updatedAt": "2021-01-12T19:56:25.138Z"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "category": "doing",
+        "Tasks": []
     },
     {
         "id": 4,
-        "title": "Belajar React",
-        "UserId": 1,
-        "CategoryId": 1,
-        "User": {
-            "id": 1,
-            "email": "user01@gmail.com",
-            "password": "$2a$10$AbIhQuGNXK.Ne3oaziXZCOER12P8IuzuPZNertEjoEuwK/5/Q4S4.",
-            "createdAt": "2021-01-12T15:52:39.486Z",
-            "updatedAt": "2021-01-12T15:52:39.486Z"
-        },
-        "Category": {
-            "id": 1,
-            "category": "backlog",
-            "createdAt": "2021-01-12T15:53:11.704Z",
-            "updatedAt": "2021-01-12T15:53:11.704Z"
-        }
+        "category": "done",
+        "Tasks": []
     }
 ]
 ```
@@ -338,6 +344,99 @@ _Response( 400 - Bad Request )_
 ```
 {
     "message": "title is required"
+}
+```
+
+_Response( 404 - Not Found )_
+```
+{
+    "message": "Not found"
+}
+```
+
+_Response ( 500 - Internal Server Error )_
+```
+{
+    "message": "Internal server error"
+}
+```
+
+---
+### GET /category
+---
+> Get category list
+
+_Request Headers_
+```
+{
+    access_token : "MOutCvMHysWtpWDi00"
+}
+```
+
+_Request Body_
+```
+Not needed
+```
+
+_Response( 200 )_
+```
+[
+    {
+        "id": 1,
+        "category": "backlog"
+    },
+    {
+        "id": 2,
+        "category": "todo"
+    },
+    {
+        "id": 3,
+        "category": "doing"
+    },
+    {
+        "id": 4,
+        "category": "done"
+    }
+]
+```
+
+_Response( 404 - Not Found )_
+```
+{
+    "message": "Not found"
+}
+```
+
+_Response ( 500 - Internal Server Error )_
+```
+{
+    "message": "Internal server error"
+}
+```
+
+---
+### POST /category
+---
+> Get category list
+
+_Request Headers_
+```
+{
+    access_token : "MOutCvMHysWtpWDi00"
+}
+```
+
+_Request Body_
+```
+{
+    category : "New category"
+}
+```
+
+_Response( 201 )_
+```
+{
+    message : "New category is created"
 }
 ```
 
