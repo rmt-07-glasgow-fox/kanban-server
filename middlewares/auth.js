@@ -1,5 +1,5 @@
 const { User, Task } = require('../models/')
-const { verifyToken } = require('../middlewares/auth')
+const { verifyToken } = require('../helpers/jwt')
 
 
 const authenticate = async (req, res, next) => {
