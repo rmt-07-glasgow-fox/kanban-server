@@ -1,5 +1,35 @@
 # API Documentations
 
+# Table of contents
+
+- [Task](#task)
+  - [Create Task](#create-task)
+  - [List Tasks](#list-tasks)
+  - [Update Task](#update-task)
+  - [Update Category ID Task](#update-category-id-task)
+  - [Delete Task](#delete-task)
+- [Category](#category)
+  - [Create Category](#create-category)
+  - [List Categories](#list-categories)
+  - [Delete Category](#delete-category)
+- [Board](#board)
+  - [Create Board](#create-board)
+  - [List Boards](#list-boards)
+  - [Detail Board](#detail-board)
+  - [Delete Board](#delete-board)
+- [Organization](#organization)
+  - [Create Organization](#create-organization)
+  - [List Organizations](#list-organizations)
+  - [Invite Member](#invite-member)
+  - [Change Role Member](#change-role-member)
+  - [Remove Member](#remove-member)
+  - [List Members](#list-members)
+  - [Delete Organization](#delete-organization)
+- [User](#user)
+  - [Register](#register)
+  - [Login](#login)
+  - [Google Login](#google-login)
+
 # Task
 
 ## **Create Task**
@@ -356,9 +386,9 @@ Update Task.
     curl --location --request PUT 'http://localhost:3000/tasks/2' --header 'Authorization: Bearer <JWT_TOKEN>' --data-urlencode 'title=Task II'
     ```
 
-## **Update Categori Id Task**
+## **Update Category Id Task**
 
-Update status Task.
+Update Category ID Task.
 
 - **URL**
 
@@ -458,9 +488,9 @@ Update status Task.
     curl --location --request PATCH 'http://localhost:3000/tasks/2/category/2' --header 'Authorization: Bearer <JWT_TOKEM'
     ```
 
-## **Destroy Task**
+## **Delete Task**
 
-Destroy Task.
+Delete Task.
 
 - **URL**
 
@@ -768,9 +798,9 @@ Show list categories by Board.
     curl --location --request GET 'http://localhost:3000/categories/board/8' --header 'Authorization: Bearer <JWT_TOKEN>'
     ```
 
-## **Destroy Category**
+## **Delete Category**
 
-Destroy Category.
+Delete Category.
 
 - **URL**
 
@@ -1046,9 +1076,9 @@ Show list Boards by Organization.
     curl --location --request GET 'http://localhost:3000/categories/board/8' --header 'Authorization: Bearer <JWT_TOKEN>'
     ```
 
-## **Detail Boards**
+## **Detail Board**
 
-Show detail Boards include Categories.
+Show detail Board include Categories.
 
 - **URL**
 
@@ -1140,9 +1170,9 @@ Show detail Boards include Categories.
     curl --location --request GET 'http://localhost:3000/boards/8' --header 'Authorization: Bearer <JWT_TOKE>'
     ```
 
-## **Destroy Board**
+## **Delete Board**
 
-Destroy Board.
+Delete Board.
 
 - **URL**
 
@@ -1309,9 +1339,9 @@ Create a Organization.
     curl --location --request POST 'http://localhost:3000/organizations' --header 'Authorization: Bearer <JWT_TOKEN>' --data-urlencode 'name=Organization 1'
     ```
 
-## **List Organization**
+## **List Organizations**
 
-Show list Organization by User.
+Show list Organizations by User.
 
 - **URL**
 
@@ -1725,9 +1755,9 @@ Remove member from organization.
     curl --location --request DELETE 'http://localhost:3000/organizations/7/member/14' --header 'Authorization: Bearer <JWT_TOKEN>'
     ```
 
-## **List Member**
+## **List Members**
 
-Show list member organization.
+Show list members organization.
 
 - **URL**
 
@@ -1815,9 +1845,9 @@ Show list member organization.
     curl --location --request GET 'http://localhost:3000/organizations/5/member' --header 'Authorization: Bearer <JWT_TOKEN>'
     ```
 
-## **Destroy Organization**
+## **Delete Organization**
 
-Destroy Organization.
+Delete Organization.
 
 - **URL**
 
