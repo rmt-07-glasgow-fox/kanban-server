@@ -5,7 +5,6 @@ const authentication = require('../middlewares/authentication')
 const authorization = require('../middlewares/authorization')
 
 
-
 router.use(authentication)
 router.get("/", TaskController.getAllTask)
 router.post("/", TaskController.createTask)
