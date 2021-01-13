@@ -6,6 +6,8 @@ class UserController {
     static login(req, res, next) {
         const { email, password } = req.body
 
+        console.log(email, password)
+
         User.findOne({
             where: {
                 email
@@ -35,6 +37,7 @@ class UserController {
                 }
             })
             .catch(err => {
+                console.log(">>>>>>", err)
                 next(err)
             })
     }

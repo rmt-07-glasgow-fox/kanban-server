@@ -1,4 +1,4 @@
-const { Todo } = require('../models/')
+const { Task } = require('../models/')
 
 class TaskController {
     static getAllTasks(req, res, next) {
@@ -34,10 +34,13 @@ class TaskController {
 
     static postTask(req, res, next) {
         const { title, description } = req.body
+        // category is not yet dynamic
+        const category = "Backlog"
         const UserId = req.user.id
         Task.create({
             title,
             description,
+            category,
             UserId
         })
             .then(createdTask => {
