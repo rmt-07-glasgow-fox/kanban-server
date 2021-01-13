@@ -31,13 +31,16 @@ class UserController {
         const obj = {
             name: req.body.email, 
             email: req.body.email,
-            password: req.body.password
+            password: req.body.password,
+            updatedAt: new Date(),
+            createdAt: new Date
         }
         User.create(obj)
         .then(data => {
             res.status(201).json(data)
         })
         .catch(error => {
+            console.log(error)
             next(error)
         })
     }
