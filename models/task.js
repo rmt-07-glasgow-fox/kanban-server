@@ -41,6 +41,7 @@ module.exports = (sequelize, DataTypes) => {
     description: {
       type: DataTypes.STRING,
     },
+    UserId:DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Task',
