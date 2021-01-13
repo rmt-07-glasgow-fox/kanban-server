@@ -12,9 +12,9 @@ class userControl {
                 email, password, username
             })
             res.status(201).json({
-                email: create.email, 
-                password: create.password, 
-                username: create.username
+                id: create.id,
+                username: create.username,
+                email: create.email,
             })
         } catch (err) {
             res.status(500).json(err)
@@ -27,15 +27,17 @@ class userControl {
             const dataBase = await User.findOne({
                 where : { email }
             })
-            // console.log(dataBase);
             if (!dataBase) {
                 res.status(401).json({
                     msg: 'Email or password is undefined'
                 })
             } else {
                 const good = comparePassword(password, dataBase.password)
-                // console.log(dataBase.dataValues);
-                if (good) {
+                if (!good) {
+                    res.status(401).json({
+                        msg: 'Email or password is undefined'
+                    })
+                } else {
                     const data = {
                         id: dataBase.id,
                         email: dataBase.email,
@@ -44,10 +46,7 @@ class userControl {
                     res.status(200).json({
                         access_token
                     })
-                } else {
-                    res.status(401).json({
-                        msg: 'Email or password is undefined'
-                    })
+
                 }
             }
         } catch (err) {

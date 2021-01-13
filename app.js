@@ -5,6 +5,7 @@ if (process.env.NODE_ENV === 'development') {
 const express = require('express')
 const app = express()
 const port = process.env.PORT || 3000
+const { authenticate } = require('./middleware/auth')
 const task = require('./routers/tasks')
 const user = require('./routers/user')
 
@@ -15,6 +16,7 @@ app.get('/', (req, res) => {
 app.use(express.urlencoded({ extended:true }))
 
 app.use(user)
+app.use(authenticate)
 app.use(task)
 
 app.listen(port, () => {

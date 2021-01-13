@@ -14,16 +14,24 @@ module.exports = {
       date: {
         type: Sequelize.DATE
       },
-      category: {
-        type: Sequelize.STRING
+      CategoryId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: 'Categories'
+          },
+          key: 'id'
+        },
+        onDelete: 'CASCADE', 
+        onUpdate: 'CASCADE' 
       },
       UserId: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         references: {
           model: {
             tableName: 'Users'
           },
-          key: 'email',
+          key: 'id'
         },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
