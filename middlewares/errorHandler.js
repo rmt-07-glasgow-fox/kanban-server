@@ -11,6 +11,21 @@ const errorHandler = (err, req, res, next) => {
           message: "Unauthorized. Something's wrong check your email or password."
         })
         break;
+      case 'InvalidToken':
+        res.status(403).json({
+          message: 'Please provide access token.'
+        })
+        break;
+      case 'Forbidden':
+        res.status(403).json({
+          message: 'Forbidden.'
+        })
+        break;
+      case 'NoData':
+        res.status(404).json({
+          message: 'No Data.'
+        })
+        break;
       default:
         if(err.name === 'SequelizeValidationError'){
           let errors = err.errors.map(el => {
