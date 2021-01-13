@@ -1,5 +1,7 @@
 # API Documentations
 
+# Task
+
 ## **Create Task**
 
 Create a Task.
@@ -130,7 +132,7 @@ Create a Task.
     curl --location --request POST 'http://localhost:3000/tasks/' --header 'Authorization: Bearer <TOKEN_JWT>' --data-urlencode 'title=Task I' --data-urlencode 'CategoryId=1'
     ```
 
-## **List Todos**
+## **List Tasks**
 
 Show list tasks by Category.
 
@@ -212,7 +214,7 @@ Show list tasks by Category.
     ]
     ```
 
-  - **Code:** 500 INTERNAL SERVER ERROR <br />
+  - **Code:** 500 Internal Server Error <br />
     **Content:**
     ```json
     [
@@ -338,7 +340,7 @@ Update Task.
     ]
     ```
 
-  - **Code:** 500 INTERNAL SERVER ERROR <br />
+  - **Code:** 500 Internal Server Error <br />
     **Content:**
     ```json
     [
@@ -440,7 +442,7 @@ Update status Task.
     ]
     ```
 
-  - **Code:** 500 INTERNAL SERVER ERROR <br />
+  - **Code:** 500 Internal Server Error <br />
     **Content:**
     ```json
     [
@@ -542,7 +544,7 @@ Destroy Task.
     ]
     ```
 
-  - **Code:** 500 INTERNAL SERVER ERROR <br />
+  - **Code:** 500 Internal Server Error <br />
     **Content:**
     ```json
     [
@@ -557,6 +559,670 @@ Destroy Task.
     ```js
     curl --location --request DELETE 'http://localhost:3000/tasks/1' --header 'Authorization: Bearer <JWT_TOKEN>'
     ```
+
+# Category
+
+## **Create Category**
+
+Create a Category.
+
+- **URL**
+
+  `/categories`
+
+- **Method:**
+
+  `POST`
+
+- **Request Header**
+
+  **Required:**
+
+  - Authorization (string)
+
+  **Example:**
+
+  - application/json
+    ```json
+    {
+      "Authorization": "Bearer <JWT_TOKEN>"
+    }
+    ```
+
+- **Request Body**
+
+  **Required:**
+
+  - name (string)
+  - BoardId (integer)
+
+  **Example:**
+
+  - application/json
+    ```json
+    {
+      "name": "Notes",
+      "CategoryId": "8"
+    }
+    ```
+
+- **Success Response:**
+
+  - **Code:** 201 <br />
+    **Content:**
+    ```json
+    {
+      "id": 6,
+      "name": "Notes",
+      "BoardId": 8,
+      "updatedAt": "2021-01-13T05:49:42.087Z",
+      "createdAt": "2021-01-13T05:49:42.087Z"
+    }
+    ```
+
+- **Error Response:**
+
+  - **Code:** 400 Bad Request <br />
+    **Content:**
+
+    ```json
+    [
+      {
+        "message": "Name is required"
+      }
+    ]
+    ```
+
+    Or
+
+    ```json
+    [
+      {
+        "message": "Board Id is required"
+      }
+    ]
+    ```
+
+  - **Code:** 404 Not Found <br />
+    **Content:**
+
+    ```json
+    [
+      {
+        "message": "Board not found"
+      }
+    ]
+    ```
+
+  - **Code:** 403 Forbidden <br />
+    **Content:**
+
+    ```json
+    [
+      {
+        "message": "You are not Admin"
+      }
+    ]
+    ```
+
+  - **Code:** 500 Internal Server Error <br />
+    **Content:**
+    ```json
+    [
+      {
+        "message": "internal server error"
+      }
+    ]
+    ```
+
+- **Sample Call:**
+  - **curl**:
+    ```js
+    curl --location --request POST 'http://localhost:3000/categories/' --header 'Authorization: Bearer <JWT_TOKEN>' --data-urlencode 'name=Notes' --data-urlencode 'BoardId=8'
+    ```
+
+## **List Categories**
+
+Show list categories by Board.
+
+- **URL**
+
+  `/tasks/category/:idBoard`
+
+- **Method:**
+
+  `GET`
+
+- **Request Header**
+
+  **Required:**
+
+  - Authorization (string)
+
+  **Example:**
+
+  - application/json
+    ```json
+    {
+      "Authorization": "Bearer <JWT_TOKEN>"
+    }
+    ```
+
+- **Request Params**
+
+  - idBoard (integer)
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:**
+    ```json
+    [
+      {
+        "id": 6,
+        "name": "Notes",
+        "BoardId": 8,
+        "createdAt": "2021-01-13T05:49:42.087Z",
+        "updatedAt": "2021-01-13T05:49:42.087Z"
+      }
+    ]
+    ```
+
+- **Error Response:**
+
+  - **Code:** 404 Not Found <br />
+    **Content:**
+
+    ```json
+    [
+      {
+        "message": "Board not found"
+      }
+    ]
+    ```
+
+  - **Code:** 403 Forbidden <br />
+    **Content:**
+
+    ```json
+    [
+      {
+        "message": "You are not member"
+      }
+    ]
+    ```
+
+  - **Code:** 500 Internal Server Error <br />
+    **Content:**
+    ```json
+    [
+      {
+        "message": "internal server error"
+      }
+    ]
+    ```
+
+- **Sample Call:**
+  - **curl**:
+    ```js
+    curl --location --request GET 'http://localhost:3000/categories/board/8' --header 'Authorization: Bearer <JWT_TOKEN>'
+    ```
+
+## **Destroy Category**
+
+Destroy Category.
+
+- **URL**
+
+  `/categories/:id`
+
+- **Method:**
+
+  `DELETE`
+
+- **Request Header**
+
+  **Required:**
+
+  - Authorization (string)
+
+  **Example:**
+
+  - application/json
+    ```json
+    {
+      "Authorization": "Bearer <JWT_TOKEN>"
+    }
+    ```
+
+- **Request Params**
+
+  - id (integer)
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:**
+
+    ```json
+    {
+      "message": "Category has been deleted"
+    }
+    ```
+
+- **Error Response:**
+
+  - **Code:** 400 Bad Request <br />
+    **Content:**
+
+    ```json
+    [
+      {
+        "message": "Category not found"
+      }
+    ]
+    ```
+
+    Or
+
+    ```json
+    [
+      {
+        "message": "Board not found"
+      }
+    ]
+    ```
+
+  - **Code:** 403 Forbidden <br />
+    **Content:**
+
+    ```json
+    [
+      {
+        "message": "You are not Admin"
+      }
+    ]
+    ```
+
+  - **Code:** 500 Internal Server Error <br />
+    **Content:**
+    ```json
+    [
+      {
+        "message": "internal server error"
+      }
+    ]
+    ```
+
+- **Sample Call:**
+  - **curl**:
+    ```js
+    curl --location --request DELETE 'http://localhost:3000/categories/6' --header 'Authorization: Bearer <JWT_TOKEN>'
+    ```
+
+# Board
+
+## **Create Board**
+
+Create a Board.
+
+- **URL**
+
+  `/boards`
+
+- **Method:**
+
+  `POST`
+
+- **Request Header**
+
+  **Required:**
+
+  - Authorization (string)
+
+  **Example:**
+
+  - application/json
+    ```json
+    {
+      "Authorization": "Bearer <JWT_TOKEN>"
+    }
+    ```
+
+- **Request Body**
+
+  **Required:**
+
+  - name (string)
+  - Organization (integer)
+
+  **Example:**
+
+  - application/json
+    ```json
+    {
+      "name": "Board 2",
+      "Organization": "5"
+    }
+    ```
+
+- **Success Response:**
+
+  - **Code:** 201 <br />
+    **Content:**
+    ```json
+    {
+      "id": 9,
+      "name": "Board 2",
+      "OrganizationId": 5,
+      "updatedAt": "2021-01-13T06:04:11.210Z",
+      "createdAt": "2021-01-13T06:04:11.210Z"
+    }
+    ```
+
+- **Error Response:**
+
+  - **Code:** 400 Bad Request <br />
+    **Content:**
+
+    ```json
+    [
+      {
+        "message": "Name is required"
+      }
+    ]
+    ```
+
+    Or
+
+    ```json
+    [
+      {
+        "message": "Organization Id is required"
+      }
+    ]
+    ```
+
+  - **Code:** 403 Forbidden <br />
+    **Content:**
+
+    ```json
+    [
+      {
+        "message": "You are not Admin"
+      }
+    ]
+    ```
+
+  - **Code:** 500 Internal Server Error <br />
+    **Content:**
+    ```json
+    [
+      {
+        "message": "internal server error"
+      }
+    ]
+    ```
+
+- **Sample Call:**
+  - **curl**:
+    ```js
+    curl --location --request POST 'http://localhost:3000/boards' --header 'Authorization: Bearer <JWT_TOKEN>' --data-urlencode 'name=Board 2' --data-urlencode 'OrganizationId=5'
+    ```
+
+## **List Boards**
+
+Show list Boards by Organization.
+
+- **URL**
+
+  `/boards/organization/:id`
+
+- **Method:**
+
+  `GET`
+
+- **Request Header**
+
+  **Required:**
+
+  - Authorization (string)
+
+  **Example:**
+
+  - application/json
+    ```json
+    {
+      "Authorization": "Bearer <JWT_TOKEN>"
+    }
+    ```
+
+- **Request Params**
+
+  - id (integer)
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:**
+    ```json
+    [
+      {
+        "id": 9,
+        "name": "Board 2",
+        "OrganizationId": 5,
+        "createdAt": "2021-01-13T06:04:11.210Z",
+        "updatedAt": "2021-01-13T06:04:11.210Z"
+      }
+    ]
+    ```
+
+- **Error Response:**
+
+  - **Code:** 403 Forbidden <br />
+    **Content:**
+
+    ```json
+    [
+      {
+        "message": "You are not member"
+      }
+    ]
+    ```
+
+  - **Code:** 500 Internal Server Error <br />
+    **Content:**
+    ```json
+    [
+      {
+        "message": "internal server error"
+      }
+    ]
+    ```
+
+- **Sample Call:**
+  - **curl**:
+    ```js
+    curl --location --request GET 'http://localhost:3000/categories/board/8' --header 'Authorization: Bearer <JWT_TOKEN>'
+    ```
+
+## **Deatil Boards**
+
+Show detail Boards include Categories.
+
+- **URL**
+
+  `/boards/:id`
+
+- **Method:**
+
+  `GET`
+
+- **Request Header**
+
+  **Required:**
+
+  - Authorization (string)
+
+  **Example:**
+
+  - application/json
+    ```json
+    {
+      "Authorization": "Bearer <JWT_TOKEN>"
+    }
+    ```
+
+- **Request Params**
+
+  - id (integer)
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:**
+    ```json
+    {
+      "id": 8,
+      "name": "Board 1",
+      "OrganizationId": 5,
+      "createdAt": "2021-01-12T16:13:48.080Z",
+      "updatedAt": "2021-01-12T16:13:48.080Z",
+      "Categories": [
+        {
+          "id": 6,
+          "name": "Notes",
+          "BoardId": 8,
+          "createdAt": "2021-01-13T05:49:42.087Z",
+          "updatedAt": "2021-01-13T05:49:42.087Z"
+        }
+      ]
+    }
+    ```
+
+- **Error Response:**
+
+  - **Code:** 403 Forbidden <br />
+    **Content:**
+
+    ```json
+    [
+      {
+        "message": "You are not member"
+      }
+    ]
+    ```
+
+    - **Code:** 404 Not Found <br />
+      **Content:**
+
+    ```json
+    [
+      {
+        "message": "Board not found"
+      }
+    ]
+    ```
+
+  - **Code:** 500 Internal Server Error <br />
+    **Content:**
+    ```json
+    [
+      {
+        "message": "internal server error"
+      }
+    ]
+    ```
+
+- **Sample Call:**
+  - **curl**:
+    ```js
+    curl --location --request GET 'http://localhost:3000/boards/8' --header 'Authorization: Bearer <JWT_TOKE>'
+    ```
+
+## **Destroy Board**
+
+Destroy Board.
+
+- **URL**
+
+  `/boards/:id`
+
+- **Method:**
+
+  `DELETE`
+
+- **Request Header**
+
+  **Required:**
+
+  - Authorization (string)
+
+  **Example:**
+
+  - application/json
+    ```json
+    {
+      "Authorization": "Bearer <JWT_TOKEN>"
+    }
+    ```
+
+- **Request Params**
+
+  - id (integer)
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:**
+
+    ```json
+    {
+      "message": "Board has been deleted"
+    }
+    ```
+
+- **Error Response:**
+
+  - **Code:** 400 Bad Request <br />
+    **Content:**
+
+    ```json
+    [
+      {
+        "message": "Board not found"
+      }
+    ]
+    ```
+
+  - **Code:** 403 Forbidden <br />
+    **Content:**
+
+    ```json
+    [
+      {
+        "message": "You are not Admin"
+      }
+    ]
+    ```
+
+  - **Code:** 500 Internal Server Error <br />
+    **Content:**
+    ```json
+    [
+      {
+        "message": "internal server error"
+      }
+    ]
+    ```
+
+- **Sample Call:**
+  - **curl**:
+    ```js
+    curl --location --request DELETE 'http://localhost:3000/boards/8' --header 'Authorization: Bearer <JWT_TOKEN>'
+    ```
+
+# User
 
 ## **Register**
 

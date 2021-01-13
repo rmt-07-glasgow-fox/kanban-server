@@ -18,7 +18,7 @@ exports.create = async (req, res, next) => {
       };
 
       const board = await Board.create(body);
-      const backlog = await Category.create({
+      await Category.create({
         name: 'Backlog',
         BoardId: board.id,
       });
