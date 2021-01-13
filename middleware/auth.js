@@ -3,7 +3,6 @@ const { User, Task } = require('../models')
 
 async function authenticate (req, res, next) {
   try {
-    console.log('authenticate')
     if (!req.headers.access_token) throw ({message: 'Please login first'});
     let payload = await verifyToken(req.headers.access_token)
     let user = await User.findOne({where: {email: payload.email}})

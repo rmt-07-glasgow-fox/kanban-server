@@ -33,8 +33,7 @@ class Controller {
           }
           let access_token = generateToken(payload)
           req.headers.access_token = access_token
-          payload.access_token = access_token
-          res.status(200).json(payload)
+          res.status(200).json({access_token: access_token, username: user.username})
         } else {
           throw ({message: 'Wrong username/password'})
         }

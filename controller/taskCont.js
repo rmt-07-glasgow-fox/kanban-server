@@ -23,7 +23,7 @@ class Controller {
 
   static getAll (req, res, next) {
     Task.findAll()
-    .then(task => {
+    .then(tasks => {
       if (tasks) {
         res.status(200).json(tasks)
       } else {

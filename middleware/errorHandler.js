@@ -17,6 +17,7 @@ function errorHandler (err, req, res, next) {
       res.status(500).json({message: '500 Internal Server Error'})
       break
     default:
+      console.log('custom error')
       errMsg = err.message.split(',\n')
       res.json(errMsg)
   }
