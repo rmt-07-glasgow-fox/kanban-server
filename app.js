@@ -1,6 +1,6 @@
-// if (process.env.NODE_ENV == 'development') {
-//   require('dotenv').config()
-// }
+if (process.env.NODE_ENV == 'development') {
+  require('dotenv').config()
+}
 
 const expres = require('express')
 const errorHandlers = require('./middlewares/errorHandlers')
@@ -19,6 +19,6 @@ app.get('/', (req, res) => {
   res.send('Home My Kamban app')
 })
 
-app.listen(port, (req, res) => {
+app.listen(PORT, (req, res) => {
   console.log('This app running well on port', PORT);
 })

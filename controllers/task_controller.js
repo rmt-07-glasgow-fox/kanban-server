@@ -12,7 +12,15 @@ class TaskController {
       }
       let task = await Task.create(taskObj)
 
-      res.status(201).json(task)
+      let _task = {
+        id: task.id,
+        name: task.name,
+        CurrentUserName: req.currentUser.name,
+        CurrentUserEmail: req.currentUser.email,
+        createdAt: task.createdAt
+      }
+
+      res.status(201).json(_task)
     } catch(error) {
       next(error)
     }
@@ -23,7 +31,7 @@ class TaskController {
     try {
       let tasks = await Task.findAll()
       let backlog_tasks = await Task.findAll({where: {CategoryId: 1}})
-      let todo_tasks = await Task.fiindAll({where: {CategoryId: 2}})
+      let todo_tasks = await Task.findAll({where: {CategoryId: 2}})
       let done_tasks = await Task.findAll({where: {CategoryId: 3}})
       let completed_task = await Task.findAll({where: {CategoryId: 4}})
 
@@ -34,9 +42,14 @@ class TaskController {
         done: done_tasks,
         completed: completed_task
       }
+
       res.status(200).json(data)
     } catch(error) {
-      next({name: 'cantRetrieve'})
+      if (error) {
+        next(error)
+      } else {
+        next({name: 'cantRetrieve'})
+      }
     }
   }
 
@@ -74,13 +87,18 @@ class TaskController {
 
   static async setStatus(req, res, next) {
     try {
-      let {id, CategoryId} = req.params
+      let {id} = req.params
+      let {CategoryId} = req.body
+
       let task = await Task.findByPk(id)
       task.CategoryId = CategoryId
       await task.save()
 
+      console.log('TRY', task);
+
       res.status(200).json(task)
     } catch(error) {
+      console.log('CATCH PATCH', error);
       next(error)
     }
   }

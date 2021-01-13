@@ -3,7 +3,7 @@ const { authorization } = require('../middlewares/auth')
 
 const router = require('express').Router()
 
-router.post('/', authorization, TaskController.create)
+router.post('/', TaskController.create)
 
 router.get('/', TaskController.findAll)
 router.get('/:id', authorization, TaskController.findOne)

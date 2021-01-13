@@ -60,7 +60,7 @@ module.exports = (sequelize, DataTypes) => {
   {
     hooks: {
       beforeCreate: (user, options) => {
-        user.password = hashSync(user.pass)
+        user.password = hashPass(user.password)
       }
     },
     sequelize,

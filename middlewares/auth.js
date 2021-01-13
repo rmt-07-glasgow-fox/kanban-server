@@ -1,5 +1,5 @@
 const { decodedToken } = require("../helpers/jwt");
-const { User } = require("../models");
+const { User, Task } = require("../models");
 
 const authentication = async (req, res, next) => {
   try {

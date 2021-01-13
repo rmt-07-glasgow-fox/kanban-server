@@ -34,7 +34,13 @@ class UserController {
           }
 
           const access_token = generateToken(payload)
-          res.status(200).json(access_token)
+          let _user = {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            createdAt: user.createdAt
+          }
+          res.status(200).json({access_token, _user})
         }
       }
 
@@ -64,14 +70,20 @@ class UserController {
         })
       }
 
-      const payload = {
+      const _payload = {
         id: user.id,
         email: user.email,
         name: user.name
       }
 
-      const access_token = generateToken(payload)
-      res.status(200).json(access_token)
+      const access_token = generateToken(_payload)
+      let _user = {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        createdAt: user.createdAt
+      }
+      res.status(200).json({access_token, _user})
     } catch(error) {
       next(error)
     }
