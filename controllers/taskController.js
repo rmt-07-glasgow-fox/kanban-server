@@ -6,7 +6,7 @@ class TaskController {
         try {
             const tasks = await Task.findAll({
                 attributes: {
-                    exclude: ['due_date', 'createdAt', 'updatedAt']
+                    exclude: ['createdAt', 'updatedAt']
                 },
                 include: {
                     model: User,
@@ -20,9 +20,9 @@ class TaskController {
     }
 
     static postTask = async (req, res, next) => {
+        const UserId = req.user.id;
+        const { title, detail, due_date } = req.body;
         try {
-            const UserId = req.user.id;
-            const { title, detail, due_date } = req.body;
             const task = await Task.create({ title, detail, due_date, UserId });
             res.status(201).json(task);
         }
