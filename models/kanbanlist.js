@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     hooks: {
       beforeCreate: (list, option) => {
-        if (list.category == "") {
+        if (!list.category) {
           list.category = "Backlog"
         }
       }

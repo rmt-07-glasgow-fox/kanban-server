@@ -19,7 +19,6 @@ class KanbanListController {
     const addNew = {
       title: req.body.title,
       description: req.body.description,
-      category: req.body.category,
       UserId: req.user.id
     }
 
@@ -39,6 +38,42 @@ class KanbanListController {
       KanbanList.destroy({where: {id}})
       .then(data => {
         return res.status(200).json({message: `Deleted Successfully`})
+      })
+      .catch(err => {
+        next(err)
+      })
+    } else {
+      next({name: `Not Found`})
+    }
+  }
+
+  static patch(req, res) {
+    let id = +req.params.id
+
+    const categoryUpdate = {
+      category: req.body.category
+    }
+
+    if (id) {
+      KanbanList.update(categoryUpdate, {where: {id}})
+      .then(data => {
+        return res.status(200).json({message: `Updated Successfully`})
+      })
+      .catch(err => {
+        next(err)
+      })
+    } else {
+      next({name: `Not Found`})
+    }
+  }
+
+  static pickOne(req, res) {
+    let id = +req.params.id
+
+    if (id) {
+      KanbanList.findByPk(id)
+      .then(data => {
+        return res.status(200).json({data})
       })
       .catch(err => {
         next(err)
