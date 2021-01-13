@@ -8,11 +8,15 @@ class UserController {
         .then(data => {
             if (data) {
                 if(compare(req.body.password, data.password)) {
-                    res.status(200).json(data)
+                    res.status(200).json({
+                        id: data.id,
+                        name: data.name, 
+                        email: data.email
+                    })
                 } else {
                     throw {
                         status: 404,
-                        message: 'email not registered'
+                        message: 'wrong email/pasword'
                     }
                 }
             } else {
@@ -23,7 +27,7 @@ class UserController {
             }
         })
         .catch(error => {
-
+            next(error)
         })
     }
 
@@ -37,10 +41,13 @@ class UserController {
         }
         User.create(obj)
         .then(data => {
-            res.status(201).json(data)
+            res.status(201).json({
+                id: data.id,
+                name: data.name, 
+                email: data.email
+            })
         })
         .catch(error => {
-            console.log(error)
             next(error)
         })
     }
