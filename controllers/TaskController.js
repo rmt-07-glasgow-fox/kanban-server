@@ -15,7 +15,11 @@ class TaskController {
       })
   }
   static getAllTasks(req, res, next){
-    Task.findAll()
+    Task.findAll({
+      where:{
+        UserId: req.userData.id
+      }
+    })
       .then(data => {
         res.status(200).json(data)
       })
