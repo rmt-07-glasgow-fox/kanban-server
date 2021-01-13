@@ -29,6 +29,7 @@ class Controller {
             email: req.body.email,
             password: req.body.password
         }
+        console.log(obj)
         User.findOne({where: {email: obj.email}})
         .then(data =>{
             if(!data){
@@ -50,6 +51,7 @@ class Controller {
             }
         })
         .catch(err =>{
+            //console.log(err)
             next(err)
         })
     }
