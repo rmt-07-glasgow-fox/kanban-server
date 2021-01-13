@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   Task.init({
     title: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
         notEmpty: {
           args: true,
@@ -25,15 +26,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     description: {
       type: DataTypes.STRING,
-      validate: {
-        // len: {
-        //   args: [_, 50],
-        //   msg: 'Max length for description is 50 characters'
-        // }
-      }
     },
     duedate: {
       type: DataTypes.DATE,
+      allowNull: false,
       validate: {
         notEmpty: {
           args: true,
@@ -47,6 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     category: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
         notEmpty: {
           args: true,
