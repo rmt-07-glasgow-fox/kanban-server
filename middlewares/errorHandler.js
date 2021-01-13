@@ -9,6 +9,8 @@ module.exports = (err, req, res, next) => {
             dataError.push(err.errors[i].message)
         }
         res.status(400).json({message: dataError})
+    } else if (err.name == "SequelizeUniqueConstraintError") {
+        res.status(400).json({message: 'email already registered'})
     } else {
         res.status(500).json({message: 'internal server error'})
     }

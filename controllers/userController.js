@@ -29,7 +29,7 @@ class UserController {
 
     static register(req,res,next) {
         const obj = {
-            name: req.body.email, 
+            name: req.body.name, 
             email: req.body.email,
             password: req.body.password,
             updatedAt: new Date(),
