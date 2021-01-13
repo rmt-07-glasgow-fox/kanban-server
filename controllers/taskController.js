@@ -15,7 +15,8 @@ class TaskController {
         const obj = {
             name: req.body.name,
             category: req.body.category,
-            description: req.body.description
+            description: req.body.description,
+            UserId: req.loggedInUser.id
         }
         Task.create(obj)
         .then(data => {
