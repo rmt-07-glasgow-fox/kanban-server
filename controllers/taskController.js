@@ -39,8 +39,7 @@ class ControllerTask {
     console.log(req.user.id);
     const input = {
       title: req.body.title,
-      category: req.body.category,
-      UserId: req.user.id
+      category: req.body.category
     }
     Task.update(input, {
       where: { id },
@@ -73,7 +72,8 @@ class ControllerTask {
     }
 
     Task.update(input, {
-      where: { id }
+      where: { id },
+      returning: true
     })
       .then(data => {
         res.status(200).json(data[1])

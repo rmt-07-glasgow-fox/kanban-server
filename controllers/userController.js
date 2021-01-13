@@ -44,7 +44,7 @@ class ControllerUser {
             }
   
             const access_token = generateToken(payload)
-            req.headers.access_token = access_token
+
             res.status(200).json({ access_token })
           } else {
             res.status(401).json({
