@@ -2,7 +2,7 @@ const { Task, Category } = require('../models')
 
 class TaskController {
     static getTask (req, res, next) {
-        Task.findAll()
+        Task.findAll({ include: Category })
         .then(result => {
             return res.status(200).json(result);
         })
