@@ -16,7 +16,9 @@ class TaskController {
             name: req.body.name,
             category: req.body.category,
             description: req.body.description,
-            UserId: req.loggedInUser.id
+            UserId: req.loggedInUser.id,
+            createdAt: new Date(),
+            updatedAt: new Date()
         }
         Task.create(obj)
         .then(data => {

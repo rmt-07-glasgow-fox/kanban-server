@@ -1,5 +1,6 @@
 const { User } = require('../models')
 const { compare } = require("../helpers/bcrypt")
+const { generateToken } = require("../helpers/jwt")
 
 
 class UserController {
@@ -8,11 +9,8 @@ class UserController {
         .then(data => {
             if (data) {
                 if(compare(req.body.password, data.password)) {
-                    res.status(200).json({
-                        id: data.id,
-                        name: data.name, 
-                        email: data.email
-                    })
+                    const access_token = generateToken({id: data.id, email:data.email})
+                    res.status(200).json({ access_token })
                 } else {
                     throw {
                         status: 404,
