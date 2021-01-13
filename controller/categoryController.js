@@ -22,7 +22,9 @@ class categoryControl {
                 msg: `${name} succsesfully created`
             })
         } catch (err) {
-            res.status(500).json(err)
+            res.status(500).json({
+                msg: 'Error in internal server'
+            })
         }
     }
 }

@@ -17,7 +17,9 @@ class userControl {
                 email: create.email,
             })
         } catch (err) {
-            res.status(500).json(err)
+            res.status(500).json({
+                msg: 'Error in internal server',
+            })
         }
     }
     static async login (req, res) {
@@ -50,7 +52,9 @@ class userControl {
                 }
             }
         } catch (err) {
-            res.status(500).json(err)
+            res.status(500).json({
+                msg: 'Error in internal server'
+            })
         }
     }
     static async googleLogin (req, res) {

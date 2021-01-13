@@ -7,7 +7,9 @@ class taskControl {
             res.status(200).json(readAll)
         } catch (err) {
             console.log(err)
-            res.status(500).json(err)
+            res.status(500).json({
+                msg: 'Error in internal server'
+            })
         }
     }
     static async create (req, res) {
@@ -29,7 +31,9 @@ class taskControl {
                 UserId
             })
         } catch (err) {
-            res.status(500).json(err)
+            res.status(500).json({
+                msg: "Error in internal server"
+            })
         }
     }
     static async update (req, res) {
@@ -57,7 +61,9 @@ class taskControl {
                 })
             }
         } catch (err) {
-            res.status(500).json(err)
+            res.status(500).json({
+                msg: "Error in internal server"
+            })
         }
     }
     static async delete (req, res) {
@@ -69,15 +75,17 @@ class taskControl {
                     where: { id }
                 })
                 res.status(200).json({
-                    msg: 'Delete taks success'
+                    msg: 'Delete task success'
                 })
             } else {
-                res.status(400).json({
+                res.status(404).json({
                     msg: 'Data is undefind'
                 })
             }
         } catch (err) {
-            res.status(500).json(err)
+            res.status(500).json({
+                msg: 'Error in internal server'
+            })
         }
     }
 }
