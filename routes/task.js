@@ -3,6 +3,7 @@ const TaskController = require("../controllers/task");
 const { taskAuthorization } = require("../middlewares/auth");
 
 router.post("/", TaskController.create);
+router.get("/", TaskController.listAll);
 router.get("/:CategoryId", TaskController.getPerCategory);
 router.get("/focus/:id", taskAuthorization, TaskController.getSpecific);
 router.put("/:id", taskAuthorization, TaskController.update);

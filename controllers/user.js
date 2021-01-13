@@ -94,6 +94,7 @@ class UserController {
             OrganizationId: response[1][0].OrganizationId,
           };
           res.status(200).json({ updated });
+          req.user.OrganizationId = OrganizationId;
         } else {
           next({ name: "FailUpdate" });
         }

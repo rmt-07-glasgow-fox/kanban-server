@@ -26,6 +26,29 @@ class TaskController {
       });
   }
 
+  static listAll(req, res, next) {
+    const { OrganizationId } = req.user;
+
+    Task.findAll({
+      where: {
+        OrganizationId,
+      },
+      include: {
+        model: User,
+        attributes: {
+          exclude: ["password", "createdAt", "updatedAt"]
+        }
+      },
+      
+    })
+      .then((response) => {
+        res.status(200).json(response);
+      })
+      .catch((err) => {
+        next(err);
+      });
+  }
+
   static getPerCategory(req, res, next) {
     const { CategoryId } = req.params;
     const { OrganizationId } = req.user;
