@@ -10,6 +10,7 @@
 
 - "POST/task"
 - "GET/task"
+- "GET/task/:category"
 - "GET/task/:id"
 - "PUT/task/:id"
 - "Patch/task/:id"
@@ -24,17 +25,17 @@
 _Request Body_
 ```json
 {
-  "email": "<title to get insert into>",
-  "username": "<category to get insert into>",
-  "password": "<category to get insert into>",
+  "email": "<email to get insert into>",
+  "username": "<username to get insert into>",
+  "password": "<password to get insert into>",
 }
 ```
 _Response (201 - Created)_
 ```json
 {
   "id": <given id by system>,
-  "email": "<posted title>",
-  "username": "<posted on category>",
+  "email": "<posted on title>",
+  "username": "<posted on username>",
   "createdAt": "2020-03-20T07:15:12.149Z",
   "updatedAt": "2020-03-20T07:15:12.149Z",
 }
@@ -92,15 +93,15 @@ _Response (500 - internal server error)_
 _Request Body_
 ```json
 {
-  "email/username": "<email/username to get insert into>",
-  "password": "<category to get insert into>",
+  "email": "<email to get insert into>",
+  "password": "<password to get insert into>",
 }
 ```
 _Response (201 - Created)_
 ```json
 {
-  "email": "<post title to get>",
-  "username": "<post category to get>",
+  "email": "<post task email>",
+  "username": "<post task username>",
   "access_token": "<post access_token>",
 }
 ```
@@ -138,6 +139,7 @@ _Request Body_
 {
   "title": "<title to get insert into>",
   "category": "<category to get insert into>",
+  "description": "<description to get insert into>",
 }
 ```
 _Response (201 - Created)_
@@ -146,6 +148,8 @@ _Response (201 - Created)_
   "id": <given id by system>,
   "title": "<posted title>",
   "category": "<posted on category>",
+  "description": "<posted description>",
+  "UserId": "<posted UserId>",
   "createdAt": "2020-03-20T07:15:12.149Z",
   "updatedAt": "2020-03-20T07:15:12.149Z",
 }
@@ -193,15 +197,19 @@ _Response (200)_
 [
   {
     "id": 1,
-    "title": "<asset title>",
-    "category": "<asset category>",
+    "title": "<task title>",
+    "category": "<task category>",
+    "description": "<task description>",
+    "UserId": "<task UserId>",
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
   },
   {
     "id": 2,
-    "title": "<asset name>",
-    "category": "<asset category>",
+    "title": "<task name>",
+    "category": "<task category>",
+    "description": "<task description>",
+    "UserId": "<task UserId>",
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
   },
@@ -237,8 +245,10 @@ _Response (200)_
 [
   {
     "id": 1,
-    "title": "<asset title>",
-    "category": "<asset category>",,
+    "title": "<task title>",
+    "category": "<task category>",
+    "description": "< task description>",
+    "UserId": "<task UserId>",
     "createdAt": "2020-03-20T07:15:12.149Z",
     "updatedAt": "2020-03-20T07:15:12.149Z",
   }
@@ -267,6 +277,7 @@ _Request Body_
 {
   "title": "<title to be update>",
   "category": "<category to be update>",
+  "description": "<description to be update>",
 }
 ```
 _Response (200 - Updated)_
@@ -275,6 +286,8 @@ _Response (200 - Updated)_
   "id": <id found>,
   "title": "<updated title>",
   "category": "<updated category>",
+  "description": "<updated description>",
+  "UserId": "<UserId same as before>",
   "createdAt": "2020-03-20T07:15:12.149Z",
   "updatedAt": "2020-03-20T07:15:12.149Z",
 }
@@ -330,6 +343,8 @@ _Response (200 - Updated)_
   "id": <id found>,
   "title": "<title same as before>",
   "category": "<category updated>",
+  "description": "<description same as before>",
+  "UserId": "<UserId same as before>",
   "createdAt": "2020-03-20T07:15:12.149Z",
   "updatedAt": "2020-03-20T07:15:12.149Z",
 }
