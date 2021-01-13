@@ -1,12 +1,9 @@
 const router = require('express').Router()
+const TaskController = require('../controllers/taskController')
 
-router.get('/', (req, res) => {
+router.get('/', TaskController.getAllTasks)
 
-})
-
-router.get('/:id', (req, res) => {
-
-})
+router.get('/:id', TaskController.getTaskDescription)
 
 router.post('/', (req, res) => {
 

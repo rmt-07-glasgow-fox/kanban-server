@@ -5,7 +5,7 @@ const createToken = (payload) => {
     return token = jwt.sign(payload, SECRET_CODE)
 }
 
-const compareToken = async (token) => {
+const verifyToken = async (token) => {
     try {
         return decodedPayload = jwt.verify(token, SECRET_CODE)
     }
@@ -15,5 +15,5 @@ const compareToken = async (token) => {
 }
 
 module.exports = {
-    createToken, compareToken
+    createToken, verifyToken
 }
