@@ -1,8 +1,10 @@
-const { Task } = require('../models')
+const { Task, User } = require('../models')
 
 class taskController {
     static getTask(req, res, next){
-        Task.findAll()
+        Task.findAll({
+            include : User
+        })
         .then(tasks => {
             res.status(200).json(tasks)
         })
@@ -56,7 +58,6 @@ class taskController {
 
     static deleteTask(req, res, next){
         const taskId = req.params.id
-        const userId = req.user.id
         Task.destroy({
             where : {
                 id : taskId
