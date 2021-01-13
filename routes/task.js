@@ -8,6 +8,7 @@ router.route('/')
   .post(TaskController.create)
 
 router.route('/:id')
+  .get(authorize ,TaskController.showOne)
   .delete(authorize ,TaskController.delete)
 
 module.exports = router

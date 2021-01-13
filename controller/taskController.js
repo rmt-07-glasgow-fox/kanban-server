@@ -30,6 +30,19 @@ class TaskController {
     }
   }
 
+  static async showOne(req,res,next){
+    try {
+      const {id} = req.params
+      const tasks = await Task.findOne({
+        where: {id},
+        include: [User]
+      })
+      res.status(200).json(tasks)
+    } catch (err) {
+      next(err)
+    }
+  }
+
   static async delete(req,res,next){
     try {
       const { id } = req.params
