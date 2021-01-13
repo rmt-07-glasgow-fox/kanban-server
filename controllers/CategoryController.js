@@ -1,8 +1,17 @@
-const { Category } = require("../models");
+const { Category, Task } = require("../models");
 
 class CategoryController {
   static getAllCategory(req, res, next) {
-    Category.findAll()
+    Category.findAll({
+      include: Task,
+      // order by : lowest category id and highest task id:
+      order: [
+        ["id", "ASC"],
+        [Task, "id", "ASC"],
+      ],
+      // order by : highest category id and highest task id:
+      // order: [['id', 'DESC'],[Task, 'id', 'DESC']]
+    })
       .then((allDataCategory) => {
         return res.status(200).json(allDataCategory);
       })
@@ -14,7 +23,11 @@ class CategoryController {
   static getCategory(req, res, next) {
     const id = req.params.id;
 
-    Category.findOne({ where: { id } })
+    Category.findOne({
+      include: Task,
+      order: [[Task, "id", "ASC"]],
+      where: { id },
+    })
       .then((dataCategory) => {
         return res.status(200).json(dataCategory);
       })
