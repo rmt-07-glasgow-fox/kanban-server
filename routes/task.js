@@ -8,12 +8,11 @@ const {
   update,
   changeCategory,
 } = require('../controllers/task');
-const requireToken = require('../helpers/requireToken');
 
-router.post('/', requireToken, create);
-router.get('/category/:idCategory', requireToken, list);
-router.put('/:id', requireToken, update);
-router.patch('/:id/category/:idCategory', requireToken, changeCategory);
-router.delete('/:id', requireToken, destroy);
+router.post('/', create);
+router.get('/category/:idCategory', list);
+router.put('/:id', update);
+router.patch('/:id/category/:idCategory', changeCategory);
+router.delete('/:id', destroy);
 
 module.exports = router;
