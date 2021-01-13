@@ -397,7 +397,7 @@ _Response (500 - Internal Server Error)_
 
 ### GET /tasks/:CategoryId
 
-> Get task per category
+> Get tasks per category
 
 _Request Header_
 ```
@@ -428,7 +428,15 @@ _Response (200 - Ok)_
         "UserId": < task user id >,
         "OrganizationId": < task organization id >,
         "createdAt": "2021-01-12T13:41:46.877Z",
-        "updatedAt": "2021-01-12T13:41:46.877Z"
+        "updatedAt": "2021-01-12T13:41:46.877Z",
+        "User": {
+            "id": < user id >,
+            "username": "< username ",
+            "email": "< user email >",
+            "firstName": "< user first name >",
+            "lastName": "< user last name >",
+            "OrganizationId": < user organization id >,
+        }
     },
     {
         "id": < task id >,
@@ -437,7 +445,15 @@ _Response (200 - Ok)_
         "UserId": < task user id >,
         "OrganizationId": < task organization id >,
         "createdAt": "2021-01-12T13:41:46.877Z",
-        "updatedAt": "2021-01-12T13:41:46.877Z"
+        "updatedAt": "2021-01-12T13:41:46.877Z",
+        "User": {
+            "id": < user id >,
+            "username": "< username ",
+            "email": "< user email >",
+            "firstName": "< user first name >",
+            "lastName": "< user last name >",
+            "OrganizationId": < user organization id >,
+        }
     },
 ]
 ```

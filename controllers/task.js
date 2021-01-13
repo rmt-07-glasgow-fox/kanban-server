@@ -1,4 +1,4 @@
-const { Task } = require("../models");
+const { User, Task } = require("../models");
 
 class TaskController {
   static create(req, res, next) {
@@ -35,10 +35,15 @@ class TaskController {
         CategoryId,
         OrganizationId,
       },
-      // include: User,
+      include: {
+        model: User,
+        attributes: {
+          exclude: ["password", "createdAt", "updatedAt"]
+        }
+      },
+      
     })
       .then((response) => {
-        // console.log(response[0]);
         res.status(200).json(response);
       })
       .catch((err) => {

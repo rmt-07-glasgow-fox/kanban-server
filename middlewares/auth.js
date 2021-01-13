@@ -1,4 +1,3 @@
-const TaskController = require("../controllers/task");
 const { checkToken } = require("../helpers/jwt");
 const { User, Task } = require("../models");
 
@@ -6,28 +5,31 @@ function authentication(req, res, next) {
   if (!req.headers.access_token) {
     next({ name: "NoToken" });
   }
+  try {
+    const decoded = checkToken(req.headers.access_token);
+    if (!decoded.id || !decoded.email) {
+      next({ name: "InvalidToken" });
+    }
 
-  const decoded = checkToken(req.headers.access_token);
-  if (!decoded.id || !decoded.email) {
+    User.findByPk(decoded.id).then((user) => {
+      if (!user || user.email !== decoded.email) {
+        next({ name: "InvalidToken" });
+      } else {
+        const current = {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          OrganizationId: user.OrganizationId,
+        };
+        req.user = current;
+        next();
+      }
+    });
+  } catch (error) {
     next({ name: "InvalidToken" });
   }
-
-  User.findByPk(decoded.id).then((user) => {
-    if (user.email !== decoded.email) {
-      next({ name: "InvalidToken" });
-    } else {
-      const current = {
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        OrganizationId: user.OrganizationId,
-      };
-      req.user = current;
-      next();
-    }
-  });
 }
 
 function orgAuthorization(req, res, next) {
