@@ -10,12 +10,11 @@ router.get('/:id', TaskController.getTaskDescription)
 router.post('/', TaskController.postTask)
 
 // requires authorisation
-router.use(authorize)
 
-router.put('/:id', TaskController.editTask)
+router.put('/:id', authorize, TaskController.editTask)
 
-router.patch('/:id', TaskController.changeCategory)
+router.patch('/:id', authorize, TaskController.changeCategory)
 
-router.delete('/:id', TaskController.deleteTask)
+router.delete('/:id', authorize, TaskController.deleteTask)
 
 module.exports = router

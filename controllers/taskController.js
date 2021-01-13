@@ -57,11 +57,7 @@ class TaskController {
         const { title, description } = req.body
         const taskId = +req.params.id
 
-        Task.findOne({
-            where: {
-                id: taskId
-            }
-        })
+        Task.findByPk(taskId)
             .then(currentTask => {
 
                 return currentTask.update({
@@ -92,7 +88,7 @@ class TaskController {
                 })
             })
             .then(changedCategoryTask => {
-                res.status(200).json(changedCategoryTask)
+                res.status(200).json({ category: changedCategoryTask.category })
             })
             .catch(err => {
                 next(err)
