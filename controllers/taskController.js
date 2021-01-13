@@ -1,5 +1,4 @@
 const { Task } = require('../models')
-const axios = require("axios")
 
 class taskController {
 
@@ -12,7 +11,11 @@ class taskController {
 
         Task.create(newTask)
             .then(data => {
-                res.status(201).json(data)
+                res.status(201).json({
+                    id: data.id, 
+                    title: data.title,
+                    category: data.category
+                })
             })
             .catch(err => {
                 if (err.name === 'SequelizeValidationError') {
