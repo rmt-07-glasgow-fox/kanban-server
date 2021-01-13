@@ -15,6 +15,7 @@ class UserController {
         email: register.email
       });
     } catch (err) {
+      console.log(err);
       next(err);
     }
   };
