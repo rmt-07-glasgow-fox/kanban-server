@@ -26,7 +26,8 @@ class taskController {
           category: el.category,
           user_id: el.user_id,
           username: el.User.username,
-          email: el.User.email
+          email: el.User.email,
+          date: el.updatedAt
         }
       })
       res.status(200).json(result)

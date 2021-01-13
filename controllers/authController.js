@@ -21,7 +21,7 @@ class authController {
           email: data.email
         }
         const access_token = generateToken(payload)
-        res.status(200).json({ access_token })
+        res.status(200).json({ access_token, username: data.username })
       } else {
         next({ name: 'invalidEmailPassword'})
       }
