@@ -100,7 +100,7 @@ class TaskController {
                 }
             })
 
-            res.status(200).json({message: `Task Deleted Successfully`})
+            res.status(200).json({message: `Task is Deleted Successfully`})
         } catch (error) {
             next(error)
         }
