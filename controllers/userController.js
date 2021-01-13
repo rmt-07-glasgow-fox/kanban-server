@@ -45,19 +45,18 @@ class Controller{
                     let payload = {id: data.id, email: data.email, username: data.username}
                     let access_token = generateToken(payload)
                     res.status(200).json(
-                    {messsage:
-                        {
-                            id:  data.id, 
-                            email: data.email, 
-                            username: data.username, 
-                            access_token
-                        }
+                    {
+                        id:  data.id, 
+                        email: data.email, 
+                        username: data.username, 
+                        access_token
+                    
                     })
                 }
             }
         })
         .catch(err=>{
-            console.log(err)
+            console.log(err, 'eror disini')
             next(err)
         })
 

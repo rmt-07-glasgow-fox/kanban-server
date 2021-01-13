@@ -1,4 +1,4 @@
-const {Task} = require('../models')
+const {Task, User} = require('../models')
 
 class Controller{
 
@@ -25,9 +25,9 @@ class Controller{
 
 /*=============================== ALL LIST TASK =============================*/  
     static listAllTask(req, res, next){
-        Task.findAll()
+        Task.findAll({include:User})
         .then(data=>{
-            res.status(200).json({message: data})
+            res.status(200).json(data)
         })
         .catch(err=>{
             console.log(err)
