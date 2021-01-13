@@ -29,7 +29,15 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    CategoryId: DataTypes.INTEGER,
+    CategoryId: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'CategoryId required'
+        }
+      }
+    },
     UserId: DataTypes.INTEGER
   }, {
     sequelize,

@@ -91,14 +91,11 @@ class TaskController {
       let {CategoryId} = req.body
 
       let task = await Task.findByPk(id)
-      task.CategoryId = CategoryId
-      await task.save()
 
-      console.log('TRY', task);
+      await task.update({CategoryId})
 
       res.status(200).json(task)
     } catch(error) {
-      console.log('CATCH PATCH', error);
       next(error)
     }
   }
