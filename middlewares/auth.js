@@ -1,6 +1,5 @@
 const { User, Task } = require('../models')
 const { verifyToken } = require('../helpers/jwtHelper')
-const task = require('../models/task')
 
 const authentication = (req, res, next) => {
   try {
