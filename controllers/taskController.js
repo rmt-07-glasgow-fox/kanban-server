@@ -108,6 +108,24 @@ class ControllerTask {
         next(err)
       })
   }
+
+  static showByID (req, res, next) {
+    const id = req.params.id
+
+    Task.findByPk(id)
+      .then(data => {
+        if (data) {
+          res.status(200).json(data)
+        } else {
+          next({
+            name: 'Data not found'
+          })
+        }
+      })
+      .catch(err => {
+        next(err)
+      })
+  }
 }
 
 module.exports = ControllerTask

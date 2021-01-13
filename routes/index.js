@@ -12,6 +12,7 @@ router.use(authentication)
 router.get('/tasks', ControllerTask.showAll)
 router.post('/tasks', ControllerTask.create)
 
+router.get('/tasks/:id', authorize, ControllerTask.showByID)
 router.put('/tasks/:id', authorize, ControllerTask.update)
 router.patch('/tasks/:id', authorize, ControllerTask.changeCategory)
 router.delete('/tasks/:id', authorize, ControllerTask.delete)
