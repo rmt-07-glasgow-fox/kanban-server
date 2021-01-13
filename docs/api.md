@@ -1046,7 +1046,7 @@ Show list Boards by Organization.
     curl --location --request GET 'http://localhost:3000/categories/board/8' --header 'Authorization: Bearer <JWT_TOKEN>'
     ```
 
-## **Deatil Boards**
+## **Detail Boards**
 
 Show detail Boards include Categories.
 
@@ -1184,7 +1184,7 @@ Destroy Board.
 
 - **Error Response:**
 
-  - **Code:** 400 Bad Request <br />
+  - **Code:** 404 Not Found <br />
     **Content:**
 
     ```json
@@ -1220,6 +1220,670 @@ Destroy Board.
   - **curl**:
     ```js
     curl --location --request DELETE 'http://localhost:3000/boards/8' --header 'Authorization: Bearer <JWT_TOKEN>'
+    ```
+
+# Organization
+
+## **Create Organization**
+
+Create a Organization.
+
+- **URL**
+
+  `/organization`
+
+- **Method:**
+
+  `POST`
+
+- **Request Header**
+
+  **Required:**
+
+  - Authorization (string)
+
+  **Example:**
+
+  - application/json
+    ```json
+    {
+      "Authorization": "Bearer <JWT_TOKEN>"
+    }
+    ```
+
+- **Request Body**
+
+  **Required:**
+
+  - name (string)
+
+  **Example:**
+
+  - application/json
+    ```json
+    {
+      "name": "Organization 1"
+    }
+    ```
+
+- **Success Response:**
+
+  - **Code:** 201 <br />
+    **Content:**
+    ```json
+    {
+      "id": 7,
+      "name": "Organization 1",
+      "UserId": 13,
+      "updatedAt": "2021-01-13T08:07:21.798Z",
+      "createdAt": "2021-01-13T08:07:21.798Z"
+    }
+    ```
+
+- **Error Response:**
+
+  - **Code:** 400 Bad Request <br />
+    **Content:**
+
+    ```json
+    [
+      {
+        "message": "Name is required"
+      }
+    ]
+    ```
+
+  - **Code:** 500 Internal Server Error <br />
+    **Content:**
+    ```json
+    [
+      {
+        "message": "internal server error"
+      }
+    ]
+    ```
+
+- **Sample Call:**
+  - **curl**:
+    ```js
+    curl --location --request POST 'http://localhost:3000/organizations' --header 'Authorization: Bearer <JWT_TOKEN>' --data-urlencode 'name=Organization 1'
+    ```
+
+## **List Organization**
+
+Show list Organization by User.
+
+- **URL**
+
+  `/organizations`
+
+- **Method:**
+
+  `GET`
+
+- **Request Header**
+
+  **Required:**
+
+  - Authorization (string)
+
+  **Example:**
+
+  - application/json
+    ```json
+    {
+      "Authorization": "Bearer <JWT_TOKEN>"
+    }
+    ```
+
+- **Request Params**
+
+  - id (integer)
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:**
+    ```json
+    [
+      {
+        "id": 6,
+        "role": "admin",
+        "UserId": 13,
+        "OrganizationId": 7,
+        "createdAt": "2021-01-13T08:07:21.829Z",
+        "updatedAt": "2021-01-13T08:07:21.829Z",
+        "Organization": {
+          "id": 7,
+          "name": "Organization 1",
+          "UserId": 13,
+          "createdAt": "2021-01-13T08:07:21.798Z",
+          "updatedAt": "2021-01-13T08:07:21.798Z"
+        }
+      }
+    ]
+    ```
+
+- **Error Response:**
+
+  - **Code:** 500 Internal Server Error <br />
+    **Content:**
+    ```json
+    [
+      {
+        "message": "internal server error"
+      }
+    ]
+    ```
+
+- **Sample Call:**
+  - **curl**:
+    ```js
+    curl --location --request GET 'http://localhost:3000/organizations/' --header 'Authorization: Bearer <JWT_TOKEN>'
+    ```
+
+## **Invite Member**
+
+Invite member to organization.
+
+- **URL**
+
+  `/:id/member`
+
+- **Method:**
+
+  `POST`
+
+- **Request Header**
+
+  **Required:**
+
+  - Authorization (string)
+
+  **Example:**
+
+  - application/json
+    ```json
+    {
+      "Authorization": "Bearer <JWT_TOKEN>"
+    }
+    ```
+
+- **Request Params**
+
+  - id (integer)
+
+- **Request Body**
+
+  **Required:**
+
+  - email (string)
+
+  **Example:**
+
+  - application/json
+    ```json
+    {
+      "email": "ari@mail.com"
+    }
+    ```
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:**
+    ```json
+    {
+      "id": 10,
+      "role": "member",
+      "UserId": 14,
+      "OrganizationId": 7,
+      "updatedAt": "2021-01-13T08:36:49.478Z",
+      "createdAt": "2021-01-13T08:36:49.478Z"
+    }
+    ```
+
+- **Error Response:**
+
+  - **Code:** 400 Bad Request <br />
+    **Content:**
+
+    ```json
+    [
+      {
+        "message": "User is already member"
+      }
+    ]
+    ```
+
+  - **Code:** 403 Forbidden <br />
+    **Content:**
+
+    ```json
+    [
+      {
+        "message": "You are not Admin"
+      }
+    ]
+    ```
+
+  - **Code:** 404 Not Found <br />
+    **Content:**
+
+    ```json
+    [
+      {
+        "message": "Organization not found"
+      }
+    ]
+    ```
+
+    Or
+
+    ```json
+    [
+      {
+        "message": "User not found"
+      }
+    ]
+    ```
+
+  - **Code:** 500 Internal Server Error <br />
+    **Content:**
+    ```json
+    [
+      {
+        "message": "internal server error"
+      }
+    ]
+    ```
+
+- **Sample Call:**
+  - **curl**:
+    ```js
+    curl --location --request POST 'http://localhost:3000/organizations/7/member' --header 'Authorization: Bearer <JWT_TOKEN>' --data-urlencode 'email=ari@mail.com'
+    ```
+
+## **Change Role Member**
+
+Chante role member.
+
+- **URL**
+
+  `/:id/member/role`
+
+- **Method:**
+
+  `PUT`
+
+- **Request Header**
+
+  **Required:**
+
+  - Authorization (string)
+
+  **Example:**
+
+  - application/json
+    ```json
+    {
+      "Authorization": "Bearer <JWT_TOKEN>"
+    }
+    ```
+
+- **Request Params**
+
+  - id (integer)
+
+- **Request Body**
+
+  **Required:**
+
+  - email (string)
+  - role (string)
+
+  **Example:**
+
+  - application/json
+    ```json
+    {
+      "email": "ari@mail.com",
+      "role": "admin"
+    }
+    ```
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:**
+    ```json
+    {
+      "message": "Member has been updated"
+    }
+    ```
+
+- **Error Response:**
+
+  - **Code:** 404 Not Found <br />
+    **Content:**
+
+    ```json
+    [
+      {
+        "message": "Organization not found"
+      }
+    ]
+    ```
+
+    Or
+
+    ```json
+    [
+      {
+        "message": "User not found"
+      }
+    ]
+    ```
+
+    Or
+
+    ```json
+    [
+      {
+        "message": "Member not found"
+      }
+    ]
+    ```
+
+  - **Code:** 500 Internal Server Error <br />
+    **Content:**
+    ```json
+    [
+      {
+        "message": "internal server error"
+      }
+    ]
+    ```
+
+- **Sample Call:**
+  - **curl**:
+    ```js
+    curl --location --request PUT 'http://localhost:3000/organizations/7/member/role' --header 'Authorization: Bearer <JWT_TOKEN' --data-urlencode 'email=ari@mail.com' --data-urlencode 'role=admin'
+    ```
+
+## **Remove Member**
+
+Remove member from organization.
+
+- **URL**
+
+  `/:id/member/:user`
+
+- **Method:**
+
+  `DELETE`
+
+- **Request Header**
+
+  **Required:**
+
+  - Authorization (string)
+
+  **Example:**
+
+  - application/json
+    ```json
+    {
+      "Authorization": "Bearer <JWT_TOKEN>"
+    }
+    ```
+
+- **Request Params**
+
+  - id (integer)
+  - user (integer)
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:**
+
+    ```json
+    {
+      "message": "Member has been remove from organization"
+    }
+    ```
+
+- **Error Response:**
+
+  - **Code:** 400 Bad Request <br />
+    **Content:**
+
+    ```json
+    [
+      {
+        "message": "Admin cannot remove, change role to member for remove member"
+      }
+    ]
+    ```
+
+  - **Code:** 403 Forbidden <br />
+    **Content:**
+
+    ```json
+    [
+      {
+        "message": "You are not Admin"
+      }
+    ]
+    ```
+
+  - **Code:** 404 Not Found <br />
+    **Content:**
+
+    ```json
+    [
+      {
+        "message": "Organization not found"
+      }
+    ]
+    ```
+
+    Or
+
+    ```json
+    [
+      {
+        "message": "User not found"
+      }
+    ]
+    ```
+
+    Or
+
+    ```json
+    [
+      {
+        "message": "Member not found"
+      }
+    ]
+    ```
+
+  - **Code:** 500 Internal Server Error <br />
+    **Content:**
+    ```json
+    [
+      {
+        "message": "internal server error"
+      }
+    ]
+    ```
+
+- **Sample Call:**
+  - **curl**:
+    ```js
+    curl --location --request DELETE 'http://localhost:3000/organizations/7/member/14' --header 'Authorization: Bearer <JWT_TOKEN>'
+    ```
+
+## **List Member**
+
+Show list member organization.
+
+- **URL**
+
+  `/:id/member`
+
+- **Method:**
+
+  `GET`
+
+- **Request Header**
+
+  **Required:**
+
+  - Authorization (string)
+
+  **Example:**
+
+  - application/json
+    ```json
+    {
+      "Authorization": "Bearer <JWT_TOKEN>"
+    }
+    ```
+
+- **Request Params**
+
+  - id (integer)
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:**
+    ```json
+    {
+      "id": 7,
+      "name": "Organization 1",
+      "UserId": 13,
+      "createdAt": "2021-01-13T08:07:21.798Z",
+      "updatedAt": "2021-01-13T08:07:21.798Z",
+      "Users": [
+        {
+          "id": 14,
+          "first_name": "ari",
+          "last_name": "bambang",
+          "email": "ari@mail.com",
+          "createdAt": "2021-01-12T13:01:09.310Z",
+          "updatedAt": "2021-01-12T13:01:09.310Z",
+          "Members": {
+            "createdAt": "2021-01-13T08:36:49.478Z",
+            "updatedAt": "2021-01-13T08:42:57.556Z",
+            "OrganizationId": 7,
+            "UserId": 14
+          }
+        }
+      ]
+    }
+    ```
+
+- **Error Response:**
+
+  - **Code:** 404 Not Found <br />
+    **Content:**
+
+    ```json
+    [
+      {
+        "message": "Organization not found"
+      }
+    ]
+    ```
+
+  - **Code:** 500 Internal Server Error <br />
+    **Content:**
+    ```json
+    [
+      {
+        "message": "internal server error"
+      }
+    ]
+    ```
+
+- **Sample Call:**
+  - **curl**:
+    ```js
+    curl --location --request GET 'http://localhost:3000/organizations/5/member' --header 'Authorization: Bearer <JWT_TOKEN>'
+    ```
+
+## **Destroy Organization**
+
+Destroy Organization.
+
+- **URL**
+
+  `/organizations/:id`
+
+- **Method:**
+
+  `DELETE`
+
+- **Request Header**
+
+  **Required:**
+
+  - Authorization (string)
+
+  **Example:**
+
+  - application/json
+    ```json
+    {
+      "Authorization": "Bearer <JWT_TOKEN>"
+    }
+    ```
+
+- **Request Params**
+
+  - id (integer)
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:**
+
+    ```json
+    {
+      "message": "Organization has been deleted"
+    }
+    ```
+
+- **Error Response:**
+
+  - **Code:** 404 Not Found <br />
+    **Content:**
+
+    ```json
+    [
+      {
+        "message": "Organization not found"
+      }
+    ]
+    ```
+
+  - **Code:** 500 Internal Server Error <br />
+    **Content:**
+    ```json
+    [
+      {
+        "message": "internal server error"
+      }
+    ]
+    ```
+
+- **Sample Call:**
+  - **curl**:
+    ```js
+    curl --location --request DELETE 'http://localhost:3000/organizations/7' --header 'Authorization: Bearer <JWT_TOKEN>'
     ```
 
 # User

@@ -36,10 +36,8 @@ exports.destroy = async (req, res, next) => {
     });
     if (!isFound) return next({ name: 'NotFound', attr: 'Organization' });
     else {
-      const orgs = await Organization.destroy({ where: { id: id } });
-      return res
-        .status(200)
-        .json({ message: 'Organization success to delete' });
+      await Organization.destroy({ where: { id: id } });
+      return res.status(200).json({ message: 'Organization has been deleted' });
     }
   } catch (err) {
     return next(err);
@@ -54,8 +52,6 @@ exports.listByUser = async (req, res, next) => {
       where: { UserId: userId },
       include: [Organization],
     });
-
-    console.log(orgs);
 
     return res.status(200).json(orgs);
   } catch (err) {
@@ -84,7 +80,6 @@ exports.member = async (req, res, next) => {
         ],
       });
 
-      console.log(orgs.Users[0].Members.role);
       return res.status(200).json(orgs);
     }
   } catch (err) {
@@ -107,7 +102,9 @@ exports.invite = async (req, res, next) => {
       const isUser = await User.findOne({ where: { email: email } });
       if (!isUser) return next({ name: 'NotFound', attr: 'User' });
 
-      const isMember = await Member.findOne({ where: { UserId: isUser.id } });
+      const isMember = await Member.findOne({
+        where: { UserId: isUser.id, OrganizationId: id },
+      });
 
       if (isMember) return next({ name: 'Member' });
       else {
@@ -116,7 +113,7 @@ exports.invite = async (req, res, next) => {
           UserId: isUser.id,
           OrganizationId: id,
         });
-        return res.status(201).json(member);
+        return res.status(200).json(member);
       }
     }
   } catch (err) {
@@ -139,12 +136,14 @@ exports.removeMember = async (req, res, next) => {
       const isUser = await User.findOne({ where: { id: UserId } });
       if (!isUser) return next({ name: 'NotFound', attr: 'User' });
 
-      const isMember = await Member.findOne({ where: { UserId: isUser.id } });
+      const isMember = await Member.findOne({
+        where: { UserId: isUser.id, OrganizationId: id },
+      });
 
       if (!isMember) return next({ name: 'NotFound', attr: 'Member' });
       else {
         const admin = await Member.findOne({
-          where: { UserId: isUser.id, role: 'admin' },
+          where: { UserId: isUser.id, OrganizationId: id, role: 'admin' },
         });
         if (!admin) {
           await Member.destroy({ where: { UserId: UserId } });
@@ -176,7 +175,9 @@ exports.changeRole = async (req, res, next) => {
       const isUser = await User.findOne({ where: { email: email } });
       if (!isUser) return next({ name: 'NotFound', attr: 'User' });
 
-      const isMember = await Member.findOne({ where: { UserId: isUser.id } });
+      const isMember = await Member.findOne({
+        where: { UserId: isUser.id, OrganizationId: id },
+      });
       if (!isMember) return next({ name: 'NotFound', attr: 'Member' });
       else {
         await Member.update({ role: role }, { where: { UserId: isUser.id } });
