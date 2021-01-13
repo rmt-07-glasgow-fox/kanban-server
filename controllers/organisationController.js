@@ -18,7 +18,7 @@ class OrganisationController {
                         attributes: ['firstName', 'lastName'],
                     }]
                 }],
-                attributes: { exclude: ['createdAt', 'updatedAt', 'password'] }
+                attributes: ['email']
             })
 
             return res.status(200).json({ status: 'sucess', data: organisation })
