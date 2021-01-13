@@ -66,6 +66,11 @@ class OrganisationController {
 
             const create = await Organisation.create(input);
 
+            await UserOrganisation.create({
+                userId: req.user.id,
+                organisationId: create.id
+            })
+
             return res.status(201).json({
                 status: 'sucess',
                 data: create
