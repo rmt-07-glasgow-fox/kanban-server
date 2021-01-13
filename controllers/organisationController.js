@@ -35,7 +35,7 @@ class OrganisationController {
                     model: Task,
                     as: 'task',
                     attributes: {
-                        exclude: ['userId', 'organisationId', 'categoryId']
+                        exclude: ['userId', 'organisationId']
                     },
                     include: [{
                         model: User,
