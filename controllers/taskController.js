@@ -4,6 +4,9 @@ class TaskController {
     static async getAll(req, res, next) {
         try {
             const task = await Task.findAll({
+                order: [
+                    ['createdAt', 'asc']
+                ],
                 include: [{
                     model: Organisation,
                     as: 'organisation',
@@ -15,7 +18,7 @@ class TaskController {
                 }, {
                     model: User,
                     as: 'user',
-                    attributes: ['firstName', 'lastName', 'email', ]
+                    attributes: ['firstName', 'lastName', 'email']
                 }]
             });
 
