@@ -34,7 +34,18 @@ class TaskController {
                 attributes: {
                     exclude: ['createdAt', 'updatedAt']
                 },
-                include: [Task]
+                include: [{
+                    model: Task,
+                    attributes: {
+                        exclude: ['createdAt', 'updatedAt']
+                    },
+                    include: [{
+                        model: User,
+                        attributes: {
+                            exclude: ['createdAt', 'updatedAt', 'password']
+                        }
+                    }]
+                }]
             })
 
             return res.status(200).json(data)
@@ -52,6 +63,35 @@ class TaskController {
             console.log('>>> deleteTask : ', deleteTask)
 
             return res.status(200).json({ message: `${req.task.title} is deleted` })
+        } catch (err) {
+            return next(err)
+        }
+    }
+
+    static async ChangeCategory(req, res, next) {
+        try {
+            let idTask = +req.params.idTask
+            let CategoryId = +req.params.CategoryId
+
+            let updatedTask = await Task.update({ CategoryId }, {
+                where: { id: idTask }
+            })
+            console.log('>> update ', updatedTask)
+
+            if (updatedTask[0]) {
+                let data = await Task.findByPk(idTask, {
+                    attributes: { exclude: ['updatedAt', 'createdAt'] }
+                })
+
+                return res.status(200).json(data)
+            }
+
+            if (!updatedTask[0]) {
+                return res.status(400).json({ message: 'gagal update' })
+            }
+
+            console.log('update data salah nih')
+
         } catch (err) {
             return next(err)
         }
