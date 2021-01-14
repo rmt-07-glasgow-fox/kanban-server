@@ -277,7 +277,7 @@ _Request Body_
 }
 ```
 
-_Response (201)_
+_Response (200)_
 ```json
 {
   "message": "Task has been Updated"
@@ -330,7 +330,7 @@ _Request Body_
 }
 ```
 
-_Response (201)_
+_Response (200)_
 ```json
 {
   "message": true

@@ -57,8 +57,7 @@ module.exports = class TaskController {
         const getId = +req.params.id
         const newData = {
             title: req.body.title,
-            CategoryId: req.body.CategoryId,
-            UserId: req.user
+            CategoryId: req.body.CategoryId
         }
         Task.update(newData, {
             where: {
@@ -67,7 +66,7 @@ module.exports = class TaskController {
         })
         .then( data => {
             if (data[0] === 1) {
-                return res.status(201).json({ message: "Task has been Updated" })
+                return res.status(200).json({ message: "Task has been Updated" })
             } else {
                 next({ name: 'notFound' })
             }
@@ -90,7 +89,7 @@ module.exports = class TaskController {
         })
         .then( data => {
             if (data[0] === 1) {
-                res.status(201).json({ message: true })
+                res.status(200).json({ message: true })
             } else {
                 next({ name: 'notFound' })
             }
