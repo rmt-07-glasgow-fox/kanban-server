@@ -1,10 +1,14 @@
-const { Task } = require('../models');
+const { User, Task } = require('../models');
 const timeFormat = require('../helpers/timeFormat');
 const updateTask = require('../helpers/updateTask')
 
 class TaskController {
     static getTasks(req, res, next) {
-        Task.findAll()
+        Task.findAll({
+            include: {
+                model: User
+            }
+        })
             .then(tasks => {
                 let updatedTasks = tasks.map(task => {
                     let { id, description, category, userId, updatedAt } = task;
@@ -14,12 +18,14 @@ class TaskController {
                         description,
                         category,
                         userId,
-                        updatedAt: timeFormat(updatedAt)
+                        updatedAt: timeFormat(updatedAt),
+                        name: task.User.name
                     }
                 })
                 res.status(200).json(updatedTasks)
             })
             .catch(err => {
+                console.log(err);
                 next(err)
             })
     }  

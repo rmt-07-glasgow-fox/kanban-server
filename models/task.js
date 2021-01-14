@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     description: {
       type: DataTypes.STRING,
       validate: {
-        notEmpty: true
+        notEmpty: true,
       }
     },
     category: DataTypes.STRING,
