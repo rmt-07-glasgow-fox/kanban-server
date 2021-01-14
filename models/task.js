@@ -20,8 +20,12 @@ module.exports = (sequelize, DataTypes) => {
       validate : {
         notEmpty : {
           msg : "Title must be filled"
+        },
+        notNull : {
+          msg : "Title must be filled"
         }
-      }
+      },
+      allowNull : false
     },
     category: DataTypes.STRING
   }, {
