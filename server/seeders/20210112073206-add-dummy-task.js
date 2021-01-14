@@ -2,14 +2,14 @@
 const data =[
   {
     title: "Task 1",
-    category: "backlog",
+    category: "Backlog",
     UserId: 1,
     createdAt: new Date(),
     updatedAt: new Date()
   },
   {
     title: "Task 2",
-    category: "review",
+    category: "Doing",
     UserId: 2,
     createdAt: new Date(),
     updatedAt: new Date()
