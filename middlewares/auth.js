@@ -28,13 +28,13 @@ class Auth {
 
     static authorization (req, res, next) {
         const id = +req.params.id
-        const userData = +req.user.id
+        const userId = +req.user.id
 
         task.findByPk(id)
         .then(data => {
             if(!data){
                 res.status(404).json({msg : 'Task Not Found'})
-            } else if(userData !== data.UserId){
+            } else if(userId !== data.UserId){
                 res.status(403).json({msg : `You don't have access`})
             } else {
                 next()

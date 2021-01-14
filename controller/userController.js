@@ -45,7 +45,7 @@ class userController {
                         email: data_login.email
                     } 
                     const access_token = generateToken(payload)  
-                    return res.status(200).json({access_token: access_token})
+                    return res.status(200).json({access_token})
                 } else {
                     next({name: 'JsonWebTokenError', msg: 'Invalid Email/Phone Number or Password'})
                 }
