@@ -60,6 +60,15 @@ class TaskController {
                   })
             
       }
+
+      static getCategory(req, res, next) {
+          Category.findAll()
+                    .then(category => {
+                        res.status(200).json(category)
+                    }).catch(err => {
+                        res.status(500).json(err)
+                    })
+      }
 }
 
 module.exports = TaskController
