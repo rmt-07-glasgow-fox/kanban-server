@@ -8,6 +8,8 @@ router.post('/', taskController.add);
 
 router.use('/:id', authorization);
 
+router.get('/:id', taskController.showOne);
+
 router.put('/:id', taskController.editTask);
 
 router.patch('/:id', taskController.editCategory);

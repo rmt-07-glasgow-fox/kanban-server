@@ -11,12 +11,26 @@ class Controller {
         }
     }
 
+    static async showOne(req, res, next) {
+        try {
+            const id = req.params.id
+            const find = await Task.findOne({ where: { id } })
+            if (find) {
+                res.status(200).json(find)
+            } else {
+                throw { name: "Not Found"};
+            }
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    }
+
     static async add(req, res, next) {
         try {
             const { id } = req.headers.user;
-            const category = req.query.name;
+            const categoryId = +req.query.category;
             const { title, description } = req.body;
-            const findCategory = await Category.findOne({ where: { name: category } });
+            const findCategory = await Category.findOne({ where: { id: categoryId } });
             const input = {
                 UserId: id,
                 CategoryId: findCategory.id,
@@ -38,17 +52,17 @@ class Controller {
     static async editTask(req, res, next) {
         try {
             const id = +req.params.id;
-            const category = req.query.name;
+            const categoryId = +req.query.category;
             const input = {
                 title: req.body.title,
-                description: req.body.description
+                description: req.body.description,
+                CategoryId: categoryId
             }
-            const findCategory = await Category.findOne({ where : { name: category } });
+            const findCategory = await Category.findOne({ where : { id: categoryId } });
             const find = await Task.update(input, {
                 where: {
                     id,
                     UserId: req.headers.user.id,
-                    CategoryId: findCategory.id
                 },
                 returning: true
             })
@@ -65,11 +79,11 @@ class Controller {
 
     static async editCategory(req, res, next) {
         try {
-            const category = req.query.name;
+            const categoryId = +req.query.category;
             const id = +req.params.id;
             const userId = req.headers.user.id;
             const newCategory = await Category.findOne({ where: { name: req.body.name} });
-            const findCategory = await Category.findOne({ where: { name: category } });
+            const findCategory = await Category.findOne({ where: { id: categoryId } });
             if (newCategory && findCategory) {
                 const task = await Task.update({ CategoryId: newCategory.id }, {
                     where: {
@@ -90,15 +104,10 @@ class Controller {
 
     static async delete(req, res, next) {
         try {
-            const userId = req.headers.user.id;
-            const category = req.query.name;
             const id = req.params.id;
-            const findCategory = await Category.findOne({ where: { name: category } });
             const destroy = await Task.destroy({
                 where: {
-                    id,
-                    UserId: userId,
-                    CategoryId: findCategory.id
+                    id
                 }
             });
             if (destroy !== 0) {
