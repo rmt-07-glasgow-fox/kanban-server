@@ -11,6 +11,16 @@ class TaskController {
         })
     }
 
+    static getTaskById (req,res,next) {
+        Task.findOne({where: {id: req.params.id}})
+        .then(data => {
+            res.status(200).json(data)
+        })
+        .catch(error => {
+            next(error)
+        })
+    }
+
     static createTask (req,res,next) {
         const obj = {
             name: req.body.name,
@@ -30,6 +40,7 @@ class TaskController {
     }
 
     static deleteTask (req,res,next) {
+        console.log('masuk delete')
         Task.destroy({where: {id: req.params.id}})
         .then(data => {
             if (data) {

@@ -3,7 +3,6 @@ module.exports = (err, req, res, next) => {
         const message = {
             message: err.message
         }
-        console.log(message)
         res.status(err.status).json(message)
     } else if (err.name == "SequelizeValidationError") {
         const dataError = []
