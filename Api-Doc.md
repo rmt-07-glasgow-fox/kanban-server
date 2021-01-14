@@ -1,18 +1,21 @@
 # KANBAN
 
 ## List endpoitns
+>USER
+- `POST /login`
+- `POST /register`
+
+>Category
+- `GET /category`
+- `POST /category`
+
 >TASK
 - `POST /task`
 - `GET /task`
 - `PUT /task/:id`
 - `DELETE /task/:id`
 
->Category
-- `GET /category`
-- `POST /category`
-
-
-### login 
+### login /login
 
 _Request Header_
 ```json
@@ -47,7 +50,7 @@ _Response (500 - Internal Server Error)_
 ```
 ---
 
-### Register
+### Register /register
 _Request Header_
 ```json
     (-)
@@ -58,14 +61,18 @@ _Request Params_
 ```
 _Request Body_
 ```json
-    email: <string>,
-    password: <string>,
-    username: <string>
+  {
+    "email": <string>,
+    "password": <string>,
+    "username": <string>
+  }
 ```
 _Response (200)_
 ```json
   {
-      "access_token": <string>
+    "id": <Increament by default>,
+    "username": <string>,
+    "username": <string>
   }
 ```
 _Response (500 - Internal Server Error)_
@@ -76,9 +83,8 @@ _Response (500 - Internal Server Error)_
 ```
 ---
 
-### POST /todos
-- `POST /category`
-- `GET /category`
+### POST /Task
+- `POST /Task`
 
 > Create new Task
 
@@ -110,6 +116,7 @@ _Response (500 - Internal Server Error)_
     "message": "Error in internal server"
   }
 ```
+
 ---
 ### GET /Task
 > Get all Task
