@@ -4,7 +4,7 @@ const routKanban = require('../routs/kanban')
 const {authentication} = require('../midleware/auth')
 
 rout.get('/',(req,res)=>{
-    res.send('WELCOME')
+    res.status(200).json({msg:'WELCOME'})
 })
 
 rout.use(routUser)
