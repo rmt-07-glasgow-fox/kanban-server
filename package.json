@@ -24,5 +24,13 @@
   "devDependencies": {
     "nodemon": "^2.0.7",
     "sequelize-cli": "^6.2.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abdulhakim2902/kanban-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/abdulhakim2902/kanban-server/issues"
+  },
+  "homepage": "https://github.com/abdulhakim2902/kanban-server#readme"
 }

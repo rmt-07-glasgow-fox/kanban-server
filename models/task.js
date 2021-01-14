@@ -21,7 +21,12 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
       }
     },
-    category: DataTypes.STRING,
+    category: {
+      type: {
+        type: DataTypes.STRING,
+        isIn: [['backlog', 'todo', 'ongoing', 'done']]
+      }
+    },
     userId: DataTypes.INTEGER
   }, {
     sequelize,

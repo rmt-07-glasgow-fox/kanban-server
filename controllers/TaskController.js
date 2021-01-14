@@ -9,25 +9,25 @@ class TaskController {
                 model: User
             }
         })
-            .then(tasks => {
-                let updatedTasks = tasks.map(task => {
-                    let { id, description, category, userId, updatedAt } = task;
+        .then(tasks => {
+            let updatedTasks = tasks.map(task => {
+                let { id, description, category, userId, updatedAt } = task;
 
-                    return {
-                        id,
-                        description,
-                        category,
-                        userId,
-                        updatedAt: timeFormat(updatedAt),
-                        name: task.User.name
-                    }
-                })
-                res.status(200).json(updatedTasks)
+                return {
+                    id,
+                    description,
+                    category,
+                    userId,
+                    updatedAt: timeFormat(updatedAt),
+                    name: task.User.name
+                }
             })
-            .catch(err => {
-                console.log(err);
-                next(err)
-            })
+            res.status(200).json(updatedTasks)
+        })
+        .catch(err => {
+            console.log(err);
+            next(err)
+        })
     }  
 
     static addTask(req, res,next) {
@@ -37,21 +37,35 @@ class TaskController {
             userId: req.user.userId,
         }
 
-        Task.create(newTask)
-            .then(task => {
-                let {id, description, category, userId, updatedAt } = task
-
-                res.status(201).json({
-                    id,
-                    description,
-                    category,
-                    userId,
-                    updatedAt: timeFormat(updatedAt)
-                })
+        Task.create(newTask, {
+            include: {
+                model: User
+            }
+        })
+        .then(task => {
+            return Task.findOne({
+                where: {
+                    id: task.id
+                },
+                include: {
+                    model: User
+                }
             })
-            .catch(err => {
-                next(err)
+        })
+        .then(task => {
+            let { id, description, category, userId, updatedAt } = task
+            res.status(201).json({
+                id,
+                description,
+                category,
+                userId,
+                name: task.User.name,
+                updatedAt: timeFormat(updatedAt)
             })
+        })
+        .catch(err => {
+            next(err)
+        })
     }
 
     static getTask(req, res, next) {
@@ -60,6 +74,9 @@ class TaskController {
         Task.findOne({
             where: {
                 id: taskId
+            },
+            include: {
+                model: User
             }
         })
             .then(task => {
@@ -71,7 +88,8 @@ class TaskController {
                     description,
                     category,
                     userId,
-                    updatedAt: timeFormat(updatedAt)
+                    updatedAt: timeFormat(updatedAt),
+                    name: task.User.name
                 })
             })
             .catch(err => {
@@ -85,7 +103,7 @@ class TaskController {
             description: req.body.description,
         }
 
-        updateTask(Task, task, taskId, res, next);
+        updateTask(task, taskId, res, next);
     }
 
     static editCategory(req, res,next) {
@@ -94,7 +112,7 @@ class TaskController {
             category: req.body.category,
         }
 
-        updateTask(Task, task, taskId, res, next)
+        updateTask(task, taskId, res, next)
     }
 
     static deleteTask(req, res, next) {
@@ -120,7 +138,7 @@ class TaskController {
             })
             .catch(err => {
                 next(err)
-            })
+            })  
     }
 
     // static updateTask(req, res, next, task) {
