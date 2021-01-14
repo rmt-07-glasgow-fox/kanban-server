@@ -22,7 +22,7 @@ class Controller {
   } 
 
   static getAll (req, res, next) {
-    Task.findAll()
+    Task.findAll({order: [['id', 'asc']]})
     .then(tasks => {
       if (tasks) {
         res.status(200).json(tasks)
