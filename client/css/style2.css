@@ -1,0 +1,355 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+nav{
+    margin-left: 35px;
+}
+
+nav ul {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    margin: 0 0 0 20px;
+    padding: 0;
+    overflow: hidden;
+}
+
+nav ul li a {
+    display: block;
+    text-align: center;
+    padding: 14px 16px;
+    margin-left: 60px;
+    text-decoration: none;
+    color:  #174d65;
+    font-weight: 600;
+}
+
+nav ul li a:hover {
+  display: block;
+  text-align: center;
+  padding: 12px 16px;
+  margin-left: 60px;
+  text-decoration: none;
+  border-bottom: 2px solid #174d65;
+  color:  #174d65;
+  font-weight: 600;
+}
+
+.my-container {
+    display: flex;
+    margin: 0 50px 0 50px;
+    height: 100vh;
+    width: auto;
+    background-color:white;
+    justify-content: space-between;
+}
+
+.my-home {
+  margin-top: 80px;
+  padding-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 67vh;
+  padding-top: 0px;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+
+}
+
+.kang-bang-text{
+    color: #174d65;
+}
+
+.getting-started{
+    height: 45px;
+    width: 225px;
+    border-radius: 15px;
+    border: 3px solid #174d65;
+    margin-bottom: 50px;
+    margin-left: 10px;
+    text-align: center;
+    font-weight: 800;
+    padding-top: 5px;
+    margin-top: 50px;
+    color: #174d65;
+    text-decoration:none;
+    font-size: 20px;
+}
+
+.getting-started:hover {
+    background-color: #174d65;
+    color: white
+}
+
+.getting-started a:hover {
+    color: white
+}
+
+.image-parent {
+  padding-top: 50px;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+}
+
+.image-design {
+  display: flex;
+  flex-direction: row;
+}
+
+.my-hover-box:hover {
+  height: 200px;
+  width: 200px;
+  border-radius: 5px;
+  background-color: white;
+  border: 1px solid #174d65;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+
+.box-1 {
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    background-color: #174d65;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.box-2 {
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    background-color: #8ed2db;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.box-3 {
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    background-color: #e7d9bf;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.box-4 {
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    background-color: #f4b8b8;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.box-6 {
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    background-color: #174d65;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.box-8 {
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    background-color: #2d5942;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.box-10 {
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    background-color: #fc7863;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.my-home-form {
+  width: 67vh;
+  padding-top: 80px;
+  padding-bottom: 60px;
+  padding-left: 80px;
+  padding-right: 80px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  justify-content: center;
+  box-shadow: 0.1px 0.1px 1px 1px rgb(230, 230, 230);
+  overflow: scroll;
+}
+
+.my-home-form:hover {
+  padding-top: 80px;
+  padding-bottom: 60px;
+  padding-left: 80px;
+  padding-right: 80px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(255, 255, 255);
+  justify-content: center;
+  box-shadow: 0.5px 0.5px 2px 2px rgb(230, 230, 230);
+  overflow: scroll;
+}
+
+.my-button {
+  width: 100% !important;
+}
+
+.my-container .my-home-form form h1 {
+  margin-bottom: 60px; text-align: center;  color: black;
+}
+
+#help-signin {
+  margin-bottom: 25px; 
+}
+
+#help-signup {
+  margin-bottom: 25px; 
+}
+
+#my-name {
+  margin-bottom: 25px; 
+}
+
+#my-button-yes {
+  text-align: center; margin-bottom: 60px;
+}
+
+#my-button-signup {
+  text-align: center; margin-bottom: 60px;
+}
+
+.google {
+  margin-bottom: 60px; 
+}
+
+.dropdown-item {
+  padding-right: 0.75rem !important;
+}
+
+.navbar {
+  padding-top: 0.3rem !important;
+  padding-bottom: 0.3rem !important;
+}
+
+@media only screen and (max-width: 1300px) {
+  .navbar {
+    padding-top: 0.3rem !important;
+    padding-bottom: 0.3rem !important;
+    border-bottom: 1px solid #174d65;
+  }
+  
+  .my-home-form {
+    width: 68vh;
+    height: auto;
+    padding-top: 80px;
+    padding-bottom: 60px;
+    padding-left: 80px;
+    padding-right: 80px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    justify-content: center;
+    box-shadow: 0.1px 0.1px 1px 1px rgb(230, 230, 230);;
+  }
+
+  .my-container .my-home-form form h1 {
+    margin-bottom: 15px; text-align: center;  color: black; font-size:medium;
+  }
+
+  #help-signin {
+    margin-bottom: 0px; 
+  }
+
+  #my-button-yes {
+    margin-bottom: 0px; 
+  }
+
+  #help-signup {
+    margin-bottom: 0px; 
+  }
+
+  #my-button-signup {
+    margin-bottom: 0px; 
+  }
+
+  .google {
+    margin-bottom: 0px; 
+  } 
+}
+
+.container {
+  margin-top: 50px;
+}
+
+@media only screen and (max-height: 500px) {
+  .my-home-form {
+    margin-top: 50px;
+    width: 120vh;
+    height: auto;
+    padding-bottom: 60px;
+    padding-left: 80px;
+    padding-right: 80px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    justify-content: center;
+    box-shadow: 0.1px 0.1px 1px 1px rgb(230, 230, 230);
+    overflow: scroll;
+  }
+
+  .my-home {
+    padding-top: 85px;
+    width: 120vh;
+    height: auto;
+    padding-bottom: 60px;
+    padding-right: 80px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    justify-content: center;
+    overflow: scroll;
+  }
+
+  #help-signin {
+    margin-bottom: 20px; 
+  }
+
+  #help-signup{
+    margin-bottom: 20px; 
+  }
+
+  #my-button-yes {
+    margin-bottom: 20px; 
+    width: 100%;
+  }
+
+  #my-button-signup {
+    margin-bottom: 20px; 
+    width: 100%;
+  }
+
+  .my-container .my-home-form form h1 {
+    margin-bottom: 0; margin-top: 55px; text-align: center;  color: black;
+  }
+
+  .google {
+    margin-bottom: 0px; 
+  } 
+}
