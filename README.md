@@ -1,4 +1,10 @@
 # Kanban-server
+Server for kanban app, created using node.js, express, sequelize, postgres.
+
+
+## URL:
+https://kanban-glasgow-server.herokuapp.com
+
 
 ## List of available endpoints:
 
