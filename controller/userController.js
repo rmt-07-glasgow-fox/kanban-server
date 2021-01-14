@@ -8,14 +8,23 @@ class userControl {
     static async register (req, res) {
         const { email, password, username } = req.body
         try {
-            const create = await User.create({
-                email, password, username
+            const find = await User.findOne({
+                where: { email }
             })
-            res.status(201).json({
-                id: create.id,
-                username: create.username,
-                email: create.email,
-            })
+            if (!find) {
+                const create = await User.create({
+                    email, password, username
+                })
+                res.status(201).json({
+                    id: create.id,
+                    username: create.username,
+                    email: create.email,
+                })
+            } else {
+                res.status(400).json({
+                    msg: 'This email already register'
+                })
+            }
         } catch (err) {
             res.status(500).json({
                 msg: 'Error in internal server',

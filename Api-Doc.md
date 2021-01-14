@@ -75,6 +75,12 @@ _Response (200)_
     "username": <string>
   }
 ```
+_Response (400 - Bad Request)_
+```json
+  {
+    "message": "This email already register"
+  }
+```
 _Response (500 - Internal Server Error)_
 ```json
   {
