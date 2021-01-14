@@ -71,8 +71,8 @@ exports.member = async (req, res, next) => {
 
     if (!isMember) return next({ name: 'NotFound', attr: 'Organization' });
     else {
-      const orgs = await Organization.findOne({
-        where: { id: id },
+      const members = await Member.findAll({
+        where: { OrganizationId: id },
         include: [
           {
             model: User,
@@ -81,7 +81,7 @@ exports.member = async (req, res, next) => {
         ],
       });
 
-      return res.status(200).json(orgs);
+      return res.status(200).json(members);
     }
   } catch (err) {
     return next(err);
