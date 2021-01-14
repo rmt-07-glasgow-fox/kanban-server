@@ -3,7 +3,8 @@ const { Task, User } = require('../models')
 class taskController {
     static getTask(req, res, next){
         Task.findAll({
-            include : User
+            include : User,
+            order : ['id']
         })
         .then(tasks => {
             res.status(200).json(tasks)
