@@ -3,6 +3,7 @@ const { Organization, Member, User } = require('../models');
 exports.create = async (req, res, next) => {
   const { name } = req.body;
   const userId = req.user.id;
+  if (!name) return next({ name: 'OrgValidation' });
 
   try {
     const body = {
