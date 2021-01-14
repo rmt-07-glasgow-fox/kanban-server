@@ -26,6 +26,7 @@ exports.login = async (req, res, next) => {
 
       return res.status(200).json({
         access_token: token,
+        id: user.id,
         first_name: user.first_name,
         last_name: user.last_name,
       });
@@ -109,7 +110,8 @@ exports.google = async (req, res, next) => {
       const token = jwt.sign(payloadUser, process.env.JWT_SECRET);
 
       return res.status(200).json({
-        accessToken: token,
+        access_token: token,
+        id: isUser.id,
         first_name: payloadGoogle.given_name,
         last_name: payloadGoogle.family_name,
       });
