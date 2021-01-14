@@ -1,18 +1,16 @@
 const { Task } = require('../models')
 
 class TaskController{
-    static getTask(req,res){
+    static getTask(req,res,next){
         Task.findAll()
         .then(data => {
             res.status(200).json(data)
         })
         .catch(err => {
-            res.status(500).json({message: 'server error'})
+            next(err)
         })
     }
-    static addTask(req,res){
-        console.log('>>>>>>>>>>',req.user.id);
-        console.log('romi');
+    static addTask(req, res, next){
         const newTask = {
             title: req.body.title,
             category: req.body.category,
@@ -23,11 +21,11 @@ class TaskController{
             res.status(201).json(data)
         })
         .catch(err => {
-            console.log(err);
-            res.status(500).json({message: 'server error'})
+            next(err)
         })
     }
-    static deleteTask(req,res){
+    static deleteTask(req,res,next){
+        console.log('ini request nya');
         Task.destroy({
             where: {
                 id:req.params.id
@@ -37,32 +35,40 @@ class TaskController{
             res.status(200).json({message: 'Task has been deleted'})
         })
         .catch(err => {
-            res.status(500).json({message: 'server error'})
+            next(err)
         })
     }
-    static editTask(req,res){
+    static editTask(req,res,next){
         const newTask = {
             title: req.body.title,
             category: req.body.category
         }
-        Task.update(newTask)
+        Task.update(newTask, {
+            where:{
+                id: req.params.id
+            }
+        })
         .then(data => {
-            res.status(200).json(data)
+            res.status(200).json({ message: 'Task has been updated' })
         })
         .catch(err => {
-            res.status(405).json({message: 'Wrong data update'})
+            next(err)
         })
     }
-    static editOne(req,res){
+    static editOne(req,res,next){
         const newTask = {
-            status: req.body.category
+            category: req.body.category
         }
-        Task.update(newTask)
+        Task.update(newTask, {
+            where:{
+                id: req.params.id
+            }
+        })
         .then(data => {
-            res.status(200).json(data)
+            res.status(200).json({ message: 'Task has been updated' })
         })
         .catch(err => {
-            res.status(405).json({message: 'Wrong data update'})
+            next(err)
         })
     }
 }

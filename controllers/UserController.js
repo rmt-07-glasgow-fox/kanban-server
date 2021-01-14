@@ -3,7 +3,7 @@ const { comparePass } = require('../helper/hash')
 const { generateToken } = require('../helper/jwt')
 
 class UserController{
-    static addNew(req,res){
+    static addNew(req,res,next){
         const {name, email, password} = req.body  
         console.log(req.body.name);
         User.create({name, email, password})
@@ -11,10 +11,10 @@ class UserController{
             res.status(201).json({id: data.id, name : data.name, email:data.email})
         })
         .catch(err => {
-            res.status(400).json(err)
+            next(err)
         })
     } 
-    static login(req,res){
+    static login(req,res,next){
         const {email,password} = req.body
         User.findOne({
             where:{
@@ -22,7 +22,7 @@ class UserController{
             }
         })
         .then(data => {
-            if (!data) {
+            if (data.email != email) {
                 res.status(401).json({
                     msg: 'Invalid Email/Password'
                 })
@@ -44,8 +44,8 @@ class UserController{
                 }
             }
         })
-        .catch(err => {
-            res.status(401).json(err)
+        .catch(err => { 
+            next(err)
         })
     }
 }

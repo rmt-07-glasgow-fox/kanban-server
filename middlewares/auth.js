@@ -1,5 +1,5 @@
 const { cekToken } = require('../helper/jwt')
-const { User,Todo } = require('../models')
+const { User,Task } = require('../models')
 
 function authenticate(req, res, next) {
     try {
@@ -27,13 +27,13 @@ function authenticate(req, res, next) {
 }
 
 function authorize(req, res, next) {
-    Todo.findOne({
+    Task.findOne({
         where:{
             id: req.params.id
         }
     })
     .then(data => {
-        if (!data || data.UserId != req.user.id) {
+        if (data && data.UserId == req.user.id) {
             next()
         } else {
             res.status(401).json({ msg: 'Not yours' })
