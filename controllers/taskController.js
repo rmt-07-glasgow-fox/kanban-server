@@ -4,7 +4,10 @@ class Controller {
     static async showAll(req, res, next) {
         // res.send(req.headers.user)
         try {
-            const users = await Category.findAll({ include: [Task]});
+            const users = await Category.findAll({
+                include: [Task],
+                order: [['id', 'asc']]
+            });
             res.status(200).json(users);
         } catch (err) {
             res.status(500).json(err);
