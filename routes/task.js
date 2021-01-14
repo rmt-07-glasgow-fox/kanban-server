@@ -9,6 +9,8 @@ router.route('/')
 
 router.route('/:id')
   .get(authorize ,TaskController.showOne)
+  .put(authorize, TaskController.edit)
+  .patch(authorize, TaskController.updateCategory)
   .delete(authorize ,TaskController.delete)
 
 module.exports = router

@@ -22,7 +22,6 @@ class TaskController {
         category : category || '',
         UserId
       }
-      console.log(input);
       const task = await Task.create(input)
       res.status(201).json(task)
     } catch (err) {
@@ -38,6 +37,44 @@ class TaskController {
         include: [User]
       })
       res.status(200).json(tasks)
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  static async edit(req,res,next){
+    try {
+      const { id } = req.params
+      const { title, category } = req.body
+      const UserId = req.user.id
+      const input = {
+        title : title || '',
+        category : category || '',
+        UserId
+      }
+      const task = await Task.update(input, {
+        where : {id},
+        returning: true
+      })
+      if(task){
+        res.status(200).json(task[1])
+      }
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  static async updateCategory(req,res,next){
+    try {
+      const { id } = req.params
+      const { category } = req.body
+      const task = await Task.update({category},{
+        where: {id},
+        returning: true
+      })
+      if(task){
+        res.status(200).json(task[1])
+      }
     } catch (err) {
       next(err)
     }
