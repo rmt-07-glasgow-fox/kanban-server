@@ -1,5 +1,4 @@
 const {
-  User,
   Task,
   Category
 } = require("../models")
@@ -29,7 +28,19 @@ class TaskController {
   }
 
   static getAllTask(req, res, next) {
-    let output
+    Task.findAll({
+      order: [["id", "ASC"]]
+    })
+    .then(data => {
+      output = data
+      res.status(200).json(data)
+    })
+    .catch(err => {
+      next(err)
+    })
+  }
+
+  static getAllCategory(req, res, next) {
     Category.findAll({
       include: Task,
       order: [["id", "ASC"], [Task, "createdAt", "ASC"]]
@@ -45,7 +56,9 @@ class TaskController {
 
   static getOneTask(req, res, next) {
     let id = req.params.id
-    Task.findByPk(id)
+    Task.findByPk(id, {
+      include: Task
+    })
     .then(data=> {
       res.status(200).json(data)
     })
@@ -72,6 +85,26 @@ class TaskController {
     })
   }
 
+  static changeTaskCategory(req, res, next) {
+    let { categoryId } = req.body
+    let id = req.params.id
+    Task.findByPk(id)
+    .then(data => {
+      if (!data) {
+        next({name: "resourceNotFound"})
+      } else {
+        data.categoryId = categoryId
+        return data.save()
+      }
+    })
+    .then(data => {
+      res.status(200).json(data)
+    })
+    .catch(err => {
+      next(err)
+    })
+  }
+
   static deleteOneTask(req, res, next) {
     let id = req.params.id
     Task.destroy({
@@ -81,6 +114,40 @@ class TaskController {
       res.status(200).json({
         message: "Task successfuly deleted"
       })
+    })
+    .catch(err => {
+      next(err)
+    })
+  }
+
+  static deleteCategory(req, res, next) {
+    let id = req.params.id
+    Category.findByPk(id, {
+      include: Task,
+    })
+    .then(data=> {
+      if (data.Tasks.length == 0) {
+        return Category.destroy({
+          where: {
+            id
+          }
+        })
+      } else {
+        return next({
+          name: "CannotDelete"
+        })
+      }
+    })
+    .then(data => {
+      if (data == 1) {
+        return res.status(200).json({
+          message: "Categories successfuly deleted"
+        })
+      } else {
+        return next({
+          name: "CannotDelete"
+        })
+      }
     })
     .catch(err => {
       next(err)

@@ -29,14 +29,20 @@ const errorHandler = (err, req, res, next) => {
           message: "You're not authorized!"
         })
 
+      case "CannotDelete":
+        return res.status(403).json({
+          message: "You cannot delete this!"
+        })
+
       case "NotFound":
         return res.status(404).json({
           message: "Not found"
         })
 
       default:
-        return res.status(500).json(err)
-        // "Internal Server Error"
+        return res.status(500).json({
+          message: "Internal Server Error"
+        })
     }
   }
 }
