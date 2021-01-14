@@ -1,8 +1,10 @@
 module.exports = (err, req, res, next) => {
     if(err.status){
-        res.status(err.status).json({
+        const message = {
             message: err.message
-        })
+        }
+        console.log(message)
+        res.status(err.status).json(message)
     } else if (err.name == "SequelizeValidationError") {
         const dataError = []
         for (let i = 0 ; i < err.errors.length; i++){

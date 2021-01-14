@@ -10,7 +10,11 @@ class UserController {
             if (data) {
                 if(compare(req.body.password, data.password)) {
                     const access_token = generateToken({id: data.id, email:data.email})
-                    res.status(200).json({ access_token })
+                    const user = {
+                        access_token: access_token,
+                        name: data.name
+                    }
+                    res.status(200).json(user)
                 } else {
                     throw {
                         status: 404,
