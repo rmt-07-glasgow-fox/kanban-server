@@ -27,6 +27,34 @@ class OrganisationController {
         }
     }
 
+    static async getUser(req, res, next) {
+        try {
+            const { id } = req.params;
+            const organisation = await Organisation.findByPk(id, {
+                include: [{
+                    model: User,
+                    through: UserOrganisation,
+                    as: 'user',
+                    attributes: { exclude: ['createdAt', 'updatedAt'] }
+                }, {
+                    model: User,
+                    as: 'owner',
+                    attributes: ['firstName', 'lastName']
+                }],
+                attributes: { exclude: ['ownerId', 'createdAt', 'updatedAt'] }
+            });
+
+            if (!organisation) return next({ name: 'notFound' });
+
+            return res.status(200).json({
+                status: 'success',
+                data: organisation
+            })
+        } catch (error) {
+            return next(error)
+        }
+    }
+
     static async get(req, res, next) {
         try {
             const { id } = req.params;
@@ -87,6 +115,27 @@ class OrganisationController {
         }
     }
 
+    static async storeUser(req, res, next) {
+        try {
+            const { id, userId } = req.params;
+
+            const findUser = User.findByPk(userId);
+            if (!findUser) return next({ name: 'notFound' });
+
+            const data = await UserOrganisation.create({
+                userId: userId,
+                organisationId: id
+            })
+
+            return res.status(201).json({
+                status: 'sucess',
+                data
+            })
+        } catch (error) {
+            return next(error)
+        }
+    }
+
     static async update(req, res, next) {
         try {
             const { id } = req.params
@@ -119,6 +168,25 @@ class OrganisationController {
             return res.status(200).json({
                 status: 'success',
                 message: 'successfully delete organisation'
+            })
+        } catch (error) {
+            return next(error)
+        }
+    }
+
+    static async destroyUser(req, res, next) {
+        try {
+            const { id, userId } = req.params;
+            const userOrganisation = await UserOrganisation.findOne({ where: { userId, organisationId: id } })
+            if (!userOrganisation) return next({ name: 'notFound' });
+            console.log(userId, req.user.id);
+            if (req.user.id === +userId) return next({ name: 'deleteSelf' })
+
+            userOrganisation.destroy();
+
+            return res.status(200).json({
+                status: 'success',
+                message: 'successfully delete user from organisation'
             })
         } catch (error) {
             return next(error)

@@ -13,20 +13,27 @@ _Auth Endpoint_
 - `POST /login`
 - `POST /register`
 
+_Users Endpoint_
+- `GET /users`
+
 _Tasks Endpoint_
-- `GET /task`
-- `GET /task/:id`
-- `POST /task`
-- `PUT /task/:id`
-- `PATCH /task/:id`
-- `DELETE /task/:id`
+- `GET /tasks`
+- `GET /tasks/:id`
+- `POST /tasks`
+- `PUT /tasks/:id`
+- `PATCH /tasks/:id`
+- `DELETE /tasks/:id`
 
 _Organisation Endpoint_
 - `GET /organisations`
 - `GET /organisations/:id`
+- `GET /organisations/:id/users`
 - `POST /organisations`
+- `POST /organisations/:id/users/:userId`
 - `PUT /organisations/:id`
 - `DELETE /organisations/:id`
+- `DELETE /organisations/:id/users/:userId`
+
 
 
 ### POST /login
@@ -108,7 +115,7 @@ _Response (200)_
   "password": "<posted password>",
   "firstName": "<posted first name>",
   "lastName": "<posted last name>"
-}
+  }
 }
 ```
 
@@ -135,9 +142,51 @@ _Response (500 - Internal Server Error)_
   "message": "Internal server error"
 }
 ```
-
 ---
+### GET /users
 
+> Get all users
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200)_
+```json
+{
+  "status" : "success",
+  "data" : 
+    [
+        {
+            "firstName": "Mochammad",
+            "lastName": "Trinanda",
+            "email": "m.trinandanoviardy@gmail.com"
+        },
+        {
+            "firstName": "Mochammad",
+            "lastName": "Trinanda",
+            "email": "m.trinandanoviardy@gmail.com"
+        } 
+    ]
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "status" : "error",
+  "message": "Internal server error"
+}
+```
+---
 ### GET /tasks
 
 > Get all tasks
@@ -656,6 +705,62 @@ _Response (500 - Internal Server Error)_
 }
 ```
 ---
+### GET /organisation/:id/users
+
+> Get all users in organisation
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200)_
+```json
+{
+  "status" : "success",
+   "data":  {
+        "id": 4,
+        "name": "vintage-fox",
+        "user": [],
+        "owner": {
+            "firstName": "Mochammad",
+            "lastName": "Trinanda"
+        }
+    }
+}
+```
+
+_Response (401 - Unauthorized)_
+```json
+{
+  "status" : "error",
+  "message": "unauthorized!"
+}
+```
+
+_Response (404 - Not Found)_
+```json
+{
+  "status" : "error",
+  "message": "organisation not found"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "status" : "error",
+  "message": "Internal server error"
+}
+```
+---
 ### POST /organisation
 
 > Create new organisation
@@ -700,6 +805,49 @@ _Response (400 - Bad Request)_
     ]
 }
 ```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "status" : "error",
+  "message": "Internal server error"
+}
+```
+---
+### POST /organisation/:id/users/:userId
+
+> Create new organisation
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```json
+{
+  "organisationId": "<organisation id to get insert into>",
+  "userId": "<user id id to get insert into>",
+
+}
+```
+
+_Response (201 - Created)_
+```json
+{
+"status" : "success",
+"data" : {
+  "id": "<given id by system>",
+  "organisationId": "<posted organisation id>",
+  "userId": "<posted user id id >",
+  "createdAt": "2020-03-20T07:15:12.149Z",
+  "updatedAt": "2020-03-20T07:15:12.149Z",
+}
+}
+```
+
 
 _Response (500 - Internal Server Error)_
 ```json
@@ -810,6 +958,54 @@ _Response (404 - Not Found)_
 {
   "status" : "error",
   "message": "organisation not found"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "status" : "error",
+  "message": "Internal server error"
+}
+```
+---
+### DELETE /organisation/:id/users/:userId
+
+> Delete users organisation
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200)_
+```json
+{
+  "status": "success",
+  "message": "users successfully deleted",
+}
+```
+
+_Response (401 - Unauthorized)_
+```json
+{
+  "status" : "error",
+  "message": "unauthorized!"
+}
+```
+
+_Response (404 - Not Found)_
+```json
+{
+  "status" : "error",
+  "message": "users not found"
 }
 ```
 

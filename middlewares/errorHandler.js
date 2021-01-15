@@ -36,7 +36,11 @@ const errorHandler = (err, req, res, next) => {
                 message: 'not found!'
             })
             break;
-
+        case "deleteSelf":
+            res.status(400).json({
+                status: 'error',
+                message: 'your cannot kick yourself in this organisation'
+            })
         default:
             res.status(500).json({
                 status: 'error',
