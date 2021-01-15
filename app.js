@@ -17,6 +17,6 @@ app.get('/', (req, res, next) => {
 app.use('/', router)
 app.use(errorHandler)
 
-app.listen(port, () => {
+app.listen(PORT, () => {
       console.log(`connected to ${PORT}`);
 })
