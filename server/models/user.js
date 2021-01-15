@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       User.hasMany(models.Task, { foreignKey: 'user_id' })
+      User.belongsTo(models.Organization, {foreignKey: 'org_id'})
     }
   };
   User.init({

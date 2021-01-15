@@ -1,3 +1,4 @@
+const { OAuth2Client } = require('google-auth-library')
 const { User } = require('../models')
 const { Op } = require("sequelize")
 const { comparepassword } = require('../helpers/bcrypt')
@@ -11,8 +12,6 @@ class Controller {
             password: req.body.password
         }
 
-        console.log(user)
-
         User.create(user)
             .then(data => {
                 const sent = {
@@ -21,7 +20,6 @@ class Controller {
                     username: data.username
                 }
 
-                console.log(sent)
                 res.status(201).json(sent)
             })
             .catch(err => {
@@ -46,7 +44,6 @@ class Controller {
         })
             .then(data => {
                 if (!data) {
-                    //res.status(401).json({message: 'invalid email'})
                     next({
                         message: 'Invalid email/password',
                         code: 401,
@@ -54,7 +51,6 @@ class Controller {
                     })
                 }
 
-                console.log('find one')
                 const isValid = comparepassword(password, data.password)
                 if (isValid) {
                     // kirim jwt
@@ -66,7 +62,6 @@ class Controller {
                     const access_token = generateToken(payload)
                     res.status(200).json({ access_token })
                 } else {
-                    //res.status(401).json({message: 'invalid email'})
                     next({
                         message: 'Invalid email/password',
                         code: 401,
@@ -76,12 +71,58 @@ class Controller {
 
             })
             .catch(err => {
-                //res.status(500).json({message: err.message})
                 next({
                     message: err.message,
                     code: 400,
                     from: 'Controller User: login user'
                 })
+            })
+    }
+
+    static loginGoogle(req, res, next) {
+        const { id_token } = req.body
+        let email = null
+
+        const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
+        client.verifyIdToken({
+            idToken: id_token,
+            audience: process.env.GOOGLE_CLIENT_ID
+        })
+            .then(ticket => {
+                const payload = ticket.getPayload()
+                console.log(payload);
+                email = payload.email
+
+                return User.findOne({
+                    where: { email }
+                })
+            })
+            .then(user => {
+                if (!user) {
+                    return User.create({
+                        email,
+                        username: 'username',
+                        password: Math.random() * 100 + 'password random google'
+                    })
+                } else {
+                    return user
+                }
+            })
+            .then(user => {
+                const payload = {
+                    id: user.id,
+                    email: user.email
+                }
+                const access_token = generateToken(payload)
+
+                res.status(200).json({
+                    id: user.id,
+                    email: user.email,
+                    access_token: access_token
+                })
+            })
+            .catch(err => {
+                next(err)
             })
     }
 }

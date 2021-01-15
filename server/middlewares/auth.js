@@ -17,6 +17,7 @@ function authentication(req, res, next) {
                     })
                 } else {
                     req.userId = data.id
+                    req.orgId = data.org_id
                     next()
                 }
             })
@@ -37,7 +38,7 @@ function authorization(req, res, next) {
         where: { id: task_id }
     })
         .then(data => {
-            if (!data || data.user_id !== user_id) {
+            if (!data || data.user_id !== user_id || data.org_id !== req.orgId) {
                 next({
                     message: 'disallowed',
                     code: 401,

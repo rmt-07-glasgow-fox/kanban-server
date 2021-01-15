@@ -13,7 +13,7 @@ class Controller {
                 next({
                     message: 'Internal server error',
                     code: 500,
-                    from: 'Controller task: show task'
+                    from: 'Controller task: show all task'
                 })
             })
     }
@@ -26,8 +26,6 @@ class Controller {
             due_date: generalStampz(req.body.due_date),
             user_id: req.userId
         }
-
-        console.log(task)
 
         Task.create(task)
             .then(data => {
@@ -141,6 +139,8 @@ class Controller {
                 const task = {
                     category: req.body.category
                 }
+
+                console.log(task)
 
                 return Task.update(task, {
                     where: { id },
