@@ -7,6 +7,7 @@ router.post('/', TaskController.createTask)
 router.get('/', TaskController.getTask)
 router.get('/categories', TaskController.getCategory)
 router.get('/:id', TaskController.getOne)
+router.patch('/:id', TaskController.patchTask)
 router.put('/:id', authorize, TaskController.updateTask)
 router.delete('/:id', authorize, TaskController.deleteTask)
 

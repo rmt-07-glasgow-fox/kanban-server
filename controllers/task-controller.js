@@ -68,6 +68,24 @@ class TaskController {
 
       }
 
+      static patchTask(req, res, next){
+          let patch = {
+              CategoryId: req.body.CategoryId
+          }
+             let { id } = req.params
+          Task.update(patch, {where: {id}})
+               .then(data => {
+                     return Task.findOne({where: {id}})
+               }).then(task => {
+                      res.status(200).json(task)
+               }).catch(err => {
+                next({name: 'Unauthorized'})
+                next({name:"SequelizeValidationError"})
+                next({name: "SourceNotFound"})
+                next(err)
+               })
+      }
+
       static deleteTask(req, res, next) {
             let id = req.params.id
 
