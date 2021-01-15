@@ -1,6 +1,7 @@
 const { User } = require ("../models")
 const { comparePassword } = require ("../helpers/bcrypt")
 const { getToken } = require ("../helpers/jwt")
+const { OAuth2Client } = require('google-auth-library');
 
 class UserController {
     static register (req, res, next) {
@@ -57,15 +58,18 @@ class UserController {
         const { id_token } = req.body
         const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
         let email = ""
-
+        let username = ""
+        console.log(process.env.GOOGLE_CLIENT_ID)
         client.verifyIdToken({
             idToken: id_token,
             audience: process.env.GOOGLE_CLIENT_ID
         })
         .then (ticket => {
             const payload = ticket.getPayload();
-            // console.log(payload)
+            console.log(email, username)
+            console.log(payload)
             email = payload.email
+            username = payload.name
 
             //setelah dapat email, kita cocokkan apakah di database User email telah terdaftar
             //jika belum, maka diregistrasikan lalu generate JWT
@@ -82,6 +86,7 @@ class UserController {
             // console.log(result)
             if (!result) {
                 return User.create ({
+                    username,
                     email,
                     password: Math.floor(Math.random()*1000) + "Pass"
                 })
