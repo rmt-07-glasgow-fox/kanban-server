@@ -1,6 +1,8 @@
 const {User,Task} = require('../models')
 const { compare } = require('../helpers/bcrypt')
 const { generateToken } = require('../helpers/jwt')
+const {OAuth2Client} = require('google-auth-library')
+const genPassword = require('../helpers/randPassword')
 
 class UserController {
     static async login(req,res,next){

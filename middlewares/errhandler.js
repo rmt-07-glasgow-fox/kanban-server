@@ -5,25 +5,40 @@ module.exports = {
         let StatusCode = 500
         let message = 'Internal Server Error'
         switch (err.name) {
-            case "NotFound":
-                StatusCode = 404
-                message = err.message                
+            case 'SequelizeValidationError':
+                statusCode = 400
+                message = err.errors[0].message
                 break;
-
-            case "Unaothorized":
-                StatusCode = 401
-                message = err.message                
+            case 'SequelizeDatabaseError':
+                if(err.parent.code === '23502'){
+                    statusCode = 400
+                    message = err.errors[0].message
+                }            
                 break;
-                
-            case "Forbidden":
-                StatusCode = 403
-                message = err.message                
+            case "SequelizeUniqueConstraintError":
+                statusCode = 400
+                message = `${err.errors[0].value} sudah ada`
                 break;
-            
-            case "JsonWebTokenError":
-                StatusCode = 401
-                message = "Silahkan Login terlebih dahulu"          
+            case 'SequelizeForeignKeyConstraintError': 
+                statusCode = 400
+                message = `ForeignKey error!` 
                 break;
+            case 'NotFound':
+                statusCode = 404
+                message = err.message
+                break;
+            case 'Forbidden':
+                statusCode = 403
+                message = err.message
+                break
+            case 'Unauthorized':
+                statusCode = 401
+                message = err.message
+                break
+            case 'JsonWebTokenError':
+                statusCode = 401
+                message = err.message
+                break
         }
         res.status(StatusCode).json({message})
     }
