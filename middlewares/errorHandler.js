@@ -17,7 +17,7 @@ function errorHandler(err, req, res , next){
     }
     else if (err.name === "SequelizeUniqueConstraintError"){
         let message = ['Email has been registered']
-        res.status(400).json({Errors : message})
+        res.status(400).json({message : message})
     }
     else if (err.name === 'Invalid email / password'){
         res.status(401).json({message : "Invalid Email / Password"})
