@@ -39,10 +39,12 @@ Create new User
   ```
   [
     {
+      name: "Bad Request"
       message: <error_message>,
       column: <path>
     },
     {
+      name: "Bad Request"
       message: <error_message>,
       column: <path>
     }
@@ -52,6 +54,7 @@ Create new User
   **Content:**
   ```
   {
+    "name": "Internal server error",
     "message": <error_message>
   }
   ```
@@ -88,6 +91,7 @@ Login User
 
   ```
   {
+    "name": "Bad Request",
     "message": <error_message>
   }
   ```
@@ -95,6 +99,7 @@ Login User
   **Content:**
   ```
   {
+    "name": "Internal server error",
     "message": <error_message>
   }
   ```
@@ -129,6 +134,7 @@ Login with google
 
   ```
   {
+    "name": "Bad Request",
     "message": <error_message>
   }
   ```
@@ -136,6 +142,7 @@ Login with google
   **Content:**
   ```
   {
+    "name": "Internal server error",
     "message": <error_message>
   }
   ```
@@ -193,6 +200,7 @@ Get all tasks
   **Content:**
   ```
   {
+    "name": "Internal server error",
     "message": <error_message>
   }
   ```
@@ -240,6 +248,7 @@ Create new task
   **Content:**
   ```
   {
+    "name": "Internal server error",
     "message": <error_message>
   }
   ```
@@ -280,13 +289,15 @@ Update task
   **Content:**
   ```
   {
-    "message": "Unauthorized"
+    "name": "Unauthorized",
+    "message": "Not authorized"
   }
   ```
   **Code:** 500 <br>
   **Content:**
   ```
   {
+    "name": "Internal server error",
     "message": <error_message>
   }
   ```
@@ -324,6 +335,7 @@ Delete task
   **Content:**
   ```
   {
+    "name": "Unauthorized",
     "message": "Unauthorized"
   }
   ```
@@ -331,6 +343,7 @@ Delete task
   **Content:**
   ```
   {
+    "name": "Internal server error",
     "message": <error_message>
   }
   ```
