@@ -38,17 +38,18 @@ class UserController {
                 let isLogin = !user ? false : comparePassword(password, user.password);
 
                 if (!isLogin) throw new Error ('InvalidEmailPassword');
-
-                res.status(205).json({
-                    name: user.name,
-                    access_token: generateToken({
-                        id: user.id,
-                        email: user.email
+                else {
+                    return res.status(200).json({
+                        name: user.name,
+                        access_token: generateToken({
+                            id: user.id,
+                            email: user.email
+                        })
                     })
-                })
+                }
+
             })
             .catch(err => {
-                res.send(err)
                 next(err)
             })
     }
