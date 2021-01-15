@@ -2,7 +2,7 @@ const TaskController = require('../controllers/taskController');
 const { authorization } = require('../middlewares/authMiddle');
 const router = require('express').Router();
 
-router.get('/', TaskController.getTask);
+router.get('/', TaskController.getCategory);
 router.post('/', TaskController.createTask)
 
 router.patch('/:id', authorization,TaskController.editCategory)

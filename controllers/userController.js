@@ -1,3 +1,4 @@
+const {OAuth2Client} = require('google-auth-library')
 const { comparePassword } = require('../helpers/bcrypt');
 const { generateToken } = require('../helpers/jwt');
 const { User } = require('../models')
@@ -40,6 +41,43 @@ class UserController {
             }
         })
         .catch(err => {
+            next(err)
+        })
+    }
+
+    static loginGoogle(req, res , next){
+        const {id_token} = req.body
+        const client = new OAuth2Client(process.env.GOOGLE_API)
+        let payload = null
+        console.log(id_token, client)
+        client.verifyIdToken({
+            idToken: id_token,
+            audience: process.env.GOOGLE_API
+        })
+        .then(ticket =>{
+            payload = ticket.getPayload()
+            return User.findOne({where: {email: payload.email}})
+        })
+        .then(user =>{
+            if(!user){
+                return User.create({
+                    email: payload.email,
+                    password: Math.floor(Math.random()*1000) + 'vue-google-signin-button-directive',
+                    name: payload.name
+                })
+            }else {
+                return user
+            }
+        })
+        .then(user =>{
+            let googleSign = {
+                id: user.id,
+                email: user.email
+            }
+            let access_token = generateToken(googleSign)
+            res.status(200).json({access_token})
+        })
+        .catch(err =>{
             next(err)
         })
     }

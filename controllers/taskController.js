@@ -11,6 +11,16 @@ class TaskController {
         })
     }
 
+    static getCategory (req, res, next) {
+        Category.findAll({ include: Task })
+        .then(result => {
+            return res.status(200).json(result);
+        })
+        .catch(err => {
+            next(err)
+        })
+    }
+
     static createTask (req, res, next) {
         let newTask = {
             title: req.body.title,
