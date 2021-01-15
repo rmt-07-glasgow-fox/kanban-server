@@ -21,7 +21,7 @@ class UserController {
                 })
             })
             .catch(err => {
-                next(err)
+                next(err)  
             })
 
     }
