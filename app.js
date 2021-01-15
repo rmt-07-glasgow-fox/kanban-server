@@ -4,7 +4,7 @@ const app = express()
 const router = require('./routes/index')
 const errorHandler = require('./middleware/errorhandler')
 const cors = require('cors')
-const port = 3000
+const PORT = process.env.PORT || 3000
 
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
@@ -18,5 +18,5 @@ app.use('/', router)
 app.use(errorHandler)
 
 app.listen(port, () => {
-      console.log(`connected to ${port}`);
+      console.log(`connected to ${PORT}`);
 })
