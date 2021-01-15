@@ -8,18 +8,16 @@ function errorHandler(err, req, res, next) {
       res.status(400).json({ message: errors })
       break
     case 'SequelizeUniqueConstraintError':
-      res.status(400).json({ message: 'Please register with a different email' })
+      res.status(400).json({ message: 'Please register with a different email account' })
       break
     case 'accessDenied':
-      res.status(401).json({message: 'access denied'})
+      res.status(401).json({message: `You don't have access for this action`})
       break;
     case 'resourceNotFound':
       res.status(404).json({message: 'resource not found'})
+      break
     case 'JsonWebTokenError':
       res.status(401).json({message: 'JWT must be provided'})
-      break;
-    case 'internalServerError':
-      res.status(500).json({ message: 'internal server error' });
       break;
     default: 
       res.status(500).json({message: 'internal server error'})

@@ -1,8 +1,10 @@
-const { Task } = require('../models')
+const { Task, User } = require('../models')
 
 class TaskController {
   static showTasks(req, res, next) {
-    Task.findAll({ order: [['id', 'ASC']] })
+    Task.findAll({ 
+      order: [['id', 'ASC']],
+      include: User })
       .then(task => {
         return res.status(200).json(task)
       })
@@ -19,6 +21,18 @@ class TaskController {
     Task.create(newTask)
       .then(task => {
         return res.status(201).json(task)
+      })
+      .catch(err => {
+        next(err)
+      })
+  }
+
+  static getTaskById(req, res, next) {
+    const id = +req.params.id
+
+    Task.findByPk(id)
+      .then(task => {
+        return res.status(200).json(task)
       })
       .catch(err => {
         next(err)
@@ -42,7 +56,6 @@ class TaskController {
         return res.status(200).json(task[1])
       })
       .catch(err => {
-        console.log(err)
         next(err)
       })
   }
@@ -63,7 +76,6 @@ class TaskController {
         return res.status(200).json(task[1])
       })
       .catch(err => {
-        console.log(err)
         next(err)
       })
   }

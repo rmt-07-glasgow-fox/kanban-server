@@ -7,8 +7,8 @@ const generateToken = payload => {
 }
 
 const verifyToken = token => {
-  const isMatched = jwt.verify(token, SECRET_KEY)
-  return isMatched
+  const isMatching = jwt.verify(token, SECRET_KEY)
+  return isMatching
 }
 
 module.exports = { generateToken, verifyToken }

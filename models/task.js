@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {
-          msg: 'Please write down your task'
+          msg: 'Task name must not be empty!'
         }
       }
     },

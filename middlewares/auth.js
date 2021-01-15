@@ -13,7 +13,6 @@ async function authentication(req, res, next) {
     req.user = { id: user.id, email: user.email }
     next()
   } catch(err) {
-    console.log('error di middleware-authentication: ', err)
     next(err)
   }
 }
@@ -29,7 +28,6 @@ async function authorization(req, res, next) {
       next()
     }
   } catch (err) {
-    console.log('error di middleware-authorization: ', err)
     next(err)
   }
 
