@@ -26,6 +26,11 @@ module.exports = (sequelize, DataTypes) => {
     CategoryId: DataTypes.STRING,
     UserId: {
       type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: {
+          msg: "Cattegory is needed"
+        }
+      },
       references: {
         model: "Users",
         key: "id"

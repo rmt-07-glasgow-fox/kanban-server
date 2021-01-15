@@ -2,7 +2,6 @@ errorHandlers = (err, req, res, next) => {
     if (err) {
         switch (err.name) {
             case "SequelizeValidationError":
-                console.log(err.errors[0].message);
                 const errMsg = err.errors.map( el => {
                     return { message: el.message }
                 } )
@@ -10,6 +9,9 @@ errorHandlers = (err, req, res, next) => {
                 break;
             case "loginFailed":
                 res.status(400).json({ message: "Invalid email/ password" })
+                break;
+            case "SequelizeUniqueConstraintError":
+                res.status(400).json([{ message: "Email already been used" }])
                 break;
             case "notLogin":
                 res.status(401).json({

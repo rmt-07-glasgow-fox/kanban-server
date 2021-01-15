@@ -33,9 +33,7 @@ module.exports = (sequelize, DataTypes) => {
         isEmail: {
           msg: "Error format email"
         },
-        //uniqueCustom
       },
-      unique: true
     },
     password: {
       type: DataTypes.STRING,
