@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Task extends Model {
+  class Category extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,23 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Task.belongsTo(models.User, {foreignKey: 'UserId'})
-      Task.belongsTo(models.Category, {foreignKey: 'CatId'})
+      Category.hasMany(models.Task, {foreignKey: 'CatId'})
     }
   };
-  Task.init({
-    title: {
-      type: DataTypes.STRING,
-      validate: {
-        notEmpty: {
-          args: true,
-          msg: "Title is Required"
-        }
-      }
-    },
+  Category.init({
+    name: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'Task',
+    modelName: 'Category',
   });
-  return Task;
+  return Category;
 };

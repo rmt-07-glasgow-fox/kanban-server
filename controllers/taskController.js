@@ -1,12 +1,13 @@
 const {Task} = require("../models")
 
 class Controller { 
-  static async createTask(req, res) {
+  static async createTask(req, res, next) {
     try {
       const data = {
         title: req.body.title,
         category: req.body.category,
-        UserId: req.user.id
+        UserId: req.user.id,
+        CatId: req.body.CatId
       }
       const task = await Task.create(data)
       res.status(201).json(task)
@@ -15,9 +16,9 @@ class Controller {
     }
   }
 
-  static async getTasks(req, res) {
+  static async getTasks(req, res, next) {
     try {
-      const tasks = await Task.findAll()
+      const tasks = await Task.findAll({order: ['id']})
       res.status(200).json(tasks)
     } catch (error) {
       console.log(error);
@@ -25,7 +26,7 @@ class Controller {
     }
   }
 
-  static async getTask(req, res) {
+  static async getTask(req, res, next) {
     try {
       const id = req.params.id
       const task = await Task.findByPk(id)
@@ -43,7 +44,7 @@ class Controller {
     }
   }
 
-  static async updateTask(req, res) {
+  static async updateTask(req, res, next) {
     try {
       const id = req.params.id
       const data = {
@@ -64,10 +65,10 @@ class Controller {
     }
   }
 
-  static async patchTask(req, res) {
+  static async patchTask(req, res, next) {
     try {
       const id = req.params.id
-      const task = await Task.findByPk(id)
+      let task = await Task.findByPk(id)
       const data = {
         category: task.category
       }
@@ -89,8 +90,8 @@ class Controller {
             data.category = `Backlog`
             break;
         }
-        const pTask = await Task.update(data, {where: {id}, returning: true})
-        res.status(200).json(pTask)
+        task = await Task.update(data, {where: {id}, returning: true})
+        res.status(200).json(task)
       } else {
         throw {
           code: 400,
@@ -102,7 +103,7 @@ class Controller {
     }
   }
 
-  static async deleteTask(req, res) {
+  static async deleteTask(req, res, next) {
     try {
       const id = req.params.id
       const task = await Task.findByPk(id)
