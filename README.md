@@ -4,6 +4,10 @@
 **How to**
 ---
 ```
+Deployed link : https://kanban-server-by-rozakus.herokuapp.com
+```
+
+```
 settings server : 
 
 npm i
