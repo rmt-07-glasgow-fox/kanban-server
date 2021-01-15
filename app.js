@@ -1,7 +1,7 @@
 if(process.env.NODE_ENV === "development") {
-  console.log(process.env.NODE_ENV);
   require("dotenv").config()
 }
+console.log(process.env.NODE_ENV);
 const express = require("express")
 const app = express()
 const PORT = process.env.PORT || 3000
