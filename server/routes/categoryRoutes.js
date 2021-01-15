@@ -6,6 +6,6 @@ const router = express.Router()
 router.get('/', CategoryController.getCategories)
 router.post('/', CategoryController.addCategories)
 router.delete('/:id', categoriesAuth, CategoryController.deleteCategories)
-router.put('/:id', categoriesAuth, CategoryController.editCategories)
+router.patch('/:id', categoriesAuth, CategoryController.editCategories)
 
 module.exports = router

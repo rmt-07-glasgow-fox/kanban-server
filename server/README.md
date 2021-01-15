@@ -94,28 +94,48 @@ not needed
 _Response (200 - OK)_
 ```
 [
-    {
-        "id": 1,
-        "title": "Task 1",
-        "category": "backlog",
-        "UserId": 1,
-        "createdAt": "2021-01-12T07:37:04.069Z",
-        "updatedAt": "2021-01-12T07:37:04.069Z",
-        "User": {
-            "username": "superman"
-        }
-    },
-    {
-        "id": 2,
-        "title": "Task 2",
-        "category": "done",
-        "UserId": 2,
-        "createdAt": "2021-01-12T07:37:04.069Z",
-        "updatedAt": "2021-01-12T08:13:58.634Z",
-        "User": {
-            "username": "spiderman"
-        }
-    }
+  {
+      "id": 1,
+      "title": "test ",
+      "CategoryId": 1,
+      "UserId": 2,
+      "createdAt": "2021-01-15T09:28:26.492Z",
+      "updatedAt": "2021-01-15T09:28:26.492Z",
+      "User": {
+          "username": "superman"
+      },
+      "Category": {
+          "name": "Backlog"
+      }
+  },
+  {
+      "id": 2,
+      "title": "test google login",
+      "CategoryId": 2,
+      "UserId": 3,
+      "createdAt": "2021-01-15T09:28:42.152Z",
+      "updatedAt": "2021-01-15T09:28:42.152Z",
+      "User": {
+          "username": "Arif Santoso"
+      },
+      "Category": {
+          "name": "Todo"
+      }
+  },
+  {
+      "id": 3,
+      "title": "hi, aku admin",
+      "CategoryId": 3,
+      "UserId": 1,
+      "createdAt": "2021-01-15T09:28:57.879Z",
+      "updatedAt": "2021-01-15T09:28:57.879Z",
+      "User": {
+          "username": "admin123"
+      },
+      "Category": {
+          "name": "Doing"
+      }
+  }
 ]
 ```
 
@@ -141,29 +161,28 @@ _Request Body_
 ```
 {
   "title": "Task 3",
-  "category": "backlog",
+  "categoryId": "1",
 }
 ```
 
 _Response (201 - Created)_
 ```
 {
-    "id": 3,
-    "title": "Task 3",
-    "category": "backlog",
-    "UserId": 2,
-    "updatedAt": "2021-01-12T08:18:45.955Z",
-    "createdAt": "2021-01-12T08:18:45.955Z"
+  "id": 5,
+  "title": "Task 1",
+  "CategoryId": 1,
+  "UserId": 2,
+  "updatedAt": "2021-01-15T09:42:13.987Z",
+  "createdAt": "2021-01-15T09:42:13.987Z"
 }
 ```
 
 _Response (400 - Bad Request)_
 ```
 {
-    "message": [
-        "Title must be filled",
-        "Category must be filled"
-    ]
+  "message": [
+      "Title must be filled"
+  ]
 }
 ```
 _Response (500 - Bad Request)_
@@ -192,15 +211,15 @@ id = [integer]
 _Response (200 - OK)_
 ```
 {
-    "id": 2,
-    "title": "Task 2",
-    "category": "done",
-    "UserId": 2,
-    "createdAt": "2021-01-12T07:37:04.069Z",
-    "updatedAt": "2021-01-12T08:13:58.634Z",
-    "User": {
-        "username": "spiderman"
-    }
+  "id": 1,
+  "title": "test ",
+  "CategoryId": 1,
+  "UserId": 2,
+  "createdAt": "2021-01-15T09:28:26.492Z",
+  "updatedAt": "2021-01-15T09:28:26.492Z",
+  "User": {
+      "username": "superman"
+  }
 }
 ```
 _Response (401 - Unauthorized)_
@@ -241,19 +260,19 @@ _Request Body_
 ```
 {
   "title": "Task 3 revisi",
-  "category": "backlog",
+  "categoryId": "2",
 }
 ```
 
 _Response (200 - OK)_
 ```
 {
-    "id": 2,
+    "id": 1,
     "title": "Task 3 revisi",
-    "category": "done",
+    "CategoryId": 2,
     "UserId": 2,
-    "createdAt": "2021-01-12T07:37:04.069Z",
-    "updatedAt": "2021-01-12T09:02:02.019Z"
+    "createdAt": "2021-01-15T09:28:26.492Z",
+    "updatedAt": "2021-01-15T09:45:48.999Z"
 }
 ```
 _Response (401 - Unauthorized)_
@@ -266,10 +285,9 @@ _Response (401 - Unauthorized)_
 _Response (400 - Bad Request)_
 ```
 {
-    "message": [
-        "Title must be filled",
-        "Category must be filled"
-    ]
+  "message": [
+      "Title must be filled"
+  ]
 }
 ```
 _Response (404 - Not Found)_
@@ -303,19 +321,19 @@ id = [integer]
 _Request Body_
 ```
 {
-  "category": "done"
+  "categoryId": "3"
 }
 ```
 
 _Response (200 - OK)_
 ```
 {
-    "id": 2,
+    "id": 1,
     "title": "Task 3 revisi",
-    "category": "done",
+    "CategoryId": 3,
     "UserId": 2,
-    "createdAt": "2021-01-12T07:37:04.069Z",
-    "updatedAt": "2021-01-12T09:03:47.303Z"
+    "createdAt": "2021-01-15T09:28:26.492Z",
+    "updatedAt": "2021-01-15T09:47:47.598Z"
 }
 ```
 
@@ -368,6 +386,213 @@ _Response (200 - OK)_
 ```
 {
     "message": "Delete task success"
+}
+```
+_Response (401 - Unauthorized)_
+```
+{
+  "message": "User not authorized"
+}
+```
+_Response (404 - Not Found)_
+```
+{
+  "message": "Data not found"
+}
+```
+_Response (500 - Bad Request)_
+```
+{
+  "message": "Internal Server Error"
+}
+```
+## Endpoints for Category
+### GET /categories
+
+> Get all categories list
+
+_Request Headers_
+```
+{
+  "access_token": "<user access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200 - OK)_
+```
+[
+    {
+        "id": 1,
+        "name": "Backlog",
+        "UserId": 1,
+        "createdAt": "2021-01-15T09:27:09.580Z",
+        "updatedAt": "2021-01-15T09:27:09.580Z"
+    },
+    {
+        "id": 2,
+        "name": "Todo",
+        "UserId": 1,
+        "createdAt": "2021-01-15T09:27:09.580Z",
+        "updatedAt": "2021-01-15T09:27:09.580Z"
+    },
+    {
+        "id": 3,
+        "name": "Doing",
+        "UserId": 1,
+        "createdAt": "2021-01-15T09:27:09.580Z",
+        "updatedAt": "2021-01-15T09:27:09.580Z"
+    },
+    {
+        "id": 4,
+        "name": "Done",
+        "UserId": 1,
+        "createdAt": "2021-01-15T09:27:09.580Z",
+        "updatedAt": "2021-01-15T09:27:09.580Z"
+    }
+]
+```
+
+_Response (500 - Bad Request)_
+```
+{
+  "message": "Internal Server Error"
+}
+```
+---
+### POST /categories
+
+> Create new category
+
+_Request Headers_
+```
+{
+  "access_token": "<user access token>"
+}
+```
+
+_Request Body_
+```
+{
+  "name": "Review"
+}
+```
+
+_Response (201 - Created)_
+```
+{
+    "id": 6,
+    "name": "Review",
+    "UserId": 2,
+    "updatedAt": "2021-01-15T09:52:25.414Z",
+    "createdAt": "2021-01-15T09:52:25.414Z"
+}
+```
+
+_Response (400 - Bad Request)_
+```
+{
+  "message": [
+      "Category name must be filled",
+      "Category name must be unique"
+  ]
+}
+```
+_Response (500 - Bad Request)_
+```
+{
+  "message": "Internal Server Error"
+}
+```
+---
+### PATCH /categories/:id
+
+> Edit category name
+
+_Request Headers_
+```
+{
+  "access_token": "<user access token>"
+}
+```
+
+_Request Params_
+```
+id = [integer]
+```
+_Request Body_
+```
+{
+  "name": "Progres",
+}
+```
+
+_Response (200 - OK)_
+```
+{
+    "id": 6,
+    "name": "Progres",
+    "UserId": 2,
+    "createdAt": "2021-01-15T09:52:25.414Z",
+    "updatedAt": "2021-01-15T09:55:46.818Z"
+}
+```
+_Response (401 - Unauthorized)_
+```
+{
+  "message": "User not authorized"
+}
+```
+
+_Response (400 - Bad Request)_
+```
+{
+  "message": [
+    "Category name must be filled"
+  ]
+}
+```
+_Response (404 - Not Found)_
+```
+{
+  "message": "Data not found"
+}
+```
+_Response (500 - Bad Request)_
+```
+{
+  "message": "Internal Server Error"
+}
+```
+---
+### DELETE /categories/:id
+
+> Delete task
+
+_Request Headers_
+```
+{
+  "access_token": "<user access token>"
+}
+```
+
+_Request Params_
+```
+id = [integer]
+```
+_Request Body_
+```
+not needed
+```
+
+_Response (200 - OK)_
+```
+{
+    "message": "Delete category success"
 }
 ```
 _Response (401 - Unauthorized)_
