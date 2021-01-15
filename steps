@@ -1,0 +1,16 @@
+# install package
+npm init-y
+npm install pg sequelize express 
+npm install --save-Dev sequelize-cli
+npm install -g nodemon
+
+#sequelize
+npx sequelize init
+npx sequelize model:generate --name User --attributes email:string,password:string
+npx sequelize model:generate --name Task --attributes title:string,category:string,UserId:integer
+
+npx sequelize db:create
+npx sequelize db:migrate
+
+
+
