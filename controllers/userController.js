@@ -1,6 +1,7 @@
 const { User } = require('../models')
 const { compare } = require("../helpers/bcrypt")
 const { generateToken } = require("../helpers/jwt")
+const { OAuth2Client } = require('google-auth-library');
 
 
 class UserController {
@@ -55,9 +56,8 @@ class UserController {
     }
 
     static googleLogin(req,res,next){
-        const client = new OAuth2Client(process.env.CLIENT_ID);
         const id_token = req.body.id_token
-
+        const client = new OAuth2Client(process.env.CLIENT_ID);
         client.verifyIdToken({
             idToken: id_token,
             audience: process.env.CLIENT_ID
@@ -84,7 +84,6 @@ class UserController {
                 res.status(200).json({ access_token,name })
             })
             .catch(error => {
-                console.log(error)
                 next(error)
             })
 

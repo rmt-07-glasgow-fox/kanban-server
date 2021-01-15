@@ -40,7 +40,6 @@ class TaskController {
     }
 
     static deleteTask (req,res,next) {
-        console.log('masuk delete')
         Task.destroy({where: {id: req.params.id}})
         .then(data => {
             if (data) {
