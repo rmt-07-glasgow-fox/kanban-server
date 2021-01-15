@@ -211,15 +211,18 @@ id = [integer]
 _Response (200 - OK)_
 ```
 {
-  "id": 1,
-  "title": "test ",
+  "id": 5,
+  "title": "Task 1",
   "CategoryId": 1,
   "UserId": 2,
-  "createdAt": "2021-01-15T09:28:26.492Z",
-  "updatedAt": "2021-01-15T09:28:26.492Z",
+  "createdAt": "2021-01-15T09:42:13.987Z",
+  "updatedAt": "2021-01-15T09:42:13.987Z",
   "User": {
       "username": "superman"
-  }
+  },
+  "Category": {
+      "name": "Backlog"
+    }
 }
 ```
 _Response (401 - Unauthorized)_
@@ -552,7 +555,8 @@ _Response (400 - Bad Request)_
 ```
 {
   "message": [
-    "Category name must be filled"
+    "Category name must be filled",
+    "Category must be unique"
   ]
 }
 ```

@@ -23,10 +23,13 @@ class KanbanController{
     static getTaskById(req, res, next){
         let taskId = req.params.id
         Kanban.findByPk(taskId, {
-            include: {
+            include: [{
                 model: User,
                 attributes: ['username']
-            }
+            },{
+                model: Category,
+                attributes: ['name']
+            }]
         })
         .then(data => {
             if(data){

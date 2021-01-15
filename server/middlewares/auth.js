@@ -51,6 +51,7 @@ function authorized(req, res, next){
 function categoriesAuth(req, res, next){
     let catId = req.params.id
     let userId = req.userData.id
+    // userId 1 ==> admin
     if (userId == 1){
         next()
     } else {

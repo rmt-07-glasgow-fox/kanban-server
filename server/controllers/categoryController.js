@@ -1,8 +1,4 @@
-const {
-  Kanban,
-  User,
-  Category
-} = require('../models')
+const { Kanban, Category } = require('../models')
 
 class CategoryController {
   static getCategories(req, res, next) {
@@ -25,7 +21,7 @@ class CategoryController {
         res.status(201).json(data)
       })
       .catch(err => {
-        if (err.name == "SequelizeValidationError") {
+        if (err.name == "SequelizeValidationError" || err.name == "SequelizeUniqueConstraintError") {
           next({
             status: 400,
             errors: err.errors
@@ -51,9 +47,7 @@ class CategoryController {
             }
           })
         } else {
-          next({
-            status: 404
-          })
+          next({ status: 404 })
         }
       })
       .then(data => {
@@ -85,7 +79,7 @@ class CategoryController {
         }
     })
     .catch(err => {
-        if(err.name == "SequelizeValidationError"){
+        if(err.name == "SequelizeValidationError" || err.name == "SequelizeUniqueConstraintError"){
             next({
                 status: 400,
                 errors: err.errors
