@@ -661,23 +661,51 @@ _Response (200)_
 {
   "status" : "success",
    "data": {
-        "id": "<organisation id>",
-        "name": "<organisation name>",
-        "task": [
+        "category": [
             {
-                "id": "<task id>",
-                "name": "<task name>",
-                "description": "<task description>",
-                "createdAt": "2021-01-12T13:06:12.450Z",
-                "updatedAt": "2021-01-12T13:06:12.450Z",
-                "user": {
-                    "email": "<user email>"
-                },
-                "category": {
-                    "name": "<category name>"
-                }
+                "id": 1,
+                "name": "backlog",
+                "task": []
             },
-   }
+            {
+                "id": 2,
+                "name": "todo",
+                "task": [
+                    {
+                        "id": 23,
+                        "name": "makan",
+                        "description": "makan",
+                        "userId": 1,
+                        "organisationId": 29,
+                        "categoryId": 2,
+                        "createdAt": "2021-01-15T08:08:58.565Z",
+                        "updatedAt": "2021-01-15T08:46:38.218Z",
+                        "user": {
+                            "email": "m.trinandanoviardy@gmail.com"
+                        }
+                    }
+                ]
+            },
+            {
+                "id": 3,
+                "name": "doing",
+                "task": []
+            },
+            {
+                "id": 4,
+                "name": "done",
+                "task": []
+            }
+        ],
+        "organisation": {
+            "id": 29,
+            "name": "foxy",
+            "owner": {
+                "firstName": "Mochammad",
+                "lastName": "Trinanda"
+            }
+        }
+    }
 }
 ```
 

@@ -58,23 +58,24 @@ class OrganisationController {
     static async get(req, res, next) {
         try {
             const { id } = req.params;
-            const organisation = await Organisation.findByPk(id, {
+
+            const category = await Category.findAll({
                 include: [{
                     model: Task,
                     as: 'task',
-                    attributes: {
-                        exclude: ['userId', 'organisationId']
-                    },
+                    where: { organisationId: id },
+                    required: false,
                     include: [{
                         model: User,
                         as: 'user',
                         attributes: ['email']
-                    }, {
-                        model: Category,
-                        as: 'category',
-                        attributes: ['name']
-                    }]
-                }, {
+                    }],
+                }],
+                attributes: { exclude: ['ownerId', 'createdAt', 'updatedAt'] }
+            })
+
+            const organisation = await Organisation.findByPk(id, {
+                include: [{
                     model: User,
                     as: 'owner',
                     attributes: ['firstName', 'lastName']
@@ -86,7 +87,10 @@ class OrganisationController {
 
             return res.status(200).json({
                 status: 'success',
-                data: organisation
+                data: {
+                    category,
+                    organisation
+                }
             })
         } catch (error) {
             return next(error)
