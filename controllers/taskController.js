@@ -51,6 +51,17 @@ class TaskController {
     }
   }
 
+  static async getTaskById(req, res, next) {
+    try {
+      const id = req.params.id;
+      const task = await Task.findByPk(id);
+      return res.status(200).json(task);   
+    }
+    catch (err) {
+      return next(err);
+    }
+  }
+
 }
 
 
