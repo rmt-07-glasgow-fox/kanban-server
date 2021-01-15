@@ -1,4 +1,5 @@
 const {
+  User,
   Task,
   Category
 } = require("../models")
@@ -12,6 +13,7 @@ class TaskController {
       res.status(201).json(data)
     })
     .catch(err => {
+      console.log(err.message);
       next(err)
     })
   }
@@ -41,13 +43,14 @@ class TaskController {
 
   static getAllCategory(req, res, next) {
     Category.findAll({
-      include: Task,
+      include: [{model:Task, include:[{model:User}]}],
       order: [["id", "ASC"], [Task, "createdAt", "ASC"]]
     })
     .then(data => {
       res.status(200).json(data)
     })
     .catch(err => {
+      console.log(err);
       next(err)
     })
   }

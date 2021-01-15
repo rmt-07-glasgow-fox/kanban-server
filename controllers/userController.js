@@ -19,7 +19,12 @@ class UserController {
           email: data.email,
           fullname: data.fullname
         }
-        res.status(201).json(sendOut)
+        let access_token = generateToken(sendOut)
+        res.status(200).json({
+          access_token,
+          email: data.email,
+          fullname: data.fullname
+        })
       })
       .catch(err => {
         next(err)
@@ -51,7 +56,9 @@ class UserController {
         }
         let access_token = generateToken(payload)
         res.status(200).json({
-          access_token
+          access_token,
+          email: data.email,
+          fullname: data.fullname
         })
       })
       .catch(err => {
@@ -98,7 +105,9 @@ class UserController {
         }
         const access_token = generateToken(payload)
         return res.status(200).json({
-          access_token
+          access_token,
+          email: user.email,
+          fullname: user.fullname
         })
       })
       .catch(err => {
