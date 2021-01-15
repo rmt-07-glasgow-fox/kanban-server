@@ -23,7 +23,7 @@ class TaskController {
         const UserId = req.user.id;
         const { title, detail, due_date, category } = req.body;
         try {
-            const task = await Task.create({ title, detail, due_date, UserId, category});
+            const task = await Task.create({ title, detail, due_date, category, UserId });
             res.status(201).json(task);
         }
         catch(err) { next(err) }
