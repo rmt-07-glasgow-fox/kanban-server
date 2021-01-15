@@ -24,7 +24,9 @@ module.exports = (sequelize, DataTypes) => {
     category: {
       type: {
         type: DataTypes.STRING,
-        isIn: [['backlog', 'todo', 'ongoing', 'done']]
+        validate: {
+          isIn: [['backlog', 'todo', 'ongoing', 'done']]
+        }
       }
     },
     userId: DataTypes.INTEGER
