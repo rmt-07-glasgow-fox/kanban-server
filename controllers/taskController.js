@@ -49,7 +49,7 @@ class Controller {
       const id = req.params.id
       const data = {
         title: req.body.title,
-        category: req.body.category
+        CatId: req.body.CatId
       }
       const task = await Task.update(data, {where: {id}, returning: true})
       if (task) {
@@ -69,25 +69,22 @@ class Controller {
     try {
       const id = req.params.id
       let task = await Task.findByPk(id)
-      const data = {
-        category: task.category
-      }
-      if (data) {
-        switch (data.category) {
-          case `Backlog`:
-            data.category = `Todo`
+      if (task) {
+        switch (task.CatId) {
+          case 1:
+            task.CatId = 2
             break;
-          case `Todo`:
-            data.category = `Doing`
+          case 2:
+            task.CatId = 3
             break;
-          case `Doing`:
-            data.category = `Done`
+          case 3:
+            task.CatId = 4
             break;
-          case `Done`:
-            data.category = `Completed`
+          case 4:
+            task.CatId = 5
             break;
-          case `Completed`:
-            data.category = `Backlog`
+          case 5:
+            task.CatId = 1
             break;
         }
         task = await Task.update(data, {where: {id}, returning: true})
