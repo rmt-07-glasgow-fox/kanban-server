@@ -39,7 +39,7 @@ class UserController {
 
                 if (!isLogin) throw new Error ('InvalidEmailPassword');
                 else {
-                    return res.status(200).json({
+                    res.status(200).json({
                         name: user.name,
                         access_token: generateToken({
                             id: user.id,

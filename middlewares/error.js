@@ -39,6 +39,6 @@ module.exports = (err, req, res, next) => {
         break;
 
         default: 
-            res.send(err)
+            res.status(500).json({ message: 'Internal server error'})
     }
 }
