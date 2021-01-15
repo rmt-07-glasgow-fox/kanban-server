@@ -136,7 +136,7 @@ class UserController {
   }
 
   static selectOrg(req, res, next) {
-    console.log("masuk add organization");
+    // console.log("masuk add organization");
     const { OrganizationId } = req.body;
     const { id } = req.user;
 
