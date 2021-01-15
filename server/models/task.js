@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Task.belongsToMany(models.User, {through: models.UserTask, foreignKey: "id"})
-      Task.hasMany(models.UserTask, {foreignKey:"TaskId", targetKey: "id"})
+      Task.belongsToMany(models.User, { through: models.UserTask, foreignKey: "id" })
+      Task.hasMany(models.UserTask, { foreignKey: "TaskId", targetKey: "id" })
     }
   };
   Task.init({
@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     dueDate: {
-      type: DataTypes.STRING,
+      type: DataTypes.DATEONLY,
       validate: {
         notEmpty: {
           message: "dueDate Required"

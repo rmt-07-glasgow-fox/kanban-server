@@ -1,26 +1,27 @@
 const app = new Vue({
     el: '#app',
     data: {
-      message: 'Hello Vue!',
-      page: "get-started-page",
-      mainPage: "home-page",
-      formTask: "",
-      user: {
-        name: "",
-        email: "",
-        password: ""
-      },
-      taskList: [],
-      task: {
-          title: "",
-          description: "",
-          status: "",
-          dueDate: ""
-      },
-      server: "http://localhost:3000"
+        message: 'Hello Vue!',
+        page: "get-started-page",
+        mainPage: "home-page",
+        profilName: "",
+        formTask: "",
+        user: {
+            name: "",
+            email: "",
+            password: ""
+        },
+        taskList: [],
+        task: {
+            title: "",
+            description: "",
+            status: "",
+            dueDate: ""
+        },
+        server: "http://localhost:3000"
     },
     methods: {
-        changePage(pageName){
+        changePage(pageName) {
             this.page = pageName
             this.user = {
                 name: "",
@@ -28,8 +29,8 @@ const app = new Vue({
                 password: ""
             }
         },
-        changeMainPage(mainPageName){
-            if(this.mainPageName === "kanban-page"){
+        changeMainPage(mainPageName) {
+            if (this.mainPageName === "kanban-page") {
                 this.page = ""
             }
             this.mainPage = mainPageName
@@ -48,13 +49,13 @@ const app = new Vue({
                     password: this.user.password
                 }
             })
-            .then(task => {
-                localStorage.setItem('access_token', task.data.access_token )
-                this.checkAuth()
-            })
-            .catch(err => {
-                console.log(err,"ini err")
-            })
+                .then(task => {
+                    localStorage.setItem('access_token', task.data.access_token)
+                    this.checkAuth()
+                })
+                .catch(err => {
+                    console.log(err, "ini err")
+                })
 
         },
         signin() {
@@ -67,16 +68,16 @@ const app = new Vue({
                     password: this.user.password
                 }
             })
-            .then(task => {
-                localStorage.setItem('access_token', task.data.access_token )
-                this.checkAuth()
-            })
-            .catch(err => {
-                console.log(err, "ini error")
-            })
+                .then(task => {
+                    localStorage.setItem('access_token', task.data.access_token)
+                    this.checkAuth()
+                })
+                .catch(err => {
+                    console.log(err, "ini error")
+                })
 
         },
-        logout(){
+        logout() {
             localStorage.clear()
             this.checkAuth()
         },
@@ -85,39 +86,61 @@ const app = new Vue({
             axios({
                 method: 'GET',
                 url: this.server,
-                headers: {access_token: localStorage.getItem('access_token')}
+                headers: { access_token: localStorage.getItem('access_token') }
             })
-            .then(task => {
-                this.taskList = task.data
-            })
-            .catch(err => {
-    
-            })
+                .then(task => {
+                    this.taskList = task.data
+                })
+                .catch(err => {
+
+                })
         },
-        showCreateFormBacklog(){
+        getDataUser() {
+            console.log("MASUK GET DATA User")
+            axios({
+                method: 'GET',
+                url: `${this.server}/user`,
+                headers: { access_token: localStorage.getItem('access_token') }
+            })
+                .then(task => {
+                    this.profilName = `Hi, ${task.data.user.name}`
+                    console.log(this.profilName)
+                })
+                .catch(err => {
+
+                })
+        },
+        showCreateFormBacklog() {
             this.formTask = "show-create-form-backlog"
             this.task.status = "Backlog"
             this.task.title = ""
             this.task.description = ""
             this.task.dueDate = ""
         },
-        showCreateFormTodo(){
+        showCreateFormTodo() {
             this.formTask = "show-create-form-todo"
             this.task.status = "Todo"
             this.task.title = ""
             this.task.description = ""
             this.task.dueDate = ""
         },
-        showCreateFormDoing(){
+        showCreateFormDoing() {
             this.formTask = "show-create-form-doing"
             this.task.status = "Doing"
             this.task.title = ""
             this.task.description = ""
             this.task.dueDate = ""
         },
-        showCreateFormDone(){
+        showCreateFormDone() {
             this.formTask = "show-create-form-done"
             this.task.status = "Done"
+            this.task.title = ""
+            this.task.description = ""
+            this.task.dueDate = ""
+        },
+        hideCreateForm() {
+            this.formTask = ""
+            this.task.status = ""
             this.task.title = ""
             this.task.description = ""
             this.task.dueDate = ""
@@ -132,15 +155,15 @@ const app = new Vue({
                     status: this.task.status,
                     dueDate: this.task.dueDate
                 },
-                headers: {access_token: localStorage.getItem('access_token')}
+                headers: { access_token: localStorage.getItem('access_token') }
             })
-            .then(task => {
-                this.formTask = ""
-                this.getData()
-            })
-            .catch(err => {
-                console.log("GAGAL")
-            })
+                .then(task => {
+                    this.formTask = ""
+                    this.getData()
+                })
+                .catch(err => {
+                    console.log("GAGAL")
+                })
         },
         putData() {
             axios({
@@ -152,14 +175,14 @@ const app = new Vue({
                     status: this.task.status,
                     dueDate: this.task.dueDate
                 },
-                headers: {access_token: localStorage.getItem('access_token')}
+                headers: { access_token: localStorage.getItem('access_token') }
             })
-            .then(task => {
+                .then(task => {
 
-            })
-            .catch(err => {
-                
-            })
+                })
+                .catch(err => {
+
+                })
         },
         patchData() {
             axios({
@@ -171,35 +194,37 @@ const app = new Vue({
                     status: this.task.status,
                     dueDate: this.task.dueDate
                 },
-                headers: {access_token: localStorage.getItem('access_token')}
+                headers: { access_token: localStorage.getItem('access_token') }
             })
-            .then(task => {
+                .then(task => {
 
-            })
-            .catch(err => {
-                
-            })
+                })
+                .catch(err => {
+
+                })
         },
         deleteData(num) {
             console.log(num)
             axios({
                 method: 'DELETE',
                 url: `${this.server}/${num}`,
-                data: { },
-                headers: {access_token: localStorage.getItem('access_token')}
+                data: {},
+                headers: { access_token: localStorage.getItem('access_token') }
             })
-            .then(task => {
-                this.getData()
-            })
-            .catch(err => {
-                console.log(err, "DIA ERROR")
-            })
+                .then(task => {
+                    this.getData()
+                })
+                .catch(err => {
+                    console.log(err, "DIA ERROR")
+                })
         },
-        checkAuth(){
-            if(localStorage.access_token){
+        checkAuth() {
+            if (localStorage.access_token) {
                 this.mainPage = "kanban-page"
                 this.page = ""
                 this.getData()
+                this.getDataUser()
+
             } else {
                 this.mainPage = "home-page"
                 this.page = 'get-started-page'
@@ -212,10 +237,10 @@ const app = new Vue({
         }
 
     },
-    created: function() {
+    created: function () {
         this.checkAuth()
     },
-    mounted: function() {
+    mounted: function () {
         this.checkAuth()
     }
-  })
+})

@@ -2,7 +2,7 @@
 const {
   Model
 } = require('sequelize');
-const {hashPassword} = require('../helpers/bcrypt')
+const { hashPassword } = require('../helpers/bcrypt')
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -12,8 +12,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.belongsToMany(models.Task, {through: models.UserTask, foreignKey: "id"})
-      User.hasMany(models.UserTask, {foreignKey:"UserId", targetKey: "id"})
+      User.belongsToMany(models.Task, { through: models.UserTask, foreignKey: "id" })
+      User.hasMany(models.UserTask, { foreignKey: "UserId", targetKey: "id" })
+      User.hasMany(models.Category, { foreignKey: "UserId", targetKey: "id" })
     }
   };
   User.init({

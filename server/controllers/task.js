@@ -1,32 +1,31 @@
 const { Task, UserTask, User } = require('../models')
 
 class Controller {
-    static async createTask(req, res, next){
+    static async createTask(req, res, next) {
         try {
-            const {title, description, dueDate, status} = req.body
+            const { title, description, dueDate, status } = req.body.value
+            console.log(req.body, "INI REQ")
             const addedTask = await Task.create({
-                title, description, dueDate, status 
+                title, description, dueDate, status
             })
+            console.log(addedTask, "<<<<<<")
             const temp = await UserTask.create({
                 UserId: req.user.id,
-                TaskId:addedTask.id,
-                dueDate: dueDate
+                TaskId: addedTask.id,
+                dueDate: addedTask.dueDate
             })
             res.status(200).json(addedTask)
-        } catch (err){
+        } catch (err) {
+            console.log(err, "gaga;")
             next(err)
         }
     }
 
-    static async readTask(req, res, next){
+    static async readTask(req, res, next) {
         try {
             const readTask = await UserTask.findAll({
-                include: [User, Task],
-                where: {
-                    UserId: req.user.id
-                }
+                include: [User, Task]
             })
-            console.log(readTask[0].Task.title, "YEAH")
             res.status(200).json(readTask)
 
         } catch (err) {
@@ -35,93 +34,58 @@ class Controller {
         }
     }
 
-    static async putTask(req, res, next){
+    static async putTask(req, res, next) {
         try {
             console.log("MASUK PUT")
-            const {title, description, dueDate, status} = req.body
-            const putTask = await User.update({
-                title, description, dueDate, status},
-            {
-                where: {
-                    id: +req.params.id
-                }
-            })
-            if(!putTask){
-                next({name: "ResourceNotFound"})
+            const { title, description, dueDate, status } = req.body.data
+            console.log(req.body.data)
+            const putTask = await Task.update({
+                title, description, dueDate, status
+            },
+                {
+                    where: {
+                        id: +req.params.id
+                    }
+                })
+            if (!putTask) {
+                next({ name: "ResourceNotFound" })
             } else {
-                res.status(200).json({message: "Task Updated"})
+                res.status(200).json({ message: "Task Updated" })
             }
         } catch (err) {
             next(err)
         }
     }
 
-
-    static async patchTask(req, res, next){
-        try {
-            console.log("MASUK PATCH")
-            const {status} = req.body
-            const patchTask = await User.update({status}, 
-            {
-                where: {
-                    id: +req.params.id
-                }
-            })
-            if(!patchTask){
-                next({name: "ResourceNotFound"})
-            } else {
-                res.status(200).json({message: "Task Updated"})
-            }
-        } catch (err) {
-            next(err)
-        }
-    }
-
-    static async deleteTask(req, res, next){
+    static async deleteTask(req, res, next) {
         try {
             console.log("MASUK DELETE")
+            console.log(req.params.id)
             const deletedConjunction = await UserTask.destroy({
                 where: {
-                    id: +req.params.id
+                    TaskId: +req.params.id
                 }
             })
-            if(!deletedConjunction){
-                next({name: "ResourceNotFound"})
+            if (!deletedConjunction) {
+                next({ name: "ResourceNotFound" })
             }
             const deletedTask = await Task.destroy({
                 where: {
                     id: +req.params.id
                 }
             })
-            if(!deletedTask){
-                next({name: "ResourceNotFound"})
+            if (!deletedTask) {
+                next({ name: "ResourceNotFound" })
             } else {
-                res.status(200).json({message: "Task Deleted"})
+                res.status(200).json({ message: "Task Deleted" })
             }
         } catch (err) {
             next(err)
         }
     }
 
-    static async addMembers(req, res, next){
-        try {
-            const {email} = req.body
-            const findMembers = await User.findOne({
-                where: {
-                    email
-                }                
-            })
-            if(!findMembers){
-                next({name:"FindUserError"})
-            }
-            const addedMembers = await UserTask.create({
-                TaskId:+req.params.id,
-                UserId:+findMembers.id 
-            })
-            
-        } catch (err) {
-            next(err)
-        }
+    static async userData(req, res, next) {
+        res.status(200).json({ user: req.user })
     }
 }
 

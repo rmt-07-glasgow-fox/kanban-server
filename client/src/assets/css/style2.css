@@ -298,6 +298,10 @@ nav ul li a:hover {
   margin-top: 50px;
 }
 
+.my-nav-hover:hover {
+  background-color: #e2e4e5;
+}
+
 @media only screen and (max-height: 500px) {
   .my-home-form {
     margin-top: 50px;
