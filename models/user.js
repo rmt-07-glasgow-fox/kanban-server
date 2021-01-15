@@ -13,21 +13,11 @@ module.exports = (sequelize, DataTypes) => {
   User.init({
     email: {
       type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
       validate: {
         isEmail: {msg: 'Not a valid email format'},
         notEmpty: {msg: 'Email is required'},
-        uniqueEmail (input) {
-          console.log(input)
-          User.findOne({where: {email: input}})
-          .then(user => {
-            if (user) {
-              throw {message: 'Email already used'}
-            }
-          })
-          .catch(err => {
-            console.log(err)
-          })
-        }
       }
     },
     username: {
@@ -38,13 +28,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: {
       type: DataTypes.STRING,
-      validate: {
-        notEmpty: {msg: 'Username is required'},
-        len: {
-          args: [6],
-          msg: 'Password at least 6 character'
-        }
-      }
     }
   }, {
     sequelize,

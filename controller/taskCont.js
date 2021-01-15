@@ -49,6 +49,19 @@ class Controller {
     })
   }
 
+  static updateCategory (req, res, next) {
+    let idParams = req.params.id
+    let { category } = req.body
+    Task.update({ category }, {where: {id: idParams}, returning: true})
+    .then(task => {
+      res.status(200).json(task[1])
+    })
+    .catch(err => {
+      console.log(err)
+      next(err)
+    })
+  }
+
   static delete (req, res, next) {
     let idParams = req.params.id
     Task.destroy({where: {id: idParams}})
