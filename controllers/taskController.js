@@ -57,6 +57,53 @@ class taskController {
         })
     }
 
+    static getOneTask(req, res, next){
+        const taskId = +req.params.id
+        Task.findOne({
+            where : {
+                UserId : req.user.id,
+                id : taskId
+            }
+        })
+        .then(data => {
+            if(data === null){
+                next({name : "Not found"})
+            } else {
+                res.status(200).json(data)
+            }
+        })
+        .catch(err => {
+            next(err)
+        })
+    }
+
+    static editOneTask(req, res, next){
+        let taskID = +req.params.id
+        const newTodo = {
+            title: req.body.title,
+        }
+        Task.update(newTodo,{
+            where : {
+                id : taskID
+            }
+        })
+        .then(data => {
+            if(data[0] === 1){
+                return Task.findOne({
+                    where : {
+                        id : taskID
+                    }
+                })
+            }
+        })
+        .then(editedTask => {
+            res.status(200).json(editedTask)
+        })
+        .catch(err => {
+            next(err)
+        })
+    }
+
     static deleteTask(req, res, next){
         const taskId = req.params.id
         Task.destroy({

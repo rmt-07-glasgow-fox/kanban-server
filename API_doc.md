@@ -7,6 +7,8 @@
 
 - `GET /task`
 - `POST /task`
+- `GET /task/:id`
+- `PUT /task/:id`
 - `PATCH /task/:id`
 - `DELETE /task/:id`
 
@@ -190,6 +192,100 @@ _Response (500 - Internal Server Error)_
 }
 ```
 
+### GET /task/:id
+
+> to get one task based on its id
+
+_Request Header_
+```
+    access_token(string)
+```
+_Request Body_
+```
+    not needed
+```
+_Request Params_
+```
+    id=[integer]
+```
+_Response (200 - OK)_
+```
+[
+    {
+        "id": 1,
+        "title": "example title",
+        "category": "Back-Log",
+        "createdAt": "2021-01-12T08:48:28.555Z",
+        "updatedAt": "2021-01-14T14:34:15.442Z",
+        "UserId": 1,
+        "User": {
+            "id": 1,
+            "email": "example@mail.com"
+        }
+    }
+]
+```
+_Response (404 - Not Found)_
+```
+{
+    "message": "Not found"
+}
+```
+_Response (500 - Internal Server Error)_
+```
+{
+    "message" : "Internal Server Error"
+}
+```
+
+### PUT /task/:id
+
+> to change task tile
+
+_Request Header_
+```
+    access_token(string)
+```
+_Request Body_
+```
+{
+    "title" : "change title"
+}
+```
+_Request Params_
+```
+    id=[integer]
+```
+_Response (200 - OK)_
+```
+{
+    "id": 1,
+    "title": "change title",
+    "category": "To-Do",
+    "updatedAt": "2021-01-15T00:50:09.371Z",
+    "createdAt": "2021-01-15T00:50:09.371Z",
+    "UserId": 1,
+}
+```
+_Response (401 - Unauthorized)_
+```
+{
+    "message": "Do not have access"
+}
+```
+_Response (404 - Not Found)_
+```
+{
+    "message": "Not found"
+}
+```
+_Response (500 - Internal Server Error)_
+```
+{
+    "message" : "Internal Server Error"
+}
+```
+
 ### PATCH /task/:id
 
 > to change task category
@@ -203,6 +299,10 @@ _Request Body_
 {
     "category" : "To-Do"
 }
+```
+_Request Params_
+```
+    id=[integer]
 ```
 _Response (200 - OK)_
 ```
@@ -245,6 +345,10 @@ _Request Header_
 _Request Body_
 ```
     not needed
+```
+_Request Params_
+```
+    id=[integer]
 ```
 _Response (200 - OK)_
 ```
