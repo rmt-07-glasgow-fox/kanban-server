@@ -10,6 +10,7 @@ router.get('/', tasksController.showTasks)
 router.get('/:id', tasksController.showTasksById)
 
 router.patch('/:id', authorization, tasksController.patchTasksById)
+router.put('/:id', authorization, tasksController.putTasksById)
 router.delete('/:id', authorization, tasksController.deleteTasksById)
 
 

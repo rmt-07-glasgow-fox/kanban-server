@@ -8,6 +8,7 @@ const router = require('./routers/index')
 app.use(cors())
 
 //buat ngebaca body
+app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 //arahin ke main router
@@ -22,7 +23,17 @@ app.listen(PORT, () => {
 
 function errorHandlers(err, req, res, next) {
   if (err.name === 'JsonWebTokenError') {
-    return res.status(500).json({message: 'Invalid token!'})
+    return res.status(400).json({message: 'Invalid token!'})
   }
+  if (err.name === 'SequelizeValidationError') {
+    let errMessages = []
+    err.errors.forEach(element => {
+      errMessages.push(element.message)
+    });
+    return res.status(400).json({message: errMessages})
+  }
+
+
+  // console.log(err);
   res.status(500).json(err)
 }

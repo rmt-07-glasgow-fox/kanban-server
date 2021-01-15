@@ -16,6 +16,7 @@ class Controller {
       returning: true
     })
     .then((data) => {
+      data.dataValues.message = 'Task created successfully!'
       return res.status(200).json(data)
     })
     .catch((err) => {
@@ -24,7 +25,15 @@ class Controller {
   }
 
   static showTasks(req, res, next) {
-    Task.findAll()
+    Task.findAll({
+      attributes: {
+        exclude: ['createdAt', 'updatedAt']
+      },
+      include: {
+        model: User,
+        attributes: ['email']
+      }
+    })
     .then((data) => {
       return res.status(200).json(data)
     })
@@ -57,8 +66,27 @@ class Controller {
     .then((data) => {
       res.status(200).json({
         message: 'Task moved successfully',
-        previous: category,
         updated: data[1][0].category
+      })
+    })
+    .catch((err) => {
+      next(err)
+    })
+  }
+
+  static putTasksById(req, res, next) {
+    let taskId = +req.params.id
+    let title = req.body.title
+
+    // by default, update only returns 1 if success, 0 if not success
+    Task.update({title}, {
+      where: {id: taskId},
+      returning: true
+    })
+    .then((data) => {
+      res.status(200).json({
+        message: 'Task updated successfully',
+        updated: data[1][0].title
       })
     })
     .catch((err) => {
