@@ -1,17 +1,14 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('KanbanLists', {
+    await queryInterface.createTable('Categories', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      title: {
-        type: Sequelize.STRING
-      },
-      description: {
+      catName: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -25,6 +22,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('KanbanLists');
+    await queryInterface.dropTable('Categories');
   }
 };

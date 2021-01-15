@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       KanbanList.belongsTo(models.User)
+      KanbanList.belongsTo(models.Category)
     }
   };
   KanbanList.init({
@@ -30,20 +31,13 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    category: {
-      type: DataTypes.STRING,
-      validate: {
-        notEmpty: {
-          msg: `Must be filled`
-        }
-      }
-    },
-    UserId: DataTypes.INTEGER
+    UserId: DataTypes.INTEGER,
+    CategoryId: DataTypes.INTEGER
   }, {
     hooks: {
       beforeCreate: (list, option) => {
-        if (!list.category) {
-          list.category = "Backlog"
+        if (!list.CategoryId) {
+          list.CategoryId = 1
         }
       }
     },
