@@ -19,7 +19,7 @@ function errorHandler (err, req, res, next) {
     default:
       console.log('custom error')
       errMsg = err.message.split(',\n')
-      res.json(errMsg)
+      res.status(401).json(errMsg)
   }
 }
 
