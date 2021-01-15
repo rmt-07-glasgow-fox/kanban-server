@@ -1,11 +1,12 @@
-const { Task } = require('../models')
+const { Task, Category } = require('../models')
 
 class TaskController {
   static addTask(req, res, next){
     Task.create({
       title: req.body.title || '',
       category: req.body.category || '',
-      UserId: req.userData.id
+      UserId: req.userData.id,
+      CategoryId: req.body.CategoryId || ''
     })
       .then(data => {
         res.status(201).json(data)
@@ -18,7 +19,8 @@ class TaskController {
     Task.findAll({
       where:{
         UserId: req.userData.id
-      }
+      },
+      include: [ Category ]
     })
       .then(data => {
         res.status(200).json(data)
@@ -28,7 +30,9 @@ class TaskController {
       })
   }
   static getTaskById(req, res, next){
-    Task.findByPk(req.params.id)
+    Task.findByPk(req.params.id, {
+      include: [ Category ]
+    })
       .then(data => {
         res.status(200).json(data)
       })
@@ -57,7 +61,7 @@ class TaskController {
   static patchTaskCategoryById(req, res, next){
     Task.update(
       {
-        category: req.body.category
+        CategoryId: req.body.CategoryId
       },
       {
         where:{
