@@ -1,6 +1,8 @@
 const { User } = require('../models')
 const { comparePassword } = require('../helper/bcrypt')
 const { tokenGenerate } = require('../helper/jwt')
+// const {OAuth2Client} = require('google-auth-library');
+
 
 class UserController {
       static register(req, res, next) {
@@ -13,7 +15,9 @@ class UserController {
                   .then(data => {
                         res.status(201).json(data)
                   }).catch(err => {
-                        res.status(400).json(err)
+                        if(err.name === 'SequelizeValidationError') next('SequelizeValidationError')
+                        next(err)
+                        // res.send(err)
                   })
 
       }
@@ -26,9 +30,9 @@ class UserController {
             
             User.findOne({where: {email: userLogin.email}})
                   .then(user => {
-                        if(!user) res.status(400).json(err)
+                        if(!user) res.status(404).json({message: 'invalid email/password'})
                         let match = comparePassword(userLogin.password, user.password)
-                        if(!match) res.status(400).json(err)
+                        if(!match) res.status(404).json({message: 'invalid email/password'})
                   
                         let payload = {
                               id: user.id,
@@ -38,7 +42,8 @@ class UserController {
                    
                         res.status(200).json({access_token})
                   }).catch(err => {
-                        res.status(500).json(err)
+                        if(err.name === 'SequelizeValidationError') next('SequelizeValidationError')
+                        next(err)
                   })
             
       }

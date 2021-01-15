@@ -9,11 +9,14 @@ class TaskController {
             }
             Task.create(newTask)
                   .then(task => {
-                      
+                      if(task.title === ''|| task.CategoryId === ''){
+                          task.title = null,
+                          task.CategoryId = null
+                      }
                       res.status(201).json(task)
                   }).catch(err => {
-                      
-                      res.status(500).json(err)
+                     next({name: "SequelizeValidationError"})
+                      next(err)
                   })
             
       }
@@ -24,9 +27,22 @@ class TaskController {
                   .then(data => {
                       res.status(200).json(data)
                   }).catch(err => {
-                      res.status(500).json(err)
+                      next(err)
                   })
             
+      }
+
+      static getOne(req, res, next) {
+          let { id } = req.params
+
+        Task.findOne({where: {id}})
+             .then(task => {
+                 res.status(200).json(task)
+             }).catch(err => {
+                 next({name: "SourceNotFound"})
+                 next(err)
+             })
+
       }
 
       static updateTask(req, res, next) {
@@ -44,7 +60,10 @@ class TaskController {
                   }).then(task => {
                       res.status(200).json(task)
                   }).catch(err => {
-                      res.status(500).json(err)
+                    next({name: 'Unauthorized'})
+                    next({name:"SequelizeValidationError"})
+                    next({name: "SourceNotFound"})
+                    next(err)
                   })
 
       }
@@ -56,7 +75,9 @@ class TaskController {
                   .then(data => {
                      res.status(200).json({message: "task deleted successfully"})
                   }).catch(err => {
-                     res.status(500).json(err)
+                     next({name: 'Unauthorized'})
+                     next({name:"SequelizeValidationError"})
+                    next(err)
                   })
             
       }
@@ -66,7 +87,7 @@ class TaskController {
                     .then(category => {
                         res.status(200).json(category)
                     }).catch(err => {
-                        res.status(500).json(err)
+                        next(err)
                     })
       }
 }

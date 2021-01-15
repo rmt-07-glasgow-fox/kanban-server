@@ -7,11 +7,11 @@ function authenticate(req, res, next) {
 
       User.findOne({where: {email: decoded.email}})
           .then(user => {
-                if(!user) res.status(400).json(err)
+                if(!user) res.status(400).json({message: 'you must be loggedin'})
                 req.user = user
                 next()
           }).catch(err => {
-              req.status(500).json(err)
+              req.status(500).json({message: 'broken inside'})
           })
 }
 
@@ -20,10 +20,10 @@ function authorize(req, res, next){
 
     Task.findOne({where: {id}})
         .then(task => {
-            if(task.UserId !== req.user.id) req.status(401).json(err)
+            if(task.UserId !== req.user.id) next({name: 'Unauthorized'})
             next() 
         }).catch(err => {
-            res.status(500).json
+            next(err)
         })
 
 }
