@@ -1,4 +1,4 @@
-const { Board, Category } = require('../models');
+const { Board, Category, Task, User } = require('../models');
 const isAdmin = require('../helpers/isAdmin');
 const isMember = require('../helpers/isMember');
 
@@ -36,7 +36,19 @@ exports.list = async (req, res, next) => {
     const ismember = await isMember(userId, isBoard.OrganizationId);
     if (!ismember) return next({ name: 'NotMember' });
 
-    const categories = await Category.findAll({ where: { BoardId: idBoard } });
+    const categories = await Category.findAll({
+      where: { BoardId: idBoard },
+      include: [
+        {
+          model: Task,
+          include: {
+            model: User,
+            attributes: { exclude: ['password'] },
+          },
+        },
+      ],
+      order: [['createdAt', 'ASC']],
+    });
     return res.status(200).json(categories);
   } catch (err) {
     next(err);
