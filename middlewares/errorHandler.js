@@ -20,14 +20,16 @@ const errorHandler = (err, req, res, next) => {
                 errorMessage.messages.push("Not found.")
                 res.status(404).json(errorMessage)
                 break
-            //case "axiosError":
-            //break
             case "AuthError":
                 errorMessage.messages.push("Invalid email / password")
                 res.status(401).json(errorMessage)
                 break
+            case "NoCredentials":
+                errorMessage.messages.push("No access")
+                res.status(401).json(errorMessage)
+                break
             default:
-                errorMessage.messages.push("Internal srver error.")
+                errorMessage.messages.push("Internal server error.")
                 res.status(500).json(errorMessage)
                 break
         }

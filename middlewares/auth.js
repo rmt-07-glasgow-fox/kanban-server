@@ -42,7 +42,7 @@ const authorize = (req, res, next) => {
                 next({ name: "ResourceNotFound" })
             }
             else if (foundTask.UserId !== req.user.id) {
-                next({ name: "AuthError" })
+                next({ name: "NoCredentials" })
             }
             else {
                 next()
