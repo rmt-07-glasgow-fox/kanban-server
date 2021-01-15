@@ -48,18 +48,20 @@ class UserController{
                         username: data.username
                     })
                 } else {
-                    res.status(401).json({
+                    next({
+                        status: 401,
                         message: "Invalid email/password"
                     })
                 }
             } else {
-                res.status(401).json({
+                next({
+                    status: 401,
                     message: "Email not found, please register first"
                 })
             }
         })
         .catch(err => {
-            res.send(err)
+            next(err)
         })
     }
 
