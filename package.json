@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "NODE_ENV=development npx nodemon app.js",
-    "start": "npx nodemon app.js"
+    "dev": "NODE_ENV=development npx nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -28,10 +27,16 @@
     "google-auth-library": "^6.1.4",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.5.1",
+    "pq": "^0.0.3",
     "sequelize": "^6.3.5"
   },
   "devDependencies": {
+    "eslint": "^7.17.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
     "nodemon": "^2.0.7",
+    "prettier": "^2.2.1",
     "sequelize-cli": "^6.2.0"
   }
 }

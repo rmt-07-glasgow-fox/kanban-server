@@ -10,7 +10,7 @@ function errorHandler(err, req, res, next) {
 
     case "InvalidEmail":
       return res.status(401).json({
-        message: "This Email has been taken, try another one"
+        message: "Wrong mail, try another one"
       })
 
     case "InvalidPassword":

@@ -1,5 +1,5 @@
 const { verifyToken } = require('../helpers/jwt');
-const { User, /* AppModel */ } = require('../models');
+const { User, Task } = require('../models');
 
 async function authentication(req, res, next) {
   try {
@@ -25,11 +25,11 @@ async function authentication(req, res, next) {
 
 async function authorization(req, res, next) {
   try {
-    const idApp = req.params.id;
+    const id = req.params.id;
     const userId = req.user.id;
-    const appAuth = await /* AppModel *//* .findOne */({
+    const appAuth = await Task.findOne({
       where: {
-        id: idApp,
+        id: id,
       },
     });
     if(!appAuth) {

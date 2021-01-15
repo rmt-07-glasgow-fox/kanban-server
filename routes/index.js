@@ -7,6 +7,6 @@ const { authentication } = require('../middlewares/auth')
 router.get('/', Controller.getRootHandler)
 router.use(userRouter)
 router.use(authentication)
-router.use('/lorem', appRouter)
+router.use('/tasks', appRouter)
 
 module.exports = router;
