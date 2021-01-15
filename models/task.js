@@ -28,7 +28,11 @@ module.exports = (sequelize, DataTypes) => {
     detail: DataTypes.STRING,
     due_date: {
       type: DataTypes.DATE,
-      validation: {
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Please input date'
+        },
         isYesterday(val) {
           if (val <= yesterday()) {
             throw {

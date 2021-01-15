@@ -21,9 +21,9 @@ class TaskController {
 
     static postTask = async (req, res, next) => {
         const UserId = req.user.id;
-        const { title, detail, due_date } = req.body;
+        const { title, detail, due_date, category } = req.body;
         try {
-            const task = await Task.create({ title, detail, due_date, UserId });
+            const task = await Task.create({ title, detail, due_date, UserId, category});
             res.status(201).json(task);
         }
         catch(err) { next(err) }

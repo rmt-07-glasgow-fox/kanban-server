@@ -49,14 +49,16 @@ class UserController {
                 idToken: id_token,
                 audience: GOOGLE_CLIENT_ID
             });
-            let user = await User.findOne({ where: {
-                email: ticket.getPayload().email
-            }});
-            if (!user) {
+            let user = await User.findOne({
+                where: {
+                    email: ticket.getPayload().email
+                }
+            })
+            if (typeof user !== 'object') {
                 const password = Math.random.toString().substring(0,10) + 'google';
                 user = await User.create({
-                    email: ticket.getPayload.email,
-                    name: ticket.getPayload.give_name,
+                    email: ticket.getPayload().email,
+                    name: ticket.getPayload().given_name,
                     password
                 });
             }
