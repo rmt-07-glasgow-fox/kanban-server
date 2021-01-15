@@ -1,3 +1,5 @@
+const { OAuth2Client } = require('google-auth-library');
+
 const { compPass } = require('../helpers/bcrypt.js');
 const { genToken, chkToken } = require('../helpers/jwt.js');
 const { User } = require('../models/index.js');
@@ -64,11 +66,11 @@ class UserController {
   };
 
   static gLogin(req, res, next) {
-    const { id_token } = req.body;
+    const id_token = req.headers.id_token;
     const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
     let firstname, lastname, email, profpic;
 
-    client.verifyIdToken({ idToken: id_token, audience: process.env.GOOGLE_CLIENT_ID, })
+    client.verifyIdToken({ idToken: id_token, audience: process.env.GOOGLE_CLIENT_ID })
       .then(ticket => {
         const payload = ticket.getPayload();
         firstname = payload.given_name;
@@ -103,7 +105,7 @@ class UserController {
 
         return res.status(200).json({ access_token });
       })
-      .catch(err => next(err));
+      .catch(err => console.log(err));
   };
 };
 
