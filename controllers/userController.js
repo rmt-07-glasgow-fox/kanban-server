@@ -81,7 +81,6 @@ class userController {
             res.status(200).json({access_token})
         })
         .catch(err => {
-            console.log(err)
             next(err)
         })
         
