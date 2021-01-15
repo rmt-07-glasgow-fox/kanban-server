@@ -37,8 +37,8 @@ module.exports = (err, req, res, next) => {
         case 'TaskNotFound':
             res.status(404).json({ message: 'Task not found' })
         break;
-        
+
         default: 
-            res.status(500).json(err)
+            res.status(500).json({ message: 'Internal server error'})
     }
 }
