@@ -2,12 +2,12 @@ const { Task } = require('../models')
 
 class TaskController {
     static create(req, res, next) {
-        const { title, category } = req.body
+        const { title, CategoryId } = req.body
         const UserId = req.UserData.id
-        Task.create({ title, category, UserId })
+        Task.create({ title, CategoryId, UserId })
             .then(newTask => {
-                const { id, title, category, UserId } = newTask
-                res.status(201).json({ id, title, category, UserId })
+                const { id, title, CategoryId, UserId } = newTask
+                res.status(201).json({ id, title, CategoryId, UserId })
             })
             .catch(err => {
                 next(err)
@@ -38,14 +38,14 @@ class TaskController {
 
     static update(req, res, next) {
         const id = +req.params.id
-        const { title, category } = req.body
-        Task.update({ title, category }, {
+        const { title, CategoryId } = req.body
+        Task.update({ title, CategoryId }, {
                 where: { id },
                 returning: true
             })
             .then(taskUpdated => {
-                const { id, title, category, UserId } = taskUpdated[1][0].dataValues
-                res.status(200).json({ id, title, category, UserId })
+                const { id, title, CategoryId, UserId, updatedAt } = taskUpdated[1][0].dataValues
+                res.status(200).json({ id, title, CategoryId, UserId, updatedAt })
             })
             .catch(err => {
                 next(err)
@@ -54,15 +54,15 @@ class TaskController {
 
     static updateCategory(req, res, next) {
         const id = +req.params.id
-        const { category } = req.body
-        !category ? next({ name: 'CustomError', statusCode: 400, message: 'Category cannot be empty!' }) :
-        Task.update({ category }, {
+        const { CategoryId } = req.body
+        !CategoryId ? next({ name: 'CustomError', statusCode: 400, message: 'CategoryId cannot be empty!' }) :
+        Task.update({ CategoryId }, {
                 where: { id },
                 returning: true
             })
             .then(taskUpdated => {
-                const { id, category } = taskUpdated[1][0].dataValues
-                res.status(200).json({ id, category })
+                const { id, title, CategoryId, UserId, updatedAt } = taskUpdated[1][0].dataValues
+                res.status(200).json({ id, title, CategoryId, UserId, updatedAt })
             })
             .catch(err => {
                 next(err)

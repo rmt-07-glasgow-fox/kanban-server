@@ -3,6 +3,7 @@ const { authentication } = require('../middlewares/auth')
 const { errorHandlers } = require('../middlewares/errorHandlers')
 const auth = require('./auth')
 const task = require('./task')
+const category = require('./category')
 
 // chek connection
 router.get('/', (req, res) => {
@@ -11,6 +12,7 @@ router.get('/', (req, res) => {
 
 router.use(auth)
 router.use(authentication)
+router.use('/categories', category)
 router.use('/tasks', task)
 
 router.use(errorHandlers)

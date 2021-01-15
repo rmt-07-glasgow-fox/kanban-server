@@ -16,6 +16,10 @@ const errorHandlers = (err, req, res, next) => {
             statusCode = 400
             message = [`${err.errors[0].value} already exists`]
             break;
+        case 'SequelizeForeignKeyConstraintError':
+            statusCode = 400
+            message = [`Failed! Foreign key not exist`]
+            break;
         case 'NotFoundError':
             statusCode = 404
             message = ['Data Not Found!']

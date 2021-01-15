@@ -9,7 +9,7 @@ class Auth {
                 let payload = cekToken(access_token)
                 User.findByPk(payload.id)
                     .then(user => {
-                        !user ? next({ name: 'NotFoundError' }) :
+                        !user ? next({ name: 'CustomError', statusCode: 404, message: 'User Not Found!' }) :
                         req.UserData = payload, next()
                     })
                     .catch(err => {
