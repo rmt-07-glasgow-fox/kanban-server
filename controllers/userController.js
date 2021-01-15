@@ -67,15 +67,14 @@ class Controller {
         const { id_token } = req.body;
         const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
         let email = ''
-
+        let userName = ''
         client.verifyIdToken({
             idToken: id_token,
-            audience: process.env.GOOGLE_CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
-            // Or, if multiple clients access the backend:
-            //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+            audience: process.env.GOOGLE_CLIENT_ID,
         })
         .then(ticket => {
             const payload = ticket.getPayload();
+            userName = payload.name;
             email = payload.email;
             return User.findOne({
                 where: {
@@ -86,6 +85,7 @@ class Controller {
         .then(user => {
             if (!user) {
                 return User.create({
+                    userName,
                     email,
                     password: Math.random()*1000 + 'kanban password google'
                 })
@@ -96,6 +96,7 @@ class Controller {
         .then(user => {
             const payload = {
                 id: user.id,
+                userName: user.userName,
                 email: user.email
             }
             const access_token = generateToken(payload) 

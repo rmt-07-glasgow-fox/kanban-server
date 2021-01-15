@@ -5,4 +5,6 @@ router.post('/register', userController.register);
 
 router.post('/login', userController.login);
 
+router.post('/sign', userController.signInGoogle)
+
 module.exports = router;

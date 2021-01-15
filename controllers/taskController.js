@@ -2,7 +2,6 @@ const { User, Task, Category } = require('../models');
 
 class Controller {
     static async showAll(req, res, next) {
-        // res.send(req.headers.user)
         try {
             const users = await Category.findAll({
                 include: [Task],
@@ -24,6 +23,9 @@ class Controller {
                 throw { name: "Not Found"};
             }
         } catch (err) {
+            if (err.name === "Not Found") {
+                return res.status(404).json(err.name)
+            }
             res.status(500).json(err);
         }
     }
@@ -48,7 +50,14 @@ class Controller {
             };
             res.status(201).json(output);
         } catch (err) {
-            res.status(500).err;
+            if (err.name === "SequelizeValidationError") {
+                let errMsg = [];
+                err.errors.forEach(el => {
+                    errMsg.push(el.message);
+                });
+                return res.status(400).json({ message: errMsg })
+            }
+            res.status(500).json(err);
         }
     }
 
@@ -76,23 +85,25 @@ class Controller {
                 throw { name: "Id Not Found"};
             }
         } catch (err) {
+            if (err.name === "Id Not Found") {
+                return res.status(404).json(err)
+            } else if (err.name === "SequelizeValidationError") {
+                return res.status(400).json(err)
+            }
             res.status(500).json(err);
         }
     }
 
     static async editCategory(req, res, next) {
         try {
-            const categoryId = +req.query.category;
             const id = +req.params.id;
             const userId = req.headers.user.id;
-            const newCategory = await Category.findOne({ where: { name: req.body.name} });
-            const findCategory = await Category.findOne({ where: { id: categoryId } });
-            if (newCategory && findCategory) {
-                const task = await Task.update({ CategoryId: newCategory.id }, {
+            const categoryId = +req.body.categoryId;
+            if (categoryId !== undefined) {
+                const task = await Task.update({ CategoryId: categoryId }, {
                     where: {
                         id,
-                        UserId: userId,
-                        CategoryId: findCategory.id
+                        UserId: userId
                     },
                     returning: true
                 })
@@ -101,6 +112,11 @@ class Controller {
                 throw { name: "Category not Found"};
             }
         } catch (err) {
+            if (err.name === "Category not Found") {
+                return res.status(404).json(err)
+            } else if (err.name === "SequelizeValidationError") {
+                return res.status(400).json(err)
+            }
             res.status(500).json(err);
         }
     }
@@ -119,6 +135,9 @@ class Controller {
                 throw { name: "Task Not Found"};
             }
         } catch (err) {
+            if (err.name === "Task Not Found") {
+                return res.status(404).json(err)
+            }
             res.status(500).json(err);
         }
 
