@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User, Organization } = require("../models");
 const { checkPassword } = require("../helpers/bcrypt");
 const { createToken } = require("../helpers/jwt");
 
@@ -59,8 +59,26 @@ class UserController {
             OrganizationId: user.OrganizationId,
           };
           const access_token = createToken(payload);
-          res.status(200).json({ access_token });
+          res.status(200).json({ access_token, userId: user.id });
         }
+      })
+      .catch((err) => {
+        next(err);
+      });
+  }
+
+  static loginGoogle(req, res, next) {
+    
+  }
+
+  static userInfo(req, res, next) {
+    const id = req.user.id;
+    User.findByPk(id, {
+      attributes: { exclude: ['password'] },
+      include: Organization,
+    })
+      .then((response) => {
+        res.status(200).json({ user: response });
       })
       .catch((err) => {
         next(err);

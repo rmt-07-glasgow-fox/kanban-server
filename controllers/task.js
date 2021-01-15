@@ -33,6 +33,7 @@ class TaskController {
       where: {
         OrganizationId,
       },
+      order:[['createdAt', 'DESC']],
       include: {
         model: User,
         attributes: {
@@ -72,6 +73,10 @@ class TaskController {
       .catch((err) => {
         next(err);
       });
+  }
+
+  static checkAuth(req, res, next){
+    res.status(200).json({message: "Authorized"})
   }
 
   static getSpecific(req, res, next) {
