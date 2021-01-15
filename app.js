@@ -12,7 +12,7 @@ app.use(cors())
 
 
 app.get('/', (req, res, next) => {
-      console.log("hello world");
+      res.send("hello world");
 })
 app.use('/', router)
 app.use(errorHandler)
