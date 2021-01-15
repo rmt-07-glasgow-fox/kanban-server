@@ -343,7 +343,9 @@ _Response (200 - OK)_
 _Response (400 - Bad Request)_
 ```
 {
-  "message": "Status must filled by true/false"
+  "message": [
+      "Category Id must be filled"
+  ]
 }
 ```
 _Response (401 - Unauthorized)_
