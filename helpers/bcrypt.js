@@ -1,5 +1,4 @@
-require("dotenv").config()
-
+// require("dotenv").config()
 const bcrypt = require("bcryptjs")
 const saltSecret = process.env.SALT_SECRET
 

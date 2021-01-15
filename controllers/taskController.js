@@ -5,7 +5,7 @@ class Controller {
     try {
       const data = {
         title: req.body.title,
-        category: `backlog`,
+        category: req.body.category,
         UserId: req.user.id
       }
       const task = await Task.create(data)
@@ -20,6 +20,7 @@ class Controller {
       const tasks = await Task.findAll()
       res.status(200).json(tasks)
     } catch (error) {
+      console.log(error);
       next(error)
     }
   }
@@ -37,6 +38,7 @@ class Controller {
         }
       }
     } catch (error) {
+      console.log(error);
       next(error)
     }
   }
@@ -71,20 +73,20 @@ class Controller {
       }
       if (data) {
         switch (data.category) {
-          case `backlog`:
-            data.category = `todo`
+          case `Backlog`:
+            data.category = `Todo`
             break;
-          case `todo`:
-            data.category = `doing`
+          case `Todo`:
+            data.category = `Doing`
             break;
-          case `doing`:
-            data.category = `done`
+          case `Doing`:
+            data.category = `Done`
             break;
-          case `done`:
-            data.category = `completed`
+          case `Done`:
+            data.category = `Completed`
             break;
-          case `completed`:
-            data.category = `backlog`
+          case `Completed`:
+            data.category = `Backlog`
             break;
         }
         const pTask = await Task.update(data, {where: {id}, returning: true})
