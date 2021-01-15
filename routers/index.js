@@ -11,7 +11,7 @@ router.get('/', function (req, res) {
 // define the route
 router.post('/register', usersController.register)
 router.post('/login', usersController.login)
-// router.post('/loginGoogle', usersController.loginGoogle)
+router.post('/loginGoogle', usersController.loginGoogle)
 
 // tasks router
 router.use('/tasks', tasksRouter)

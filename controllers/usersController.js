@@ -1,6 +1,7 @@
 const { User, Task } = require('../models/index')
 const { hashPassword, checkPassword} = require('../helpers/bcrypt')
 const { generateToken, checkToken } = require('../helpers/jwt')
+const { OAuth2Client } = require('google-auth-library');
 
 class Controller {
   static register(req, res, next) {
@@ -21,7 +22,6 @@ class Controller {
 
   static login(req, res, next) {
     let { email, password } = req.body
-    console.log('LOGIN', email, password);
 
     User.findOne({
       where: {email:email},
@@ -47,6 +47,50 @@ class Controller {
       next(err)
     })
   }
+
+  static loginGoogle(req, res, next) {
+    let email
+    let id_token = req.body.id_token
+    const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+    client.verifyIdToken({
+      idToken: id_token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    })
+    .then(ticket => {
+      const payload = ticket.getPayload();
+      email = payload.email
+      return User.findOne({
+        where: {
+          email
+        }
+      })
+    })
+    .then((user) => {
+      //find the user, if the user doesnt exist, create a new one
+      if (!user) {
+        let input = {email: email, password: Math.ceil(Math.random()*1000000)+'rhs'}
+        return User.create(input)
+      } else {
+        return user
+      }
+    })
+    .then((user) => {
+      //generate the jwt
+      const payload = {
+        id: user.id,
+        email: user.email
+      }
+      let access_token =  generateToken(payload)
+      return res.status(200).json({
+        access_token
+      })
+    })
+    .catch(err => {
+      next(err)
+    })
+  }
+
 }
 
 module.exports = Controller
