@@ -27,7 +27,7 @@ function authorize (req, res, next) {
         where: { id }
     })
         .then(data => {
-            if (!data || data.UserId !== req.UserId) {
+            if (!data || (data.UserId !== req.UserId)) {
                 next({ name: 'Unauthorized'})
             } else {
                 next()

@@ -1,4 +1,4 @@
-const { Task } = require('../models')
+const { Task, User } = require('../models')
 
 class TaskController {
     static addTask(req, res, next) {
@@ -14,8 +14,22 @@ class TaskController {
             .catch(next)
     }
 
+    static taskById(req, res, next) {
+        let id = +req.params.id
+        Task.findOne({
+            where: { id }
+        }) 
+            .then(data => {
+                res.status(200).json(data)
+            })
+            .catch(next)
+
+    }
+
     static getAllTasks(req, res, next) {
-        Task.findAll()
+        Task.findAll({
+            include: User
+        })
             .then(data => {
                 res.status(200).json(data)
             })
@@ -28,19 +42,10 @@ class TaskController {
             title: req.body.title, 
             category: req.body.category
         }
-        Task.findOne({
-            where: { id }
+        Task.update(input, {
+            where: { id },
+            returning: true
         })
-            .then(data => {
-                if (!data) {
-                    next({ name: 'Not Found'})
-                } else {
-                    return Task.update(input, {
-                        where: { id },
-                        returning: true
-                    })
-                }
-            })
             .then(data => {
                 res.status(200).json(data[1])
             })
