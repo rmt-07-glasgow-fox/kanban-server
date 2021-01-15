@@ -17,6 +17,18 @@ app.use(express.json());
 app.use(routes);
 app.use(errorHandler);
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
+});
+
+const io = require('socket.io')(server, {
+  cors: {
+    origin: '*',
+  },
+});
+
+io.on('connection', function (socket) {
+  socket.on('UPDATE_TASK', function (data) {
+    io.emit('TASKS', data);
+  });
 });
