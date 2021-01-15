@@ -1,6 +1,7 @@
 const { User, Organization } = require("../models");
 const { checkPassword } = require("../helpers/bcrypt");
 const { createToken } = require("../helpers/jwt");
+const { OAuth2Client } = require("google-auth-library");
 
 class UserController {
   static register(req, res, next) {
@@ -12,7 +13,7 @@ class UserController {
       email,
       firstName,
       lastName,
-      OrganizationId: null,
+      OrganizationId: 1,
     })
       .then((response) => {
         res.status(201).json({
@@ -68,13 +69,62 @@ class UserController {
   }
 
   static loginGoogle(req, res, next) {
-    
+    const token = req.body.id_token;
+    const OAUTH_CLIENT_ID = process.env.OAUTH_CLIENT_ID;
+    let username, fullName, email, firstName, lastName;
+
+    const client = new OAuth2Client(OAUTH_CLIENT_ID);
+    client
+      .verifyIdToken({
+        idToken: token,
+        audience: OAUTH_CLIENT_ID,
+      })
+      .then((ticket) => {
+        const payload = ticket.getPayload();
+        username = payload.email;
+        email = payload.email;
+        firstName = payload.given_name;
+        lastName = payload.family_name;
+
+        return User.findOne({
+          where: { email },
+        });
+      })
+      .then((user) => {
+        if (!user) {
+          return User.create({
+            username,
+            password: Math.random() * 1000 + "pass Google",
+            email,
+            firstName,
+            lastName,
+            OrganizationId: 1,
+          });
+        } else {
+          return user;
+        }
+      })
+      .then((user) => {
+        const payload = {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          OrganizationId: user.OrganizationId,
+        };
+        const access_token = createToken(payload);
+        res.status(200).json({ access_token, userId: user.id });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   static userInfo(req, res, next) {
     const id = req.user.id;
     User.findByPk(id, {
-      attributes: { exclude: ['password'] },
+      attributes: { exclude: ["password"] },
       include: Organization,
     })
       .then((response) => {
