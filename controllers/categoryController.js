@@ -1,4 +1,4 @@
-const {Category} = require("../models")
+const {Category, Task} = require("../models")
 
 class Controller { 
   static async createCategory(req, res, next) {
@@ -105,9 +105,9 @@ class Controller {
       const id = req.params.id
       const category = await Category.findByPk(id)
       if (category) {
-        const title = category.title
         const deletedCategory = await Category.destroy({where: {id}})
-        res.status(200).json({message: `category: '${title}' success to delete`})
+        const deletedTask = await Task.destroy({where: {CatId: category.id}})
+        res.status(200).json({message: `category: '${category.title}' success to delete`})
       } else {
         throw {
           code: 400,
