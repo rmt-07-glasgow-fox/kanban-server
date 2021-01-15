@@ -42,7 +42,7 @@ class AuthContoller {
             })
     }
 
-    static loginGoogle(res, req, next) {
+    static loginGoogle(req, res, next) {
         const { id_token } = req.body
         const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
         let email, name
