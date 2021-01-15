@@ -3,6 +3,6 @@ const router = require('express').Router()
 
 router.post('/register', UserController.register)
 router.post('/login', UserController.login)
-router.post('/google_login', UserController.googleLogin)
+router.post('/googleLogin', UserController.googleLogin)
 
 module.exports = router
