@@ -53,7 +53,6 @@ class Controller {
   }
 
   static loginByGoogle(req, res, next) {
-    console.log('HIT')
     let email
     let fullName
     let idToken = req.body.id_token
