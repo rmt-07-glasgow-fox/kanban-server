@@ -33,9 +33,7 @@ class TaskController {
     }
 
     static postTask(req, res, next) {
-        const { title, description } = req.body
-        // category is not yet dynamic
-        const category = "Backlog"
+        const { title, description, category } = req.body
         const UserId = req.user.id
         Task.create({
             title,
@@ -56,6 +54,7 @@ class TaskController {
     static editTask(req, res, next) {
         const { title, description } = req.body
         const taskId = +req.params.id
+        console.log(taskId)
 
         Task.findByPk(taskId)
             .then(currentTask => {
