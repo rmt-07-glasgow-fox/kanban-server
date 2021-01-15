@@ -1,7 +1,7 @@
 const { User, Task } = require('../models')
 const { comparePass } = require('../helpers/bcrypt')
 const { generateToken } = require('../helpers/jwt')
-const { compareSync } = require('bcryptjs')
+const { OAuth2Client } = require('google-auth-library')
 
 class UserController {
     static register(req, res) {
@@ -54,9 +54,47 @@ class UserController {
         }
     }
 
-    static googleLogin(req, res) {
-
-    }
+    static googleLogin(req, res, next){
+        const { id_token } = req.body
+        let email
+        const client = new OAuth2Client('client id google');
+        client.verifyIdToken({
+          idToken: id_token,
+          audience: 'client id google'
+        })
+          .then(data => {
+            const payload = data.getPayload()
+            email = payload.email
+            return User.findOne({
+              where:{
+                email
+              }
+            })
+          })  
+          .then(user => {
+            if (!user) {
+              return User.create({
+                email,
+                password: (Math.random()*1000000).toString()
+              })
+            } else {
+              return user
+            }
+          })
+          .then(data => {
+            let access_token = generateToken({
+              id: data.id,
+              email: data.email
+            })
+            res.status(200).json({
+              access_token,
+              data
+            })
+          })
+          .catch(err => {
+            next(err)
+          })
+      }
 }
 
 module.exports = { UserController }

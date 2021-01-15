@@ -37,13 +37,14 @@ class TaskController {
     }
 
     static createTask(req, res) {
-        const { title, category} = req.body
+        const { title, category, description} = req.body
         console.log(req.user.id, 'ini disini')
         const UserId = req.user.id
         let obj = {
             title,
             category,
-            UserId
+            UserId,
+            description
         }
         console.log(obj)
         Task.create(obj)
