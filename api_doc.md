@@ -4,6 +4,8 @@
 
 Open endpoints require no Authentification.
 
+## User Related
+
 * [Register](regiser.md) : `POST  /api/users/register/`
 * [Login](login.md) : `POST /api/users/login/`
 
@@ -41,8 +43,17 @@ Closed endpoints require a Valid Token to be included in the header of the reque
 * [Show Tasks](showTasks.md) : `GET /api/tasks/`
 * [Show a Taks](showTask.md) : `GET /api/tasks/:id/`
 * [Update a Task](updateTask.md) : `PUT /api/tasks/:id/`
-* [Update a Task Category](updataTaskCategory.md) : `PATCH /api/tasks/:id/`
+* [Patch a Task](patchTask.md) : `PATCH /api/tasks/:id/`
 * [Delete a Task](deleteTask.md) : `DELETE /api/tasks/:id/`
+
+## Category Related
+
+* [Create Category](createCategory.md) : `POST /api/categories/`
+* [Show Categories](showTasks.md) : `GET /api/categories/`
+* [Show a Category](showCategory.md) : `GET /api/categories/:id/`
+* [Update a Category](updateCategory.md) : `PUT /api/categories/:id/`
+* [Patch a Category](patchCategory.md) : `PATCH /api/categories/:id/`
+* [Delete a Task](deleteCategory.md) : `DELETE /api/categories/:id/`
 
 ## Error Response because Server Error
 
