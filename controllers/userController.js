@@ -3,9 +3,9 @@ const {User} = require('../models');
 const {generateToken} = require('../helpers/jwt')
 const {comparePassword} = require('../helpers/bcrypt')
 class UserControler {
-    static welcome (req, res) {
-        res.send('welcome to kanban')
-    }
+  static welcome(req,res) {
+    res.send({message:'welcon to fancy todo'})
+  }
     
     static async login (req, res, next) {
         
