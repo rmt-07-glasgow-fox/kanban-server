@@ -32,7 +32,6 @@ class TaskController {
       order: [["id", "ASC"]]
     })
     .then(data => {
-      output = data
       res.status(200).json(data)
     })
     .catch(err => {
@@ -46,7 +45,6 @@ class TaskController {
       order: [["id", "ASC"], [Task, "createdAt", "ASC"]]
     })
     .then(data => {
-      output = data
       res.status(200).json(data)
     })
     .catch(err => {
