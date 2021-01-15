@@ -1,7 +1,7 @@
 const { User, Task } = require('../models')
 
 class TaskController {
-    static findTasks(req, res) {
+    static findTasks(req, res, next) {
         Task.findAll({
             attributes: {
                 exclude: [ 'createdAt', 'updatedAt']
@@ -16,7 +16,7 @@ class TaskController {
         })
     }
 
-    static findTaskById(req, res) {
+    static findTaskById(req, res, next) {
         let id = req.params.id
         Task.findByPk(id, {
             attributes: {
@@ -36,7 +36,7 @@ class TaskController {
         })
     }
 
-    static createTask(req, res) {
+    static createTask(req, res, next) {
         const { title, category, description} = req.body
         console.log(req.user.id, 'ini disini')
         const UserId = req.user.id
@@ -57,7 +57,7 @@ class TaskController {
         })
     }
 
-    static editTask(req, res) {
+    static editTask(req, res, next) {
         let id = req.params.id
         const { title, category, description} = req.body
         let obj = {
@@ -79,7 +79,7 @@ class TaskController {
         })
     }
 
-    static destroyTask(req, res) {
+    static destroyTask(req, res, next) {
         let id = req.params.id
         Task.destroy({
             where: {
@@ -92,6 +92,26 @@ class TaskController {
             } else {
                 res.status(200).json({message: 'Task Has Been Succesfully Deleted'})
             }
+        })
+        .catch(err => {
+            console.log(err)
+            next({message: 'Internal Server Error'})
+        })
+    }
+
+    static changeTaskCategory(req, res, next) {
+        let id = req.params.id
+        const { category } = req.body
+        let obj = {
+            category
+        }
+        Task.update(obj, {
+            where: {
+                id
+            }
+        })
+        .then(data => {
+            res.status(200).json(data)
         })
         .catch(err => {
             console.log(err)
