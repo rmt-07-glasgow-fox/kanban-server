@@ -15,7 +15,7 @@ function errorHandler (err, req, res, next) {
             case 'LoginFailed':
                 return res.status(400).json([{message: 'invalid email and password'}]);
             case 'NotFound' :
-                return res.status(404).json([{message: `${err.attr} not found`}]);
+                return res.status(404).json([{message: `Task not found`}]);
             case 'Auth' :
                 return res.status(401).json([{message: 'you must be logged in'}])
             case 'Authorize' :

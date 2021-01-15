@@ -1,20 +1,15 @@
-const {Category} = require('../models')
+const {Category,Task} = require('../models')
 class CategoryController {
-    static async create (req, res, next) {
-        const {name} = req.body
-        try {
-            const data = await Category.create({name:name})
-            return res.status(201).json(data)
-        } catch (err) {
-            next (err)
-        }
-    }
 
-    static async deleteCategory (req, res, next) {
-        const id = Number(req.params.id)
-        try {
-            await Category.destroy({where:{id:id}})
-            res.status(200).json({message: 'Category has been delete'})
+    static async list(req, res, next) {
+        try{
+            let data = await Category.findAll({
+                attributes: ['id', 'name'],
+			    include: {
+                    model: Task,
+                    attributes: ['id', 'title'],
+			    },})
+            res.status(200).json(data)
         } catch (err) {
             next(err)
         }

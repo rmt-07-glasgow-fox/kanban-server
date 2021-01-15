@@ -60,11 +60,11 @@ class UserControler {
     }
 
     static loginGoogle (req, res, next) {
-        const { id_token } = req.body
+        const { googleToken } = req.body
         let email = null
         const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
         client.verifyIdToken({
-          idToken: id_token,
+          idToken: googleToken,
           audience: process.env.GOOGLE_CLIENT_ID,
         })
         .then(ticket => {
