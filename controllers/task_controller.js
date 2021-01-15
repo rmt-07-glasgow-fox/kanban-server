@@ -20,7 +20,10 @@ class TaskController {
 
   static async findAll(req, res, next) {
     try {
-      let tasks = await Category.findAll({include: { model: Task, include: User}})
+      let tasks = await Category.findAll({
+        include: { model: Task, include: User},
+        order: [['id', 'asc']]
+      })
       // let backlog_tasks = await Task.findAll({where: {CategoryId: 1}})
       // let todo_tasks = await Task.findAll({where: {CategoryId: 2}})
       // let done_tasks = await Task.findAll({where: {CategoryId: 3}})
