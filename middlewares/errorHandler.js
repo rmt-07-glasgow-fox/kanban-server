@@ -25,6 +25,9 @@ const errorHandler = (err,req,res,next) => {
       case "ErrorAuthorize":
         objErr(401, 'you dont have access')
         break;
+      case "SequelizeForeignKeyConstraintError": 
+        objErr(400, 'invalid constrain error')
+        break;
       case "ErrorNotFound":
         objErr(404, 'not found')
         break;

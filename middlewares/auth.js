@@ -1,5 +1,5 @@
 const { cekToken } = require('../helpers/jwt')
-const { User, Task } = require('../models')
+const { User, Task, Category } = require('../models')
 
 const authenticate = async (req,res,next) => {
   try {
@@ -40,7 +40,29 @@ const authorize = async (req,res,next) => {
   }
 }
 
+const authorizeCategory = async (req,res,next) => {
+  try {
+    const { id } = req.params
+    const UserId = req.user.id
+    const category = await Category.findOne({
+      where: {id}
+    })
+    if(category){
+      if(UserId == category.UserId){
+        next()
+      }else{
+        next({name: 'ErrorAuthorize'})
+      }
+    }else{
+      next({name: 'ErrorNotFound'})
+    }
+  } catch (err) {
+    next(err)
+  }
+}
+
 module.exports = {
   authenticate,
-  authorize
+  authorize,
+  authorizeCategory
 }

@@ -1,11 +1,11 @@
-const { Task, User } = require('../models')
+const { Task, User, Category } = require('../models')
 
 class TaskController {
   static async showAll(req,res,next){
     try {
       const tasks = await Task.findAll({
         order: [[`id`]],
-        include: [User]
+        include: [User, Category]
       })
       res.status(200).json(tasks)
     } catch (err) {
@@ -16,10 +16,10 @@ class TaskController {
   static async create(req,res,next){
     try {
       const UserId = req.user.id
-      const { title, category } = req.body
+      const { title, CategoryId } = req.body
       const input = {
         title : title || '',
-        category : category || '',
+        CategoryId : CategoryId || '',
         UserId
       }
       const task = await Task.create(input)
@@ -34,7 +34,7 @@ class TaskController {
       const {id} = req.params
       const tasks = await Task.findOne({
         where: {id},
-        include: [User]
+        include: [User, Category]
       })
       res.status(200).json(tasks)
     } catch (err) {
@@ -45,11 +45,11 @@ class TaskController {
   static async edit(req,res,next){
     try {
       const { id } = req.params
-      const { title, category } = req.body
+      const { title, CategoryId } = req.body
       const UserId = req.user.id
       const input = {
         title : title || '',
-        category : category || '',
+        CategoryId : CategoryId || '',
         UserId
       }
       const task = await Task.update(input, {
@@ -57,7 +57,7 @@ class TaskController {
         returning: true
       })
       if(task){
-        res.status(200).json(task[1])
+        res.status(200).json(task[1][0])
       }
     } catch (err) {
       next(err)
@@ -67,13 +67,13 @@ class TaskController {
   static async updateCategory(req,res,next){
     try {
       const { id } = req.params
-      const { category } = req.body
-      const task = await Task.update({category},{
+      const { CategoryId } = req.body
+      const task = await Task.update({CategoryId},{
         where: {id},
         returning: true
       })
       if(task){
-        res.status(200).json(task[1])
+        res.status(200).json(task[1][0])
       }
     } catch (err) {
       next(err)
