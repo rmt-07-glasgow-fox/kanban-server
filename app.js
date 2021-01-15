@@ -1,4 +1,5 @@
-if(process.env.NODE_ENV === "development") {
+if(process.env.NODE_ENV !== "production") {
+  console.log(process.env.NODE_ENV);
   require("dotenv").config()
 }
 const express = require("express")
@@ -9,6 +10,7 @@ const cors = require("cors")
 const errorHandler = require("./middlewares/errorHandler")
 
 app.use(cors())
+app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 app.use(router)

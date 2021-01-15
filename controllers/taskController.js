@@ -46,7 +46,8 @@ class TaskController {
     let obj = {
       title: req.body.title,
       detail: req.body.detail,
-      assign: req.body.assign
+      assign: req.body.assign,
+      category: req.body.category
     }
     Task.update(obj, {
       where: {
@@ -94,6 +95,62 @@ class TaskController {
       })
       .catch(err => {
         err.name="Unauthorized"
+        next(err)
+      })
+  }
+  static getAllBacklog(req,res,next) {
+    Task.findAll({
+      where: {
+        category: "backlog"
+      }
+    })
+      .then(data => {
+        res.status(200).json(data)
+      })
+      .catch(err => {
+        console.log(err);
+        next(err)
+      })
+  }
+  static getAllTodo(req,res,next) {
+    Task.findAll({
+      where: {
+        category: "todo"
+      }
+    })
+      .then(data => {
+        res.status(200).json(data)
+      })
+      .catch(err => {
+        console.log(err);
+        next(err)
+      })
+  }
+  static getAllDoing(req,res,next) {
+    Task.findAll({
+      where: {
+        category: "doing"
+      }
+    })
+      .then(data => {
+        res.status(200).json(data)
+      })
+      .catch(err => {
+        console.log(err);
+        next(err)
+      })
+  }
+  static getAllDone(req,res,next) {
+    Task.findAll({
+      where: {
+        category: "done"
+      }
+    })
+      .then(data => {
+        res.status(200).json(data)
+      })
+      .catch(err => {
+        console.log(err);
         next(err)
       })
   }
