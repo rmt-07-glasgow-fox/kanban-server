@@ -139,8 +139,6 @@ class UserController {
     console.log("masuk add organization");
     const { OrganizationId } = req.body;
     const { id } = req.user;
-    // console.log(OrganizationId);
-    // console.log(id);
 
     User.update(
       {
