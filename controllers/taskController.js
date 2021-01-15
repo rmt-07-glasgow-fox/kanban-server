@@ -18,7 +18,6 @@ class Controller{
             res.status(201).json({message: data})
         })
         .catch(err=>{
-            console.log(err)
             next(err)
         })
     }
@@ -30,24 +29,9 @@ class Controller{
             res.status(200).json(data)
         })
         .catch(err=>{
-            console.log(err)
             next(err)
         })
     }
-
-/*======================== ALL LIST TASK BY CATEGORY =======================*/ 
-    // static listTaskByCategory(req, res, next){
-    //     let category = req.params.category
-        
-    //     Task.findAll({where:{category}})
-    //     .then(data=>{
-    //         res.status(200).json({message: data})
-    //     })
-    //     .catch(err=>{
-    //         console.log(err)
-    //         next(err)
-    //     })
-    // }
 
 /*=============================== GET TASK BY ID =============================*/ 
     static getTaskById(req, res, next){
@@ -55,10 +39,9 @@ class Controller{
         
         Task.findByPk(id)
         .then(data=>{
-            res.status(200).json({message: data})
+            res.status(200).json(data)
         })
         .catch(err=>{
-            console.log(err)
             next(err)
         })
 
@@ -85,7 +68,6 @@ class Controller{
             })
         })
         .catch(err=>{
-            console.log(err)
             next(err)
         })
     }
@@ -102,7 +84,6 @@ class Controller{
             res.status(200).json({message: `category updated to ${category.category}` })
         })
         .catch(err=>{
-            console.log(err)
             next(err)
         })
     }
@@ -115,7 +96,6 @@ class Controller{
             res.status(200).json({message: `Task with ID ${id} has been delete`})
         })
         .catch(err=>{
-            console.log(err)
             next(err)
         })
     }

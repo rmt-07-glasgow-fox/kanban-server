@@ -56,7 +56,6 @@ class Controller{
             }
         })
         .catch(err=>{
-            console.log(err, 'eror disini')
             next(err)
         })
 
@@ -74,12 +73,13 @@ class Controller{
         .then(ticket=>{
             let payload = ticket.getPayload()
             email = payload.email
-            username = payload.given_name
+            username = payload.name
             return User.findOne({where:{email}})
+            
         })
         .then(data=>{
             if(!data){
-                return User.Create({
+                return User.create({
                     email,
                     username,
                     password: "12345678"
@@ -93,7 +93,6 @@ class Controller{
                 id: data.id, 
                 email: data.email, 
                 username: data.username, 
-                access_token
             }
             let access_token = generateToken(payload)
             return res.status(200).json({
@@ -102,7 +101,6 @@ class Controller{
             })
         })
         .catch(err=>{
-            console.log(err)
             next(err)
         })
     }

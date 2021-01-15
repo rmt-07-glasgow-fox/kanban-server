@@ -28,6 +28,11 @@ module.exports = (sequelize, DataTypes) => {
       validate:{
         notEmpty:{
           msg: 'category cannot empty'
+        },
+        ChooseValidation(value){
+          if(value === 'Choose'){
+            throw new Error('Please fill category')
+          }
         }
       }
     },
