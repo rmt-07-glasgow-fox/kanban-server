@@ -273,3 +273,37 @@ _Response (500 - Internal Server Error)_
   "message": "error from the server"
 }
 ```
+&nbsp;
+## POST /googleLogin
+_Request Header_
+```
+{
+  not needed
+}
+```
+
+_Request Body_
+```
+{
+  "email": "<email to get insert into>",
+  "password": "<password to get insert into>"
+}
+```
+_Response (200 - OK)_
+```
+{
+  "access_token": "<access_token>"
+}
+```
+_Response (400 - Bad Request)_
+```
+{
+  Error message from SequelizeValdationError
+}
+```
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "error from the server"
+}
+```

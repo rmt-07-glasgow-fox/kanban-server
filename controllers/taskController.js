@@ -1,4 +1,4 @@
-const {Task} = require('../models/index')
+const {Task, User} = require('../models/index')
 
 class Controller {
     static create(req, res, next){
@@ -19,8 +19,9 @@ class Controller {
     }
 
     static showTask(req, res, next){
-        Task.findAll()
+        Task.findAll({include: User})
         .then(data =>{
+            //console.log(data)
             return res.status(200).json(data)
         })
         .catch(err =>{
