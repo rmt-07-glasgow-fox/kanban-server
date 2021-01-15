@@ -36,6 +36,7 @@ class Controller {
     })   
   }
 
+  /*
   static update (req, res, next) {
     let idParams = req.params.id
     let { title, category } = req.body
@@ -48,6 +49,7 @@ class Controller {
       next(err)
     })
   }
+  */
 
   static updateCategory (req, res, next) {
     let idParams = req.params.id

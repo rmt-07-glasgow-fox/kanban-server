@@ -50,7 +50,6 @@ class Controller {
   }
 
   static gLogin (req, res, next) {
-    console.log('di controller')
     let { id_token } = req.body
     let email
     let username
