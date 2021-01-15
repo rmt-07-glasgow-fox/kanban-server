@@ -11,10 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Category.hasMany(models.Task)
     }
   };
   Category.init({
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
+    categoryClass: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Category',

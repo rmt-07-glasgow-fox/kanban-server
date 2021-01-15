@@ -37,14 +37,29 @@ class TaskController {
                 where: {id: +req.params.id},
                 returning: true
             })
+            console.log(updatedTask);
             res.status(200).json(updatedTask)
         } catch (err) {
             next(err)
         }
     }
 
+    static patchTask(req, res, next) {
+        let { CategoryId } = req.body
+
+        Task.update({CategoryId}, {
+            where: {id: +req.params.id},
+            returning: true
+        })
+        .then(movedTask => {
+            res.status(200).json(movedTask[1][0]);
+        })
+        .catch(next)
+    }
+
     static async deleteTask(req, res, next) {
         try {
+            console.log('masuk delet');
             Task.destroy({where: {id: +req.params.id}})
             .then(() => {
                 res.status(200).json({message: 'success to delete selected task'})
