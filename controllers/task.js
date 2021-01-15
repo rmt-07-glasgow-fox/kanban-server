@@ -50,8 +50,6 @@ class TaskController {
             category: req.body.category,
             UserId: req.loggedInUser.id
         }
-        console.log(taskId, 'OOOOOOOOOOOOOOOOOOOOOOOOOOOOO')
-        console.log(taskData, 'OOOOOOOOOOOOOOOOOOOOOOOOOOOOO')
 
         Task.update(taskData, {
             where: {
