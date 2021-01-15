@@ -37,8 +37,10 @@ class UserController {
             .then(user => {
                 let isLogin = !user ? false : comparePassword(password, user.password);
 
-                if (!isLogin) throw new Error ('InvalidEmailPassword');
-                else {
+                if (!isLogin) {
+                    throw new Error ('InvalidEmailPassword');
+                }
+
                     res.status(200).json({
                         name: user.name,
                         access_token: generateToken({
@@ -46,12 +48,8 @@ class UserController {
                             email: user.email
                         })
                     })
-                }
-
             })
-            .catch(err => {
-                next(err)
-            })
+            .catch(err => next(err))
     }
 
     static googleLogin(req, res, next) {
