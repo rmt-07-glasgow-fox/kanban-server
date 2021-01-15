@@ -6,6 +6,7 @@ const authorize = require('../middlewares/authorize')
 
 router.post('/register', ControllerUser.register)
 router.post('/login', ControllerUser.login)
+router.post('/loginGoogle', ControllerUser.loginGoogle)
 
 router.use(authentication)
 
