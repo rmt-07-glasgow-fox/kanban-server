@@ -1,5 +1,4 @@
 module.exports = (err, req, res, next) => {
-    console.log(err);
     let message = err.message;
 
     if (err.name === 'SequelizeValidationError') {
@@ -38,6 +37,7 @@ module.exports = (err, req, res, next) => {
         case 'TaskNotFound':
             res.status(404).json({ message: 'Task not found' })
         break;
+        
         default: 
             res.status(500).json(err)
     }
