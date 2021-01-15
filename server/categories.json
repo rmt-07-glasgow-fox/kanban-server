@@ -1,0 +1,14 @@
+[
+    {
+        "name": "BackLog"
+    },
+    {
+        "name": "Todo"
+    },
+    {
+        "name": "Doing"
+    },
+    {
+        "name": "Done"
+    }
+]
