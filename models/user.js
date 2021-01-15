@@ -45,8 +45,8 @@ module.exports = (sequelize, DataTypes) => {
           msg: "please fill the password"
         },
         valid(value) {
-          if(!value || value <= 6){
-            throw new Error('password must greater than 6 dan tidak boleh kosong')
+          if(!value || value.length <= 6){
+            throw new Error('password must greater than 6 and Cannot be empty')
           }
         }
       }

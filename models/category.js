@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: "please fill the task name"
+          msg: "category name cannot be empty"
         }
       }
     }
