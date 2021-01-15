@@ -24,6 +24,17 @@ class KanbanCon{
         })
     }
 
+    static findOne(req,res,next){
+        let id = req.params.id
+        Kanban.findOne({where:{id:id}})
+        .then(data=>{
+            res.status(200).json(data)
+        })
+        .catch(err=>{
+            next(err)
+        })
+    }
+
     static put(req,res,next){
         let id = req.params.id
         Kanban.update(req.body,{where:{id}})

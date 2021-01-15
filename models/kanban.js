@@ -54,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     hooks:{
       beforeCreate:(user)=>{
-        user.status = 'Back-Log'
+        user.status = 'BACK-LOG'
       }
     },
     sequelize,
