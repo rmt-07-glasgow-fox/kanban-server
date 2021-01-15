@@ -2,7 +2,6 @@ const { Task } = require('../models')
 
 class TaskController {
 
-
     static getTaskHandler(req, res, next) {
 
         Task.findAll()
@@ -27,25 +26,51 @@ class TaskController {
                 res.status(200).json(data)
             })
             .catch(err => {
-                res.status(500).json({message: "Internal Server Error"})
+                next(err)
             })
+    }
+
+    static patchTaskHandler(req, res, next) {
+        let id = req.params.id
+        let { CategoryId } = req.body
+
+        Task.update(req.body, {
+            where: {
+                id
+            }, returning: true
+        })
+        .then(data => {
+            // console.log(data)
+            if(data[0] === 0) {
+                next({name: "NotFound"})
+            } else {
+                res.status(201).json(data)
+            }
+        })
+        .catch(err => {
+            next(err)
+        })
     }
 
     static putTaskHandler(req, res, next) {
         let id = req.params.id
+        let { name, description } = req.body
 
-        Task.update({where: {
-            id
-        }})
+        Task.update(req.body, {
+            where: {
+                id
+            }, returning: true
+        })
             .then(data => {
+                // console.log(data)
                 if(data[0] === 0) {
-                    res.status(404).json({message: "Not Found"})
+                    next({name: "NotFound"})
                 } else {
                     res.status(201).json(data)
                 }
             })
             .catch(err => {
-                res.status(500).json({message: "Internal Server Error"})
+                next(err)
             })
     }
 
@@ -58,10 +83,10 @@ class TaskController {
             }
         })
             .then(data => {
-
+                res.status(200).json({message: "Delete Category success"})
             })
             .catch(err => {
-                
+                next(err)
             })
     }
 }

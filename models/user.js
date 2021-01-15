@@ -22,24 +22,34 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: true,
-        isAlpha: true
+        notEmpty: {
+          args: true,
+          msg: "Name must be filled"
+        }
       }
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: true,
-        isEmail: true,
+        notEmpty: {
+          args: true,
+          msg: "Email must be filled"
+        },
+        isEmail: {
+          args: true,
+          msg: "Input must be in email format e/g asd@email.com"
+        },
       }
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: true,
-        notNull: true
+        notEmpty: {
+          args: true,
+          msg: "Password must be filled"
+        }
       }
     }
   }, {

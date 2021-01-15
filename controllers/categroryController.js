@@ -13,7 +13,7 @@ class CategoryController {
                 res.status(201).json(data)
             })
             .catch(err => {
-                res.status(500).json({message: "Internal Server Error"})
+                next(err)
             })
     }
 
@@ -24,7 +24,7 @@ class CategoryController {
                 res.status(200).json(data)
             })
             .catch(err => {
-                res.status(500).json({message: "Internal Server Error"})
+                next(err)
             })
     }
 
@@ -43,21 +43,29 @@ class CategoryController {
                 res.status(200).json(data)
             })
             .catch(err => {
-                res.status(500).json(err)
+                next(err)
             })
     }
 
     static deleteCategoryHandler(req, res, next) {
         let id = req.params.id
 
-        Category.destroy({where: {
-            id
-        }})
+        Category.destroy({
+            where: {
+                id
+            }
+        })
             .then(data => {
-                res.status(200).json()
+                    return Task.destroy({where: {
+                        CategoryId: id
+                    }})
+                
+            })
+            .then(data2 => {
+                res.status(200).json({message: "Delete Category success"})
             })
             .catch(err => {
-                res.status(500).json({message: "Internal Server Error"})
+                next(err)
             })
     }
 }

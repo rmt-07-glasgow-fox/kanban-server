@@ -3,7 +3,9 @@ const { User, Task } = require('../models')
 
 
 async function authentication(req, res, next) {
-
+    if (!req.headers.access_token) {
+        res.status(401).json({message: "No Token"})
+      }
     try {
         let decoded = checkToken(req.headers.access_token)
         // console.log(decoded)
@@ -13,7 +15,7 @@ async function authentication(req, res, next) {
         }})
             // console.log(data)
                 if(!data) {
-                    res.status(401).json({message: 'Please Login'})
+                    next({name: "invalid"})
                 }
                 else {
                     req.user = data
@@ -31,9 +33,10 @@ function authorization(req, res, next) {
         id: req.params.id
     }})
         .then(data => {
-            console.log(data)
+            // console.log(data)
+            // console.log(req.user.id)
             if(!data) {
-                res.status(401).json({message: "Error Data Not Found"})
+                next({name:"NotAuthorized"})
             } else if (data.UserId === req.user.id){
                 next()
             } 
