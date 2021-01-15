@@ -1,4 +1,4 @@
-const { Task, Category } = require('../models')
+const { Task, Category, User } = require('../models')
 
 class TaskController {
 
@@ -11,16 +11,7 @@ class TaskController {
         UserId: req.currentUser.id
       }
       let task = await Task.create(taskObj)
-
-      let _task = {
-        id: task.id,
-        name: task.name,
-        CurrentUserName: req.currentUser.name,
-        CurrentUserEmail: req.currentUser.email,
-        createdAt: task.createdAt
-      }
-
-      res.status(201).json(_task)
+      res.status(201).json(task)
     } catch(error) {
       next(error)
     }
@@ -29,21 +20,21 @@ class TaskController {
 
   static async findAll(req, res, next) {
     try {
-      let tasks = await Task.findAll()
-      let backlog_tasks = await Task.findAll({where: {CategoryId: 1}})
-      let todo_tasks = await Task.findAll({where: {CategoryId: 2}})
-      let done_tasks = await Task.findAll({where: {CategoryId: 3}})
-      let completed_task = await Task.findAll({where: {CategoryId: 4}})
+      let tasks = await Category.findAll({include: { model: Task, include: User}})
+      // let backlog_tasks = await Task.findAll({where: {CategoryId: 1}})
+      // let todo_tasks = await Task.findAll({where: {CategoryId: 2}})
+      // let done_tasks = await Task.findAll({where: {CategoryId: 3}})
+      // let completed_task = await Task.findAll({where: {CategoryId: 4}})
 
-      let data = {
-        tasks: tasks,
-        backlog: backlog_tasks,
-        todo: todo_tasks,
-        done: done_tasks,
-        completed: completed_task
-      }
+      // let data = {
+      //   tasks: tasks,
+      //   backlog: backlog_tasks,
+      //   todo: todo_tasks,
+      //   done: done_tasks,
+      //   completed: completed_task
+      // }
 
-      res.status(200).json(data)
+      res.status(200).json(tasks)
     } catch(error) {
       if (error) {
         next(error)
@@ -106,9 +97,10 @@ class TaskController {
       let {id} = req.params
       let task = await Task.findByPk(id)
       task.destroy()
-
+      console.log('TRY', task);
       res.status(200).json({msg: 'Delete task successfully'})
     } catch(error) {
+      console.log('ERROR', error);
       next(error)
     }
   }

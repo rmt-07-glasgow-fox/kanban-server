@@ -26,7 +26,9 @@ const authentication = async (req, res, next) => {
 const authorization = async (req, res, next) => {
   try {
     let task = await Task.findByPk(req.params.id)
-    if (req.currentUser.id != task.UserId) {
+    if (!task) {
+      next({name: 'notFound'})
+    } else if (req.currentUser.id != task.UserId) {
       next({name: 'notAuthorize'})
     } else {
       next()

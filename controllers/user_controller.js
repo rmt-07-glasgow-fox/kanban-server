@@ -7,10 +7,13 @@ class UserController {
 
   static async register(req, res, next) {
     try {
-      let user = await User.create(req.body)
+      let {email, password, name} = req.body
+      let user = await User.create({email, password, name})
 
+      console.log('TRY SERVER', user);
       res.status(201).json(user)
     } catch(error) {
+      console.log('ERROR SERVER??', error);
       next(error)
     }
   }
