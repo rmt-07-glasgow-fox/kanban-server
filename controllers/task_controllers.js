@@ -59,10 +59,11 @@ class TaskController {
 
     static editTask(req, res) {
         let id = req.params.id
-        const { title, category} = req.body
+        const { title, category, description} = req.body
         let obj = {
             title,
-            category
+            category,
+            description
         }
         Task.update(obj, {
             where: {
