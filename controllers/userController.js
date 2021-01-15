@@ -66,7 +66,7 @@ class UserController {
 
     static async loginGoogle(req, res, next) {
         try {
-            // console.log('>>> body.id_token : ', req.body.id_token)
+            console.log('>>> body.id_token : ', req.body.id_token)
             const { id_token } = req.body
             const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
             const ticket = await client.verifyIdToken({
@@ -94,10 +94,10 @@ class UserController {
                     email: createUser.email
                 }
 
-                const access_token = generateToken(payload)
+                const access_token = createToken(payload)
                 console.log('>>> access_token', access_token)
 
-                return res.status(201).json({ access_token })
+                return res.status(201).json({ access_token, email })
 
             }
 
@@ -107,10 +107,10 @@ class UserController {
                     email: user.email
                 }
 
-                const access_token = generateToken(payload)
+                const access_token = createToken(payload)
                 console.log('>>> access_token', access_token)
 
-                return res.status(200).json({ access_token })
+                return res.status(200).json({ access_token, email })
             }
 
         } catch (err) {

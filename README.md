@@ -1,5 +1,20 @@
 # kanban-server
 
+
+**How to**
+---
+```
+settings server : 
+
+npm i
+sequelize db:create
+sequelize db:migrate
+
+run server : npm run dev
+server url : http://localhost:3000
+```
+
+
 **User**
 | Method | Route             | Description                            |
 | ------ | ----------------- | -------------------------------------- |
@@ -8,12 +23,13 @@
 | POST   | /user/loginGoogle | Login/Register user using google oauth |
 
 **Task**
-| Method | Route                     | Description   |
-| ------ | ------------------------- | ------------- |
-| GET    | /task                     | Get list Task |
-| POST   | /task                     | Add task      |
-| DELETE | /task/:idTask             | Delete task   |
-| PUT    | /task/:idTask/:idCategory | Update task   |
+| Method | Route                     | Description          |
+| ------ | ------------------------- | -------------------- |
+| GET    | /task                     | Get list Task        |
+| POST   | /task                     | Add task             |
+| DELETE | /task/:idTask             | Delete task          |
+| PATCH  | /task/:idTask/:idCategory | Change category task |
+| PUT    | /task/:idTask/:idCategory | Edit task            |
 
 **Category**
 | Method | Route     | Description        |
@@ -139,7 +155,8 @@ _Request Body_
 _Response( 200 )_
 ```
 {
-    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ1c2VyMDJAZ21haWwuY29tIiwiaWF0IjoxNjA5OTI0ODg1fQ.PdvoxOqmU8s7Vl40B9UcdLg08EQL9t3O1XDyHbOsbsk"
+    "access_token": "eyJhbdderscgeygr",
+    "email" : 'user@gmail.com'
 }
 ```
 
@@ -182,12 +199,14 @@ _Response( 200 )_
         "category": "backlog",
         "Tasks": [
             {
-                "id": 4,
-                "title": "Belajar React",
+                "id": 30,
+                "title": "fdfdfdf",
                 "UserId": 1,
                 "CategoryId": 1,
-                "createdAt": "2021-01-12T17:13:39.512Z",
-                "updatedAt": "2021-01-12T17:13:39.512Z"
+                "User": {
+                    "id": 1,
+                    "email": "user01@gmail.com"
+                }
             }
         ]
     },
@@ -196,26 +215,87 @@ _Response( 200 )_
         "category": "todo",
         "Tasks": [
             {
-                "id": 3,
+                "id": 14,
                 "title": "test ganti dong",
-                "UserId": 1,
+                "UserId": 2,
                 "CategoryId": 2,
-                "createdAt": "2021-01-12T17:12:10.657Z",
-                "updatedAt": "2021-01-12T19:56:25.138Z"
+                "User": {
+                    "id": 2,
+                    "email": "user02@gmail.com"
+                }
+            },
+            {
+                "id": 13,
+                "title": "test ganti dong",
+                "UserId": 2,
+                "CategoryId": 2,
+                "User": {
+                    "id": 2,
+                    "email": "user02@gmail.com"
+                }
             }
         ]
     },
     {
         "id": 3,
         "category": "doing",
-        "Tasks": []
+        "Tasks": [
+            {
+                "id": 12,
+                "title": "Belajar Vue 1",
+                "UserId": 2,
+                "CategoryId": 3,
+                "User": {
+                    "id": 2,
+                    "email": "user02@gmail.com"
+                }
+            },
+            {
+                "id": 31,
+                "title": "fdfdfdf",
+                "UserId": 12,
+                "CategoryId": 3,
+                "User": {
+                    "id": 12,
+                    "email": "abdulrozak.mail@gmail.com"
+                }
+            }
+        ]
     },
     {
         "id": 4,
         "category": "done",
-        "Tasks": []
+        "Tasks": [
+            {
+                "id": 26,
+                "title": "rozak",
+                "UserId": 11,
+                "CategoryId": 4,
+                "User": {
+                    "id": 11,
+                    "email": "user05@gmail.com"
+                }
+            },
+            {
+                "id": 16,
+                "title": "hg",
+                "UserId": 1,
+                "CategoryId": 4,
+                "User": {
+                    "id": 1,
+                    "email": "user01@gmail.com"
+                }
+            }
+        ]
     }
 ]
+```
+
+_Response( 401 - Unauthorized )_
+```
+{
+    "message": "Unauthorized / access_token is required"
+}
 ```
 
 _Response( 404 - Not Found )_
@@ -259,6 +339,12 @@ _Response( 200 )_
 }
 ```
 
+_Response( 401 - Unauthorized )_
+```
+{
+    "message": "Unauthorized / access_token is required"
+}
+```
 _Response( 404 - Not Found )_
 ```
 {
@@ -294,6 +380,12 @@ _Response( 200 )_
 ```
 {
     "message": "test is deleted"
+}
+```
+_Response( 401 - Unauthorized )_
+```
+{
+    "message": "Unauthorized / access_token is required"
 }
 ```
 
@@ -344,6 +436,13 @@ _Response( 400 - Bad Request )_
 ```
 {
     "message": "title is required"
+}
+```
+
+_Response( 401 - Unauthorized )_
+```
+{
+    "message": "Unauthorized / access_token is required"
 }
 ```
 
@@ -400,6 +499,13 @@ _Response( 200 )_
 ]
 ```
 
+_Response( 401 - Unauthorized )_
+```
+{
+    "message": "Unauthorized / access_token is required"
+}
+```
+
 _Response( 404 - Not Found )_
 ```
 {
@@ -437,6 +543,13 @@ _Response( 201 )_
 ```
 {
     message : "New category is created"
+}
+```
+
+_Response( 401 - Unauthorized )_
+```
+{
+    "message": "Unauthorized / access_token is required"
 }
 ```
 
