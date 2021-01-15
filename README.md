@@ -1,5 +1,5 @@
 # Kanban App Server
-TODO App is an application to make Task list. This app has:
+Kanban App is an application to make Task list. This app has:
 * RESTful endpoint for asset's CRUD operation
 * Using Vue as client
 * Using Express JS as server
@@ -18,7 +18,7 @@ TODO App is an application to make Task list. This app has:
 ## RESTful endpoints
 ### GET /tasks
 
-> Get all Todo list
+> Get all Tasks list
 
 _Request Header_
 ```json
@@ -81,7 +81,7 @@ _Response (500 - Internal Server Error)_
 
 ### POST /tasks
 
-> Create new todo
+> Create new Task
 
 _Request Header_
 ```
@@ -138,7 +138,7 @@ _Response (500 - Internal Server Error)_
 
 ### GET /tasks/:id
 
-> get todos list by id
+> get Tasks list by id
 
 _Request Header_
 ```
@@ -199,7 +199,7 @@ _Response (500 - Internal Server Error)_
 
 ### PUT /tasks/:id
 
-> Update todos list by ID
+> Update Task list by ID
 
 _Request Header_
 ```
@@ -269,7 +269,7 @@ _Response (500 - Internal Server Error)_
 
 ### DELETE /tasks/:id
 
->Delete todos list by ID
+>Delete Task list by ID
 
 _Request Header_
 ```
