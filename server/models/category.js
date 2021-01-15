@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Kanban extends Model {
+  class Category extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,24 +11,27 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Kanban.belongsTo(models.User)
-      Kanban.belongsTo(models.Category)
+      Category.belongsTo(models.User)
+      Category.hasMany(models.Kanban)
     }
   };
-  Kanban.init({
-    title: {
+  Category.init({
+    name: {
       type: DataTypes.STRING,
+      unique: {
+        arg: true,
+        msg: "Category must be unique"
+      },
       validate: {
         notEmpty: {
-          msg: "Title must be filled"
-        }
+          msg: "Category name must be filled"
+        },
       }
     },
-    CategoryId: DataTypes.INTEGER,
     UserId: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Kanban',
+    modelName: 'Category',
   });
-  return Kanban;
+  return Category;
 };

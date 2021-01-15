@@ -1,5 +1,5 @@
 const { verifyToken } = require('../helpers')
-const { User, Kanban } = require('../models')
+const { User, Kanban, Category } = require('../models')
 
 function authenticate(req, res, next){
     try {
@@ -48,7 +48,32 @@ function authorized(req, res, next){
     })
 }
 
+function categoriesAuth(req, res, next){
+    let catId = req.params.id
+    let userId = req.userData.id
+    if (userId == 1){
+        next()
+    } else {
+        Category.findByPk(catId)
+        .then(data => {
+            if(data){
+                if(data.UserId == userId){
+                    next()
+                } else {
+                    next({status: 401})
+                }
+            } else {
+                next({status: 404})
+            }
+        })
+        .catch(err => {
+            next(err)
+        })
+    }
+}
+
 module.exports = {
     authenticate,
-    authorized
+    authorized,
+    categoriesAuth
 }

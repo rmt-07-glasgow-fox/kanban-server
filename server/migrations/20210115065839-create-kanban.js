@@ -11,8 +11,16 @@ module.exports = {
       title: {
         type: Sequelize.STRING
       },
-      category: {
-        type: Sequelize.STRING
+      CategoryId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: 'Categories'
+          },
+          key: 'id'
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade'
       },
       UserId: {
         type: Sequelize.INTEGER,

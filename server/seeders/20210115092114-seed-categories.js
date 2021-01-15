@@ -1,25 +1,33 @@
 'use strict';
-const data =[
+const data = [
   {
-    title: "Task 1",
-    category: "Backlog",
+    name: 'Backlog',
     UserId: 1,
     createdAt: new Date(),
     updatedAt: new Date()
   },
   {
-    title: "Task 2",
-    category: "Doing",
-    UserId: 2,
+    name: 'Todo',
+    UserId: 1,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    name: 'Doing',
+    UserId: 1,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    name: 'Done',
+    UserId: 1,
     createdAt: new Date(),
     updatedAt: new Date()
   }
-  
 ]
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('Kanbans', data)
+    await queryInterface.bulkInsert('Categories', data)
     /**
      * Add seed commands here.
      *
@@ -32,7 +40,7 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('Kanbans', null, {})
+    await queryInterface.bulkDelete('Categories', null, {})
     /**
      * Add commands to revert seed here.
      *

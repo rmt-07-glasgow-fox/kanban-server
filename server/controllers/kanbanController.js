@@ -1,12 +1,16 @@
-const { Kanban, User } = require('../models')
+const { Kanban, User, Category } = require('../models')
 
 class KanbanController{
     static getAllTask(req, res, next){
+        console.log('oke');
         Kanban.findAll({
-            include: {
+            include: [{
                 model: User,
                 attributes: ['username']
-            }
+            },{
+                model: Category,
+                attributes: ['name']
+            }]
         })
         .then(data => {
             res.status(200).json(data)
@@ -39,7 +43,7 @@ class KanbanController{
     static addTask(req, res, next){
         let value = {
             title: req.body.title,
-            category: req.body.category,
+            CategoryId: req.body.categoryId,
             UserId: req.userData.id
         }
         Kanban.create(value)
@@ -62,7 +66,7 @@ class KanbanController{
         let idTask = req.params.id
         let value = {
             title: req.body.title,
-            category: req.body.category
+            CategoryId: req.body.categoryId
         }
         Kanban.update(value, {
             where: {
@@ -92,7 +96,7 @@ class KanbanController{
     static patchTask(req, res, next){
         let taskId = req.params.id
         let value = {
-            category: req.body.category
+            CategoryId: req.body.categoryId
         }
         Kanban.update(value, {
             where: {

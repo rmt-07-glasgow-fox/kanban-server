@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       User.hasMany(models.Kanban)
+      User.hasMany(models.Category)
     }
   };
   User.init({
