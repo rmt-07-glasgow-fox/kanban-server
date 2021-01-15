@@ -63,7 +63,6 @@ class TaskController {
   static updateCategory(req, res, next) {
     const id = +req.params.id
     const category = { category: req.body.category }
-    console.log(category)
 
     Task.update(category, {
       where: {id}, 
