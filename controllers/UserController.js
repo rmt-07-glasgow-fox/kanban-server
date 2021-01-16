@@ -41,6 +41,7 @@ class UserController {
                 }
 
                     res.status(200).json({
+                        id: user.id,
                         name: user.name,
                         access_token: generateToken({
                             id: user.id,
