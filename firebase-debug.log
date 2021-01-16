@@ -1,0 +1,13 @@
+[debug] [2021-01-15T16:38:21.907Z] ----------------------------------------------------------------------
+[debug] [2021-01-15T16:38:21.910Z] Command:       /usr/bin/node /usr/bin/firebase deploy
+[debug] [2021-01-15T16:38:21.911Z] CLI Version:   9.1.2
+[debug] [2021-01-15T16:38:21.911Z] Platform:      linux
+[debug] [2021-01-15T16:38:21.911Z] Node Version:  v15.5.0
+[debug] [2021-01-15T16:38:21.912Z] Time:          Fri Jan 15 2021 23:38:21 GMT+0700 (Western Indonesia Time)
+[debug] [2021-01-15T16:38:21.912Z] ----------------------------------------------------------------------
+[debug] [2021-01-15T16:38:21.912Z] 
+[debug] [2021-01-15T16:38:21.923Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-01-15T16:38:21.924Z] > authorizing via signed-in user
+[debug] [2021-01-15T16:38:21.924Z] [iam] checking project kanban-5549b for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2021-01-15T16:38:21.929Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/kanban-5549b:testIamPermissions  
+ {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}

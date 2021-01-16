@@ -23,6 +23,7 @@ class UserCon{
                     let user = {
                         id:data.id,email:data.email
                     }
+                   
                     let accesstoken = generateToken(user)
                     res.status(200).json({accesstoken})
                 } else {
@@ -38,9 +39,9 @@ class UserCon{
     }
 
     static oAuthGoogle(req,res,next){
-        let user = req.body 
-        user = req.body.password + 'qwerty123456789zxcvbnm'
-
+        let user = req.body.user
+        user.password += 'qwerty123456789zxcvbnm',
+        
         User.findOne({where:{email:user.email}})
         .then(data=>{
             if (data) {
