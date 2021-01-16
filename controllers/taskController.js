@@ -1,4 +1,4 @@
-const {Task} = require("../models")
+const {Task, User, Sequelize} = require("../models")
 
 class Controller { 
   static async createTask(req, res, next) {
@@ -18,7 +18,8 @@ class Controller {
 
   static async getTasks(req, res, next) {
     try {
-      const tasks = await Task.findAll({order: ['id']})
+      const tasks = await Task.findAll({include: [User]})
+      console.log(tasks[0].User);
       res.status(200).json(tasks)
     } catch (error) {
       console.log(error);
