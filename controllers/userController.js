@@ -54,7 +54,7 @@ class UserController {
                     email: ticket.getPayload().email
                 }
             })
-            if (typeof user !== 'object') {
+            if (!user) {
                 const password = Math.random.toString().substring(0,10) + 'google';
                 user = await User.create({
                     email: ticket.getPayload().email,
