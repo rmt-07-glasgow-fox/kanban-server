@@ -1,3 +1,4 @@
+const { OAuth2Client } = require('google-auth-library')
 const { User } = require('../models')
 const { comparePassword } = require('../helpers/bcrypt')
 const { generateToken } = require('../helpers/jwt')
@@ -64,55 +65,55 @@ class UserController{
         }
     }
 
-    // static async loginGoogle(req, res, next){
-    //     try {
-    //         const { id_token } = req.body
-    //         const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
+    static async googleLogin(req, res, next){
+        try {
+            const { id_token } = req.body
+            const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
-    //         const ticket = await client.verifyIdToken({
-    //             idToken: id_token,
-    //             audience: process.env.GOOGLE_CLIENT_ID,
-    //         })
+            const ticket = await client.verifyIdToken({
+                idToken: id_token,
+                audience: process.env.GOOGLE_CLIENT_ID,
+            })
 
-    //         const payload = ticket.getPayload()
-    //         // console.log(payload)
-    //         const email = payload.email
-    //         const user = await User.findOne({
-    //             where: {
-    //                 email
-    //             }
-    //         })
+            const payload = ticket.getPayload()
 
-    //         if(user){
-    //            const access_token = generateToken({
-    //                 id: user.id,
-    //                 email: user.email
-    //             })
-    //             res.status(200).json({
-    //                 access_token
-    //             })
-    //         } else {
-    //              const opt = {
-    //                 email,
-    //                 password: 'random'
-    //             }
+            const email = payload.email
+            const user = await User.findOne({
+                where: {
+                    email
+                }
+            })
 
-    //             const newUser = await User.create(opt)
-    //             const access_token = generateToken({
-    //                 id: newUser.id,
-    //                 email: newUser.email
-    //             })
-    //             res.status(200).json({
-    //                 access_token
-    //             })
-    //         }
+            if(user){
+               const access_token = generateToken({
+                    id: user.id,
+                    email: user.email
+                })
+                return res.status(200).json({
+                    access_token
+                })
+            } else {
+                 const opt = {
+                    email,
+                    password: 'random'
+                }
 
-    //     } catch (error) {
-    //         res.status(500).json({
-    //             error
-    //         })
-    //     }
-    // }
+                const newUser = await User.create(opt)
+                const access_token = generateToken({
+                    id: newUser.id,
+                    email: newUser.email
+                })
+                return res.status(200).json({
+                    access_token
+                })
+            }
+
+        } catch (error) {
+            return res.status(500).json({
+                error
+            })
+        }
+    }
 }
 
 module.exports = UserController
