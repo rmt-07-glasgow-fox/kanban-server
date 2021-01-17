@@ -1,0 +1,419 @@
+# Kanban app
+
+## RESTful endpoints
+
+### POST /tasks
+
+> Post new task
+
+_Request Header_
+```
+{
+    "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+{
+    "title": "<title to get insert into>",
+    "description": "<description to get insert into>",
+}
+```
+
+_Request Headers_
+```
+{
+    user: {
+        "id": "<user id that provided by database>"
+    }
+}
+```
+
+_Request Query_
+```
+{
+    "category": "<name of category inputed by user>" 
+}
+```
+
+_Response (201)_
+```
+{
+    "id": <given by system>,
+    "title": "<posted title>",
+    "description": "<posted description>",
+}
+```
+
+_Response (400)_
+```
+{
+    "message": "validation error"
+}
+```
+
+_Response (500)_
+```
+{
+    "message": "Internal Server Error"
+}
+```
+
+### GET /tasks
+
+> Get all tasks
+
+_Request Header_
+```
+{
+    "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200)_
+```
+[
+    {
+        "id": 1,
+        "UserId": "<user id>",
+        "CategoryId": "<category id>"
+        "title": "<task title>",
+        "description": "<task description>",
+        "createdAt": "<2020-03-20T07:15:12.149Z>",
+        "updatedAt": "<2020-03-20T07:15:12.149Z>"
+    },
+    {
+        "id": 2,
+        "UserId": "<user id>",
+        "CategoryId": "<category id>"
+        "title": "<task title>",
+        "description": "<task description>",
+        "createdAt": "<2020-03-20T07:15:12.149Z>",
+        "updatedAt": "<2020-03-20T07:15:12.149Z>" 
+    }
+]
+```
+
+_Response (500)_
+```
+{
+    "message": "Internal Server Error"
+}
+```
+
+### GET /tasks/:id
+
+> Get task by id
+
+_Request Header_
+```
+{
+    "access_token": "<your access token>"
+}
+```
+
+_Request Params_
+```
+{
+    "id": <task id>
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200)_
+```
+{
+    "id": <task id>,
+    "UserId": "<user id>",
+    "CategoryId": "<category id>"
+    "title": "<task title>",
+    "description": "<task description>",
+    "createdAt": "<2020-03-20T07:15:12.149Z>",
+    "updatedAt": "<2020-03-20T07:15:12.149Z>" 
+}
+```
+
+_Response (404)_
+```
+{
+    "message": "error not found"
+}
+```
+
+### PUT /tasks/:id
+
+> Update task by id
+
+_Request Header_
+```
+{
+    "access_token": "<your access token>",
+    "user": {
+        "id": "<user id that provided by database>"
+    }
+}
+```
+
+_Request Query_
+```
+{
+    "category": "<name of category inputed by user>" 
+}
+```
+
+_Request Body_
+```
+{
+    "title": "<task title>",
+    "description": "<task description>",
+}
+```
+
+_Response (200)_
+```
+{
+    "id": <task id>,
+    "UserId": "<user id>",
+    "CategoryId": "<category id>"
+    "title": "<task title>",
+    "description": "<task description>",
+    "createdAt": "<2020-03-20T07:15:12.149Z>",
+    "updatedAt": "<2020-03-20T07:15:12.149Z>" 
+}
+```
+
+_Response (404)_
+```
+{
+    "message": "error not found"
+}
+```
+
+_Response (500)_
+```
+{
+    "message": "Internal server error"
+}
+```
+
+### PATCH /todos/:id
+
+> Update category tasks by id
+
+_Request Header_
+```
+{
+    "access_token": "<your access token>",
+    "user": {
+        "id": "<user id that provided by database>"
+    }
+}
+```
+
+_Request Query_
+```
+{
+    "category": "<name of category inputed by user>" 
+}
+```
+
+_Request Body_
+```
+{
+    "title": "<task title>",
+    "description": "<task description>",
+}
+```
+
+_Response (200)_
+```
+{
+    "id": <task id>,
+    "UserId": "<user id>",
+    "CategoryId": "<category id>"
+    "title": "<task title>",
+    "description": "<task description>",
+    "createdAt": "<2020-03-20T07:15:12.149Z>",
+    "updatedAt": "<2020-03-20T07:15:12.149Z>" 
+}
+```
+
+_Response (400)_
+```
+{
+    "message": "error validation"
+}
+```
+
+_Response (404)_
+```
+{
+    "message": "error not found"
+}
+```
+
+_Response (500)_
+```
+{
+    "message": "Internal server error"
+}
+```
+
+### DELETE /tasks/:id
+
+> Delete task by id
+
+_Request Header_
+```
+{
+    "access_token": "<your access token>"
+}
+```
+
+_Request Params_
+```
+{
+    "id": <task id>
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200)_
+```
+{
+    "message": "task success to delete"
+}
+```
+
+_Response (404)_
+```
+{
+    "message": "error not found"
+}
+```
+
+_Response (500)_
+```
+{
+    "message": "Internal server error"
+}
+```
+
+
+### POST users/register
+
+> Post new User
+
+_Request Header_
+```
+{
+    "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+{
+    "userName": "<username to post to User>"
+    "email": "<email to post to User>",
+    "password": "<password to post to User>"
+}
+```
+
+_Response (201)_
+```
+{
+    "id": <given by the system>,
+    "userName": "<User username>"
+    "email": "<User email>"
+}
+```
+
+_Response (400)_
+```
+{
+    errors
+}
+```
+
+### POST /users/login
+
+> Post User login
+
+_Request Body_
+```
+{
+    "email": "<User email>",
+    "password": "<User password>"
+}
+```
+
+_Response (200)_
+```
+{
+    "accessToken": "<generated by system>"
+}
+```
+
+_Response (400)_
+```
+{
+    error
+}
+```
+
+### POST /categories
+
+> Post new Category
+
+_Request Header_
+```
+{
+    "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+{
+    "name": "<category name>"
+}
+```
+
+_Response (200)_
+```
+{
+    "id": <task id>,
+    "name": "<category name>",
+    "createdAt": "<2020-03-20T07:15:12.149Z>",
+    "updatedAt": "<2020-03-20T07:15:12.149Z>" 
+}
+```
+
+_Response (400)_
+```
+{
+    message: "validation error"
+}
+```
+
+_Response (500)_
+```
+{
+    message: "Internal Server Error"
+}
+```
