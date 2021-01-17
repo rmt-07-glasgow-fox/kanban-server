@@ -1,0 +1,18 @@
+[
+    {
+        "name": "Back-Log",
+        "categoryClass": "row card card-header bg-danger text-white mb-2 ms-0"
+    },
+    {
+        "name": "To-Do",
+        "categoryClass": "row card card-header bg-warning text-white mb-2 ms-0"
+    },
+    {
+        "name": "Doing",
+        "categoryClass": "row card card-header bg-primary text-white mb-2 ms-0"
+    },
+    {
+        "name": "Done",
+        "categoryClass": "row card card-header bg-success text-white mb-2 ms-0"
+    }
+]
