@@ -8,7 +8,8 @@ class CategoryController {
 			    include: {
                     model: Task,
                     attributes: ['id', 'title'],
-			    },})
+                    order:[['id','ASC']]    
+			    },order:[['id','ASC']]})
             res.status(200).json(data)
         } catch (err) {
             next(err)
