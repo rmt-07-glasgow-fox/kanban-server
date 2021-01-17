@@ -4,9 +4,8 @@ const {generateToken} = require('../helpers/jwt')
 const {comparePassword} = require('../helpers/bcrypt')
 class UserControler {
   static welcome(req,res) {
-    res.send({message:'welcon to fancy todo'})
-  }
-    
+    res.send({message:'welcom to fancy todo'})
+  }  
     static async login (req, res, next) {
         
         const {email, password} = req.body;
