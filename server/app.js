@@ -1,10 +1,10 @@
-// if (process.env.NODE_ENV === 'development') {
-require('dotenv').config()
-// }
+if (process.env.NODE_ENV === 'development') {
+  require('dotenv').config()
+}
 
 const express = require('express')
 const app = express()
-const port = 3000
+const PORT = process.env.PORT || 3000
 const cors = require('cors')
 const errorHandlers = require('./middlewares/errorHandlers')
 const routes = require('./routes/index')
@@ -19,6 +19,6 @@ app.use(routes)
 
 app.use(errorHandlers)
 
-app.listen(port, () => {
-  console.log(`App listening at http://localhost:${port}`)
+app.listen(PORT, () => {
+  console.log(`App listening at http://localhost:${PORT}`)
 })
