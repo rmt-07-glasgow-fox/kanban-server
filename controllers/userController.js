@@ -42,7 +42,7 @@ class UserController {
         }
         const access_token = generateToken(payload)
         return res.status(200).json({
-          access_token
+          access_token,
         })
       } else {
         throw {name: 'invalidUserPassword'}

@@ -1,9 +1,14 @@
-const { Task }   = require('../models')
+const { Task, User }   = require('../models')
 
 class TaskController {
   static async get(req, res, next) {
     try {
-      const tasks = await Task.findAll()
+      const tasks = await Task.findAll({
+        include: {
+        model: User,
+        attributes:['username']
+        } 
+      })
       return res.status(200).json(tasks)
     } catch (err) {
       console.log(err)
