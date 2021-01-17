@@ -96,14 +96,17 @@ class UserController {
   static googleSignIn(req,res,next) {
     const {id_token} = req.body;
     let email = null;
+    let name = null;
     const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
     client.verifyIdToken({
       idToken: id_token,
       audience: process.env.GOOGLE_CLIENT_ID
     })
     .then(ticket => {
+      console.log(ticket, "ticket");
       const payload = ticket.getPayload();
       email = payload.email;
+      name = payload.given_name;
       return User.findOne({
         where: {
           email
@@ -111,8 +114,10 @@ class UserController {
       })
     })
     .then(user => {
+      console.log(user,"user");
       if(!user) {
         return User.create({
+          name,
           email,
           password: `${Math.floor(Math.random()*100)}secret`
         });
@@ -127,6 +132,7 @@ class UserController {
       res.status(200).json({access_token})
     })
     .catch(err => {
+      console.log(err,"error");
       next(err)
     })
   }
