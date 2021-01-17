@@ -4,11 +4,9 @@ class Controller {
     static async createTask(req, res, next) {
         try {
             const { title, description, dueDate, status } = req.body.value
-            console.log(req.body, "INI REQ")
             const addedTask = await Task.create({
                 title, description, dueDate, status
             })
-            console.log(addedTask, "<<<<<<")
             const temp = await UserTask.create({
                 UserId: req.user.id,
                 TaskId: addedTask.id,
@@ -16,7 +14,6 @@ class Controller {
             })
             res.status(200).json(addedTask)
         } catch (err) {
-            console.log(err, "gaga;")
             next(err)
         }
     }
@@ -29,16 +26,13 @@ class Controller {
             res.status(200).json(readTask)
 
         } catch (err) {
-            console.log(err.stack)
             next(err)
         }
     }
 
     static async putTask(req, res, next) {
         try {
-            console.log("MASUK PUT")
             const { title, description, dueDate, status } = req.body.data
-            console.log(req.body.data)
             const putTask = await Task.update({
                 title, description, dueDate, status
             },
@@ -59,8 +53,6 @@ class Controller {
 
     static async deleteTask(req, res, next) {
         try {
-            console.log("MASUK DELETE")
-            console.log(req.params.id)
             const deletedConjunction = await UserTask.destroy({
                 where: {
                     TaskId: +req.params.id
@@ -82,10 +74,6 @@ class Controller {
         } catch (err) {
             next(err)
         }
-    }
-
-    static async userData(req, res, next) {
-        res.status(200).json({ user: req.user })
     }
 }
 

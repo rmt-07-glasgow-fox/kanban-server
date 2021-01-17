@@ -37,8 +37,9 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           message: "dueDate Required"
-        }
-      }
+        },
+        isAfter: (new Date()).toString()
+      },
     },
     status: {
       type: DataTypes.STRING,

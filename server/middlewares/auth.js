@@ -22,24 +22,18 @@ async function authenticate(req, res, next) {
 }
 
 async function authorize(req, res, next) {
-
     try {
-        console.log("MASUK AUTHORIZE")
-        console.log(req.params.email)
-        const checkUser = await UserTask.findOne({
+        const checkUser = await UserTask.findAll({
             where: {
                 TaskId: +req.params.id
             }
         })
-        console.log(checkUser.TaskId)
-        console.log(+req.params.id)
-        if (!checkUser || +checkUser.TaskId !== +req.params.id) {
+        if (!checkUser || +checkUser[0].UserId !== +req.user.id) {
             next({ name: "AccessError" })
         } else {
             next()
         }
     } catch (err) {
-        console.log("MASUK ERR")
         next(err)
     }
 }

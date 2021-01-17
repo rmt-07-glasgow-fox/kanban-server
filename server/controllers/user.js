@@ -5,7 +5,6 @@ const { User } = require('../models')
 class Controller {
     static async signup(req, res, next) {
         try {
-            console.log(req.body)
             const { name, email, password } = req.body
             const user = await User.create({ name, email, password })
             const payload = {
@@ -16,11 +15,11 @@ class Controller {
             const registeredUser = {
                 id: user.id,
                 email: user.email,
+                name: user.name,
                 access_token: access_token
             }
             return res.status(201).json(registeredUser)
         } catch (err) {
-            console.log(err.stack)
             next(err)
         }
     }
@@ -41,7 +40,8 @@ class Controller {
                     email: user.email
                 }
                 const access_token = generateToken(payload)
-                return res.status(200).json({ access_token })
+                let name = user.name
+                return res.status(200).json({ access_token, name })
             } else {
                 next({ name: "Invalid Email/Password" })
             }
@@ -52,24 +52,25 @@ class Controller {
 
     static async loginGoogle(req, res, next) {
         try {
+            let registeredUser = {}
             const { email, password, name } = req.body
             const user = await User.findOne({
                 where: { email }
             })
             if (!user) {
                 const newUser = await User.create({ name, email, password })
-                const registeredUser = {
+                registeredUser = {
                     id: newUser.id,
                     email: newUser.email
                 }
             } else {
-                const registeredUser = {
+                registeredUser = {
                     id: user.id,
                     email: user.email
                 }
             }
-            console.log(registeredUser)
-            return res.status(200).json({ registeredUser })
+            const access_token = generateToken(registeredUser)
+            return res.status(200).json({ access_token })
         } catch (err) {
             next(err)
         }

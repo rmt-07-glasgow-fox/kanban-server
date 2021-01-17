@@ -9,7 +9,6 @@ class Controller {
             res.status(200).json(getCategory)
 
         } catch (err) {
-            console.log(err.stack)
             next(err)
         }
     }
@@ -17,7 +16,6 @@ class Controller {
     static async createCategory(req, res, next) {
         try {
             const { category } = req.body
-            console.log(req.body, "INI BODY")
             const createCategory = await Category.create({
                 name: category, UserId: req.user.id
             })
@@ -38,7 +36,6 @@ class Controller {
             res.status(200).json({ message: "Category Deleted" })
 
         } catch (err) {
-            console.log(err.stack)
             next(err)
         }
     }
