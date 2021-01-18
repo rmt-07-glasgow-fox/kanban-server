@@ -1,0 +1,2 @@
+npx sequelize model:generate --name User --attributes email:string,username:string,password:string
+npx sequelize model:generate --name Task --attributes title:string,category:string,description:string,UserId:integer
