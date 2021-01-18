@@ -150,7 +150,7 @@
     **Content:** 
     ``` json
     {
-        "access_token": <given by system>,
+        "access_token": "<given by system>",
     }
  
 * **Error Response:**
