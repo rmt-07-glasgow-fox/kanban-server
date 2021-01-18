@@ -33,4 +33,658 @@
 1. Clone this Repository
 2. Install package based on package.json
 3. create `.env` file with value that i mention in description 
-4. to start `npm run dev`
+5. Sequelize migrate
+4. start node with `npm run dev`
+
+-------
+**POST /login**
+----
+ Login into app.
+
+* **URL**
+
+  /login
+
+* **Method:**
+
+  `POST`
+  
+* **Req Body**
+
+  **Required:**
+  ```
+    {
+        "email": "<input email>",
+        "password": "<input password>",
+    }
+  ```
+    
+
+* **Success Response:**
+
+  * **Code:** 201 <br />
+    **Content:** 
+    ``` json
+    {
+        "access_token": <given by system>,
+    }
+ 
+* **Error Response:**
+
+  * **Code:** 400 VALIDATION ERROR <br />
+    **Content:** `{ SequelizeValidationError message }`
+  
+  OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error messages }`
+-----
+**POST /register**
+----
+ register into app.
+
+* **URL**
+
+  /register
+
+* **Method:**
+
+  `POST`
+  
+* **Req Body**
+
+  **Required:**
+  ```
+    {
+        "email": "<input email>",
+        "password": "<input password>",
+    }
+  ```
+    
+
+* **Success Response:**
+
+  * **Code:** 201 <br />
+    **Content:** 
+    ``` json
+    {
+        "id": <given id by system>,
+        "email": <email inputed>
+    }
+ 
+* **Error Response:**
+
+  * **Code:** 400 VALIDATION ERROR <br />
+    **Content:** `{ SequelizeValidationError message }`
+  
+  OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error messages }`
+------
+**POST /loginGoogle**
+----
+ Login into app.
+
+* **URL**
+
+  /loginGoogle
+
+* **Method:**
+
+  `POST`
+  
+* **Req Body**
+
+  **Required:**
+  ```
+    {
+        "id_token": "<token from OauthClient>",
+    }
+  ```
+    
+
+* **Success Response:**
+
+  * **Code:** 201 <br />
+    **Content:** 
+    ``` json
+    {
+        "access_token": <given by system>,
+    }
+ 
+* **Error Response:**
+
+  * **Code:** 400 VALIDATION ERROR <br />
+    **Content:** `{ SequelizeValidationError message }`
+  
+  OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error messages }`
+-------
+
+
+**GET /user**
+----
+  Returns json data user.
+
+* **URL**
+
+  /user
+
+* **Method:**
+
+  `GET`
+  
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ``` json
+    {
+        "id": <given id by system>,
+        "email": "<email from db>",
+        "createdAt": "<given by sytem>",
+        "updatedAt": "<given by sytem>"
+    }
+ 
+* **Error Response:**
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error messages }`
+------
+
+**POST /tasks**
+----
+ Insert Task into app.
+
+* **URL**
+
+  /tasks
+
+* **Method:**
+
+  `POST`
+  
+* **Req Body**
+
+  **Required:**
+  ``` json
+    {
+        "name": "<name of task>",
+        "categoryId": "<Fkey from category>",
+        "userId" :"<Fkey from user>"
+    }
+  ```
+    
+
+* **Success Response:**
+
+  * **Code:** 201 <br />
+    **Content:** 
+    ``` json
+    {
+        "id": "<given id by system>",
+        "name": "<name of task>",
+        "categoryId": "<Fkey from category>",
+        "userId" :"<Fkey from user>",
+        "createdAt": "<given by sytem>",
+        "updatedAt": "<given by sytem>"
+    }
+ 
+* **Error Response:**
+
+  * **Code:** 400 VALIDATION ERROR <br />
+    **Content:** `{ SequelizeValidationError message }`
+  
+  OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error messages }`
+-------
+
+**GET /tasks**
+----
+  Returns json data task.
+
+* **URL**
+
+  /tasks
+
+* **Method:**
+
+  `GET`
+  
+  
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ``` json
+    {
+        "id": "<given id by system>",
+        "name": "<name of task>",
+        "categoryId": "<Fkey from category>",
+        "userId" :"<Fkey from user>",
+        "createdAt": "<given by sytem>",
+        "updatedAt": "<given by sytem>"
+    }
+ 
+* **Error Response:**
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error messages }`
+------
+
+**GET /tasks/:id**
+----
+  Returns json data task.
+
+* **URL**
+
+  /tasks/:id
+
+* **Method:**
+
+  `GET`
+
+* **Req Params**
+
+  **Required:**
+  ``` json
+    {
+      "id": "<task id>",
+    }
+  ```
+  
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ``` json
+    {
+        "id": "<given id by system>",
+        "name": "<name of task>",
+        "categoryId": "<Fkey from category>",
+        "userId" :"<Fkey from user>",
+        "createdAt": "<given by sytem>",
+        "updatedAt": "<given by sytem>"
+    }
+ 
+* **Error Response:**
+
+  * **Code:** 404 RESOURCE NOT FOUND <br />
+    **Content:** `{ ResourceNotFound }`
+  
+  OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error messages }`
+------
+
+**PUT /tasks/:id**
+----
+  In Need To update tasks.
+
+* **URL**
+
+  /tasks/:id
+
+* **Method:**
+
+  `PUT`
+
+* **Req Params**
+
+  **Required:**
+  ``` json
+    {
+      "id": "<task id>",
+    }
+  ```
+  
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ``` json
+    {
+        "id": "<given id by system>",
+        "name": "<name of task>",
+        "categoryId": "<Fkey from category>",
+        "userId" :"<Fkey from user>",
+        "createdAt": "<given by sytem>",
+        "updatedAt": "<given by sytem>"
+    }
+ 
+* **Error Response:**
+
+  * **Code:** 404 RESOURCE NOT FOUND <br />
+    **Content:** `{ ResourceNotFound }`
+  
+  OR
+
+  * **Code:** 400 VALIDATION ERROR <br />
+    **Content:** `{ SequelizeValidationError message }`
+  
+  OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error messages }`
+------
+
+**PATCH /tasks/:id**
+----
+ In Need To change categoryId 
+
+* **URL**
+
+  /tasks/:id
+
+* **Method:**
+
+  `PATCH`
+
+* **Req Params**
+
+  **Required:**
+  ``` json
+    {
+      "id": "<task id>",
+    }
+  ```
+  
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ``` json
+    {
+        "id": "<given id by system>",
+        "name": "<name of task>",
+        "categoryId": "<Fkey from category>",
+        "userId" :"<Fkey from user>",
+        "createdAt": "<given by sytem>",
+        "updatedAt": "<given by sytem>"
+    }
+ 
+* **Error Response:**
+
+  * **Code:** 404 RESOURCE NOT FOUND <br />
+    **Content:** `{ ResourceNotFound }`
+  
+  OR
+
+  * **Code:** 400 VALIDATION ERROR <br />
+    **Content:** `{ SequelizeValidationError message }`
+  
+  OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error messages }`
+------
+
+**DELETE /tasks/:id**
+----
+ In Need To delete tasks 
+
+* **URL**
+
+  /tasks/:id
+
+* **Method:**
+
+  `DELETE`
+
+* **Req Params**
+
+  **Required:**
+  ``` json
+    {
+      "id": "<task id>",
+    }
+  ```
+  
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ``` json
+    {
+        "Task success to delete"
+    }
+ 
+* **Error Response:**
+
+  * **Code:** 404 RESOURCE NOT FOUND <br />
+    **Content:** `{ ResourceNotFound }`
+  
+  OR
+
+  * **Code:** 400 VALIDATION ERROR <br />
+    **Content:** `{ SequelizeValidationError message }`
+  
+  OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error messages }`
+------
+
+
+**POST /category**
+----
+ Insert category into app.
+
+* **URL**
+
+  /category
+
+* **Method:**
+
+  `POST`
+  
+* **Req Body**
+
+  **Required:**
+  ``` json
+    {
+        "name": "<name of category>"
+        
+    }
+  ```
+    
+
+* **Success Response:**
+
+  * **Code:** 201 <br />
+    **Content:** 
+    ``` json
+    {
+        "id": "<given id by system>",
+        "name": "<name of category>",
+        "createdAt": "<given by sytem>",
+        "updatedAt": "<given by sytem>"
+    }
+ 
+* **Error Response:**
+
+  * **Code:** 400 VALIDATION ERROR <br />
+    **Content:** `{ SequelizeValidationError message }`
+  
+  OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error messages }`
+-------
+
+**GET /category**
+----
+  Returns json data category.
+
+* **URL**
+
+  /category
+
+* **Method:**
+
+  `GET`
+  
+  
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ``` json
+    {
+        "id": "<given id by system>",
+        "name": "<name of category>",
+        "createdAt": "<given by sytem>",
+        "updatedAt": "<given by sytem>"
+    }
+ 
+* **Error Response:**
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error messages }`
+------
+
+**GET /category/:id**
+----
+  Returns json data category.
+
+* **URL**
+
+  /category/:id
+
+* **Method:**
+
+  `GET`
+
+* **Req Params**
+
+  **Required:**
+  ``` json
+    {
+      "id": "<category id>",
+    }
+  ```
+  
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ``` json
+    {
+        "id": "<given id by system>",
+        "name": "<name of category>",
+        "createdAt": "<given by sytem>",
+        "updatedAt": "<given by sytem>"
+    }
+ 
+* **Error Response:**
+
+  * **Code:** 404 RESOURCE NOT FOUND <br />
+    **Content:** `{ ResourceNotFound }`
+  
+  OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error messages }`
+------
+
+**PUT /category/:id**
+----
+  In Need To update category.
+
+* **URL**
+
+  /category/:id
+
+* **Method:**
+
+  `PUT`
+
+* **Req Params**
+
+  **Required:**
+  ``` json
+    {
+      "id": "<category id>",
+    }
+  ```
+  
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ``` json
+    {
+        "id": "<given id by system>",
+        "name": "<name of category>",
+        "createdAt": "<given by sytem>",
+        "updatedAt": "<given by sytem>"
+    }
+ 
+* **Error Response:**
+
+  * **Code:** 404 RESOURCE NOT FOUND <br />
+    **Content:** `{ ResourceNotFound }`
+  
+  OR
+
+  * **Code:** 400 VALIDATION ERROR <br />
+    **Content:** `{ SequelizeValidationError message }`
+  
+  OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error messages }`
+------
+
+
+**DELETE /category/:id**
+----
+ In Need To delete category 
+
+* **URL**
+
+  /category/:id
+
+* **Method:**
+
+  `DELETE`
+
+* **Req Params**
+
+  **Required:**
+  ``` json
+    {
+      "id": "<category id>",
+    }
+  ```
+  
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ``` json
+    {
+        "category success to delete"
+    }
+ 
+* **Error Response:**
+
+  * **Code:** 404 RESOURCE NOT FOUND <br />
+    **Content:** `{ ResourceNotFound }`
+  
+  OR
+
+  * **Code:** 400 VALIDATION ERROR <br />
+    **Content:** `{ SequelizeValidationError message }`
+  
+  OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error messages }`
+------
