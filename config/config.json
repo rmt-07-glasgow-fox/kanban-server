@@ -1,0 +1,29 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "kanban-server-development",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "lghzgbvgumqgpe",
+    "password": "8b1da5ef0fe7792cf1ec244a12aae84dee8ddb589bf7f310982a35196dfac469",
+    "database": "dfpbkvhbbmqk8a",
+    "host": "ec2-50-19-32-202.compute-1.amazonaws.com",
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+          "require" : true,
+          "rejectUnauthorized" : false
+       }
+    }
+  }
+}
