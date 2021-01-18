@@ -137,7 +137,7 @@
 * **Req Body**
 
   **Required:**
-  ```
+  ``` json
     {
         "id_token": "<token from OauthClient>",
     }
