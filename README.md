@@ -66,7 +66,7 @@
     **Content:** 
     ``` json
     {
-        "access_token": <given by system>,
+        "access_token": "<given by system>",
     }
  
 * **Error Response:**
@@ -108,8 +108,8 @@
     **Content:** 
     ``` json
     {
-        "id": <given id by system>,
-        "email": <email inputed>
+        "id": "<given id by system>",
+        "email": "<email inputed>"
     }
  
 * **Error Response:**
@@ -183,7 +183,7 @@
     **Content:** 
     ``` json
     {
-        "id": <given id by system>,
+        "id": "<given id by system>",
         "email": "<email from db>",
         "createdAt": "<given by sytem>",
         "updatedAt": "<given by sytem>"
