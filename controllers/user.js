@@ -39,44 +39,49 @@ class UserCon{
     }
 
     static oAuthGoogle(req,res,next){
-        let user = req.body.user
-        user.password += 'qwerty123456789zxcvbnm',
-        
-        User.findOne({where:{email:user.email}})
+        let user = req.body
+        user.password += 'qwerty123456789zxcvbnm'
+
+        User.findOne({where: {email: user.email}})
         .then(data=>{
             if (data) {
                 let hash = data.password
-                if (compare(user.password,hash)) {
-                    let user = {
-                        id:data.id,email:data.email
+                if (compare( user.password,hash)) {
+                    const payload = {
+                        id: data.id,
+                        email: data.email
                     }
-                    let accesstoken = generateToken(user)
+                    const accesstoken = generateToken(payload)
                     res.status(200).json({accesstoken})
+                    
                 } else {
-                    next({name:'invalidLogin'})
+                    next({name: 'unauthorized'})
                 }
             } else {
                 return User.create(user)
             }
         })
         .then(data=>{
+            return User.findOne({where: {email: user.email}})
+        })
+        .then(data=>{
             if (data) {
-                let hash = data.password
-                if (compare(password,hash)) {
-                    let user = {
-                        id:data.id,email:data.email
+                if (Bcrypt.comparePassword(user.password,data.password)) {
+                    const payload = {
+                        id: data.id,
+                        email: data.email
                     }
-                    let accesstoken = generateToken(user)
+                    const accesstoken = generateToken(payload)
                     res.status(200).json({accesstoken})
                 } else {
-                    next({name:'invalidLogin'})
+                    next({name: 'unauthorized'})
                 }
-            }else{
-                next({name:'invalidLogin'})
+            } else {
+                next({name: 'unauthorized'})
             }
         })
         .catch(err=>{
-            next(err)
+            res.status(500)
         })
     }
 }
