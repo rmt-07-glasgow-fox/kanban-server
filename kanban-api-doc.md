@@ -1,4 +1,4 @@
-# Cookpad app Documentation
+# Kanban app Documentation
 
 kanban-yuk app is an application to save our activities and job progress . This app has :
 * Authentication and Authorization Server

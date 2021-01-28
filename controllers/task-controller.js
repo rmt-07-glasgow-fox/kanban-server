@@ -9,13 +9,9 @@ class TaskController {
             }
             Task.create(newTask)
                   .then(task => {
-                      if(task.title === ''|| task.CategoryId === ''){
-                          task.title = null,
-                          task.CategoryId = null
-                      }
                       res.status(201).json(task)
                   }).catch(err => {
-                     next({name: "SequelizeValidationError"})
+                      if (err.name === "SequelizeValidationError") next({name: "SequelizeValidationError"})
                       next(err)
                   })
             
