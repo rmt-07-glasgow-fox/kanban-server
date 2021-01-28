@@ -51,7 +51,7 @@ class TaskController {
         .then (result => {
             console.log(result[0])
             if (result[0] === 1) {
-                res.status (201).json ()
+                res.status (201).json ({ message: 'Succesfully Update Task' })
             } else {
                 next ({ name: "ResourceNotFoud" })
             }
@@ -72,7 +72,7 @@ class TaskController {
         })
         .then (result => {
             if (result[0] === 1) {
-                res.status (200).json ()
+                res.status (200).json ({ message: 'Succesfully Update Task' })
             } else {
                 next ({ name: "ResourceNotFound" })
             }

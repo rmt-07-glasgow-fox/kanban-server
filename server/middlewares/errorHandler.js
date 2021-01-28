@@ -14,7 +14,7 @@ function errorHandler (err, req, res, next) {
             break
 
             case "WrongInput":
-                res.status(401).json ({ message: ["Invalid Email / Password"] })
+                res.status(400).json ({ message: ["Invalid Email / Password"] })
             break
 
             case "NotLoggedIn":
