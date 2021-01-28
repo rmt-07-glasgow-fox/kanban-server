@@ -14,7 +14,7 @@
 _Request Header_
 ```
 {
-  not needed
+  "access_token": "<access_token>"
 }
 ```
 _Request Body_
@@ -55,7 +55,7 @@ _Response (500 - Internal Server Error)_
 _Request Header_
 ```
 {
-  not needed
+  "access_token": "<access_token>"
 }
 ```
 _Request Body_
@@ -87,7 +87,7 @@ _Response (500 - Internal Server Error)_
 _Request Header_
 ```
 {
-  not needed
+  "access_token": "<access_token>"
 }
 ```
 _Request Params_
@@ -139,7 +139,7 @@ _Response (500 - Internal Server Error)_
 _Request Header_
 ```
 {
-  not needed
+  "access_token": "<access_token>"
 }
 ```
 _Request Params_
@@ -189,7 +189,7 @@ _Response (500 - Internal Server Error)_
 _Request Header_
 ```
 {
-  not needed
+  "access_token": "<access_token>"
 }
 ```
 _Request Params_
