@@ -190,7 +190,7 @@
 ### POST/REGISTER
 
 * **SUCCESS RESPONSE**
-    * **code** 200
+    * **code** 201
     * **content**
     ```json
     [
