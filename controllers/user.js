@@ -41,7 +41,6 @@ class UserCon{
     static oAuthGoogle(req,res,next){
         let user = req.body
         user.password += 'qwerty123456789zxcvbnm'
-
         User.findOne({where: {email: user.email}})
         .then(data=>{
             if (data) {
