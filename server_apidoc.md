@@ -189,7 +189,8 @@ Not needed
 _Request Header_
 ```
 {
-  "Content-type": "application/json"
+  "Content-type": "application/json",
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTYxMTEyMzcxN30.ZpC6kOy3iDO--tfUuch4zqXMXNCIbEK0RdYtL39yyE8"
 }
 ```
 
@@ -238,7 +239,9 @@ url: http://localhost:3000/tasks
 
 _Request Header_
 ```
-Not needed
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTYxMTEyMzcxN30.ZpC6kOy3iDO--tfUuch4zqXMXNCIbEK0RdYtL39yyE8"
+}
 ```
 
 _Request Body_
@@ -342,7 +345,9 @@ _Request Params_
 
 _Request Header_
 ```
-Not needed
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTYxMTEyMzcxN30.ZpC6kOy3iDO--tfUuch4zqXMXNCIbEK0RdYtL39yyE8"
+}
 ```
 
 _Request Body_
@@ -395,7 +400,8 @@ _Request Params_
 _Request Header_
 ```
 {
-  "Content-type": "application/json"
+  "Content-type": "application/json",
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTYxMTEyMzcxN30.ZpC6kOy3iDO--tfUuch4zqXMXNCIbEK0RdYtL39yyE8"
 }
 ```
 
@@ -458,7 +464,8 @@ _Request Params_
 _Request Header_
 ```
 {
-  "Content-type": "application/json"
+  "Content-type": "application/json",
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTYxMTEyMzcxN30.ZpC6kOy3iDO--tfUuch4zqXMXNCIbEK0RdYtL39yyE8"
 }
 ```
 
@@ -521,7 +528,8 @@ _Request Params_
 _Request Header_
 ```
 {
-  "Content-type": "application/json"
+  "Content-type": "application/json",
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTYxMTEyMzcxN30.ZpC6kOy3iDO--tfUuch4zqXMXNCIbEK0RdYtL39yyE8"
 }
 ```
 
