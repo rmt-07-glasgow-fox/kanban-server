@@ -4,6 +4,7 @@ const { User, Task } = require('../models')
 
 async function authenticate (req, res, next) {
     try {
+        console.log('dari authenticate')
         const decode = verifyToken(req.headers.access_token)
         const data = await User.findOne({
             where: { id: decode.id}

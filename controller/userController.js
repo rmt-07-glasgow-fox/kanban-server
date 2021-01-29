@@ -7,14 +7,17 @@ const { OAuth2Client } = require('google-auth-library');
 class userControl {
     static async register (req, res) {
         const { email, password, username } = req.body
+        console.log(email, password, username, 'ini ===========');
         try {
             const find = await User.findOne({
                 where: { email }
             })
+
             if (!find) {
                 const create = await User.create({
                     email, password, username
                 })
+
                 res.status(201).json({
                     id: create.id,
                     username: create.username,
@@ -26,6 +29,7 @@ class userControl {
                 })
             }
         } catch (err) {
+            console.log(err);
             res.status(500).json({
                 msg: 'Error in internal server',
             })

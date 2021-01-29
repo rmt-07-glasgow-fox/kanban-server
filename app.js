@@ -3,6 +3,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const express = require('express')
+const cors = require('cors')
 const app = express()
 const port = process.env.PORT || 3000
 const { authenticate } = require('./middleware/auth')
@@ -15,6 +16,8 @@ app.get('/', (req, res) => {
 })
 
 app.use(express.urlencoded({ extended:true }))
+app.use(express.json())
+app.use(cors())
 
 app.use(user)
 app.use(authenticate)
@@ -24,5 +27,3 @@ app.use(category)
 app.listen(port, () => {
     console.log(`connected on http://localhost:${port}`);
 })
-
-//R6oQGEbVQwcaGT0SuBQeGMh8
