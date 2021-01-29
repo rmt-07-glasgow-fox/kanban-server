@@ -27,6 +27,7 @@
     "googleapis": "^67.0.0",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.5.1",
-    "sequelize": "^6.3.5"
+    "sequelize": "^6.3.5",
+    "socketio": "^1.0.0"
   }
 }
