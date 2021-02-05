@@ -1,13 +1,31 @@
 # kanban-server
-- >.env
+> ### **Feature**
+- [x] Rest API PostgreSQL + Sequelize
+- [x] API Documentation
+- [x] Auth 
+- [x] User login, register and get info
+- [x] CRUD Task 
+- [x] CRUD Category 
+- [x] API Documentation
+- [x] Association models 
+- [x] Google Auth
+- [x] heroku-server
+- [x] firebase-client
+
+> ### **🚀 Rocket**
+- [x] Dynamic Category 
+
+> ### **Deploy**
+>Heroku Server 
+- >https://kanban-skh.herokuapp.com/
+>Firebase Client
+- >https://green-kanban.web.app/
+
+> ### **.env**
 - >SECRET_KEY="jwt secret"
 - >GOOGLE_CLIENT_ID="input your google client id"
 - >GOOGLE_SECRET="input your secret"
 
-- >heroku-server
-- >https://kanban-skh.herokuapp.com/
-- >firebase-client
-- >https://green-kanban.web.app/
 ### API LIST
 | ROUTES         | METHODS | DESCRIPTION                    |
 |----------------|---------|--------------------------------|
