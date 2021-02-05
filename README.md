@@ -1,4 +1,13 @@
 # kanban-server
+- >.env
+- >SECRET_KEY="jwt secret"
+- >GOOGLE_CLIENT_ID="input your google client id"
+- >GOOGLE_SECRET="input your secret"
+
+- >heroku-server
+- >https://kanban-skh.herokuapp.com/
+- >firebase-client
+- >https://green-kanban.web.app/
 ### API LIST
 | ROUTES         | METHODS | DESCRIPTION                    |
 |----------------|---------|--------------------------------|
