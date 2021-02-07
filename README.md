@@ -16,9 +16,9 @@
 - [x] Dynamic Category 
 
 > ### **Deploy**
->Heroku Server 
+> Heroku Server 
 - >https://kanban-skh.herokuapp.com/
->Firebase Client
+> Firebase Client
 - >https://green-kanban.web.app/
 
 > ### **.env**
